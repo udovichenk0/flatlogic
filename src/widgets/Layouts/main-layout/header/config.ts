@@ -1,0 +1,31 @@
+import { createRoute } from "atomic-router";
+
+const goToHomeRoute = createRoute();
+const goToPagesRoute = createRoute();
+const goToShopRoute = createRoute();
+const goToBlogRoute = createRoute();
+
+const goToAboutPage = createRoute();
+export const routes = [
+  { path: goToHomeRoute, label: "Home" },
+  {
+    path: goToHomeRoute,
+    label: "Pages",
+    dropItems: [
+      { path: goToHomeRoute, label: "About Us" },
+      { path: goToHomeRoute, label: "About Team" },
+      { path: goToHomeRoute, label: "Contact Us" },
+      { path: goToHomeRoute, label: "FAQ" },
+      { path: goToHomeRoute, label: "Wishlist" },
+    ],
+  },
+  { path: goToHomeRoute, label: "Shop" },
+  { path: goToHomeRoute, label: "Blog" },
+];
+
+export const navigationRoutes = {
+  goToHomeRoute,
+  goToPagesRoute,
+  goToShopRoute,
+  goToBlogRoute,
+};
