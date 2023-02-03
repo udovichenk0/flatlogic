@@ -1,4 +1,5 @@
 import { createRoute } from "atomic-router";
+import { CardSvg, SearchSvg, UserSvg } from "./assets";
 
 const goToHomeRoute = createRoute();
 const goToPagesRoute = createRoute();
@@ -21,6 +22,12 @@ export const routes = [
   },
   { path: goToHomeRoute, label: "Shop" },
   { path: goToHomeRoute, label: "Blog" },
+];
+
+export const iconNavigations = [
+  { Icon: SearchSvg, path: goToHomeRoute },
+  { Icon: UserSvg, path: goToHomeRoute },
+  { Icon: CardSvg, path: goToHomeRoute },
 ];
 
 export const navigationRoutes = {

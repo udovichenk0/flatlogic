@@ -1,9 +1,7 @@
 import { NavigateButton } from "@/shared/ui/Buttons/navigate-button"
-import { navigationRoutes, routes } from "./config"
+import { Link } from "atomic-router-react"
+import { iconNavigations, navigationRoutes, routes } from "./config"
 
-// const routes = [
-// 	{path: navigationRoutes.goToHomeRoute, label: 'Home'}
-// ]
 
 export const Header = () => {
 	return (
@@ -19,8 +17,14 @@ export const Header = () => {
 						)
 					})}
 				</nav>
-				<div>
-					cont
+				<div className="flex gap-3">
+					{iconNavigations.map(({path, Icon}, id) => {
+						return (
+							<Link to={path} key={id} className='hover:text-[#bd744c] duration-300 p-2'>
+								<Icon/>
+							</Link>
+						)
+					})}
 				</div>
 			</div>
 		</header>
