@@ -13,8 +13,9 @@
 	],
 	"plugins": [
 		[
-		"effector/babel-plugin",
+		"effector-logger/babel-plugin",
 		{
+			"inspector": true,
 			"factories": ["@farfetched/core", "atomic-router"]
 		}
 	]

@@ -5,7 +5,7 @@ import { iconNavigations, navigationRoutes, routes } from "./config"
 
 export const Header = () => {
 	return (
-		<header className="h-[60px] flex shadow-[0_4px_20px_rgb(38,38,38,0.1)] border-[1px] border-">
+		<header className="h-[60px] flex shadow-[0_4px_20px_rgb(38,38,38,0.1)]">
 			<div className="container px-5 h-full flex items-center justify-between">
 				<h2 className="font-bold text-[17.5px]">Flatlogic</h2>
 				<nav className="flex gap-2 h-full">

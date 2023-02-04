@@ -10,6 +10,9 @@ module.exports = {
         'montserrat': 'Montserrat'
       }
     },
+    colors: {
+      "brown": "#bd744c"
+    },
   },
   plugins: [],
 }

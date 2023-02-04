@@ -1,0 +1,20 @@
+import { useState } from "react"
+
+export const BrownAnimatedButton = ({text, arrow}: 
+	{
+		text:string,
+		arrow?:boolean,
+		animation: 'leftToRight' | 'hover'
+	}) => {
+		const [hover, hovered] = useState(false)
+	return (
+		<button onMouseEnter={() => hovered(true)} onMouseLeave={() => hovered(false)} className="border-[1px] border-brown font-bold px-[42px] py-[14px] flex items-center gap-1 hover:shadow-[inset_240px_0_0_0_#bd744c] hover:text-[#fff] hover:fill-[#ffffff] fill-brown text-brown transition-all duration-300">
+			<span>
+				{text}
+			</span>
+			<span>
+				<svg xmlns="http://www.w3.org/2000/svg" width={27} height={27} viewBox="0 0 24 24"><title>Artboard-1</title><g id="Right-4" data-name="Right"><path d="M18.707,12.707l-3,3a1,1,0,0,1-1.414-1.414L15.586,13H6a1,1,0,0,1,0-2h9.586L14.293,9.707a1,1,0,0,1,1.414-1.414l3,3A1,1,0,0,1,18.707,12.707Z"/></g></svg>
+			</span>
+		</button>
+	)
+}
