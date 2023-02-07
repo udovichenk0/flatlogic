@@ -15,23 +15,19 @@ $$model.store.on({
 })
 */
 
-import { GoodCard } from "@/entities/Cards/Good"
-import { cartModel } from "@/entities/cart"
-import { startAddingToCart } from "@/features/save/save-to-cart"
-import { $$goodsList } from "@/pages/Home"
-import { Good } from "@/shared/api/Goods"
-import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
-import { Effect, Store } from "effector"
 import { useStore } from "effector-react"
 
+import { Good } from "@/shared/api/Goods"
+import { isItemInCart } from "@/shared/lib/isItemInCart"
 
-export const GoodsList = ({goodsList}: {
-	goodsList: {
-		$goods:Store<Good[]>,
-		getGoodsFx: Effect<any, any>
-	}
-}) => {
-	const goods = useStore(goodsList.$goods)
+import { cartModel } from "@/entities/cart"
+import { GoodCard } from "@/entities/Cards/Good"
+
+import { startAddingToCart } from "@/features/save/save-to-cart"
+
+
+
+export const GoodsList = ({goods}:{goods:Good[]}) => {
 	const cart = useStore(cartModel.$cart)
 	return (
 		<div>
@@ -40,6 +36,7 @@ export const GoodsList = ({goodsList}: {
 					return (
 						<div key={id} className='w-full'>
 							<GoodCard price={price} title={title} type={type} url={url}
+							isAdded={isItemInCart(cart, id)}
 							addToCard={() => startAddingToCart({id, price, title,type,url,description})}/>
 						</div>
 					)

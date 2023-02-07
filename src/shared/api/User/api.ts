@@ -1,10 +1,10 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { User } from "./types";
+import { CartItem, User } from "./types";
 
 export const getSessionUser = async () => {
   const sessionUser = await getDoc(doc(db, "users", "xVoU1CfS4uLTgPz3gkJK"));
-  return sessionUser.data() as User;
+  return { ...sessionUser.data(), id: sessionUser.id } as User;
 };
 
 // export const getCart = () => {
@@ -12,11 +12,11 @@ export const getSessionUser = async () => {
 // const docSnap = await getDoc(docRef);
 // }
 
-export const addToCard = async (data: any) => {
-  const sessionUser = await updateDoc(
-    doc(db, "users", "xVoU1CfS4uLTgPz3gkJK"),
-    {
-      cart: [data],
-    }
-  );
+export const addToCard = async (data: CartItem, id: string) => {
+  const usersRef = doc(db, "users", id);
+  const cart = await updateDoc(usersRef, {
+    cart: arrayUnion(data),
+  });
+  console.log(cart);
+  return cart;
 };

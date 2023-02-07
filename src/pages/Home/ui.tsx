@@ -5,12 +5,14 @@ import { SliderBlock } from '@/widgets/SliderBlock'
 import firstCard from '/first.webp'
 import secondCard from '/second.webp'
 import thirdCard from '/third.webp'
-import { $$goodsList, homeRoutes, redirectToShop } from './home.module'
+import { $$goodsList, redirectToShop } from './home.module'
 import { GoodsList } from '@/widgets/goods-list'
 import { BrownAnimatedButton } from '@/shared/ui/Buttons/brown-animated-button'
+import { useStore } from 'effector-react'
 
 
 const Home = () => {
+	const goods = useStore($$goodsList.$goods)
 	return (
 		<div>
 			<SliderBlock>
@@ -23,7 +25,7 @@ const Home = () => {
 				<p className='max-w-[600px] text-gray text-sm text-center mb-11'>Check out our new furniture collection! Cozy sofa, fancy chair, wooden casket, and many more. The new collection brings an informal elegance to your home.</p>
 			</div>
 			<div className='container'>
-				<GoodsList goodsList={$$goodsList}/>
+				<GoodsList goods={goods}/>
 				<span className="flex justify-center mb-10">
 					<BrownAnimatedButton text="VIEW MORE" animation='leftToRight'
 					onClick={() => redirectToShop()}/>

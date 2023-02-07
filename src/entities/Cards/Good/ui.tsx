@@ -1,15 +1,13 @@
-import { Good } from '@/shared/api/Goods'
 import { Like } from '@/shared/ui/Buttons/like'
-import { Event } from 'effector'
 import { useState } from 'react'
-//image={item.url} price={item.price} type={item.type} title={item.title} id={item.id}
-export const GoodCard = ({type,url,price,title, addToCard}:
+export const GoodCard = ({type,url,price,title, addToCard, isAdded}:
 	{
 	type: string,
 	url: string,
 	price: number,
 	title: string,
-	addToCard: any
+	isAdded: boolean,
+	addToCard: () => void
 }) => {
 	const [hovered, hover] = useState<boolean>(false)
 	return (
@@ -19,7 +17,7 @@ export const GoodCard = ({type,url,price,title, addToCard}:
 				<img src={url} alt={type} />
 			</button>
 				<div className='absolute right-4'>
-					<Like action={addToCard}/>
+					<Like action={addToCard} isAdded={isAdded}/>
 				</div>
 			</div>
 			<button className='flex flex-col gap-2 mb-2'>
