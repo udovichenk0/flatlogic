@@ -16,8 +16,11 @@ $$model.store.on({
 */
 
 import { GoodCard } from "@/entities/Cards/Good"
+import { cartModel } from "@/entities/cart"
+import { startAddingToCart } from "@/features/save/save-to-cart"
 import { $$goodsList } from "@/pages/Home"
 import { Good } from "@/shared/api/Goods"
+import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Effect, Store } from "effector"
 import { useStore } from "effector-react"
 
@@ -25,22 +28,23 @@ import { useStore } from "effector-react"
 export const GoodsList = ({goodsList}: {
 	goodsList: {
 		$goods:Store<Good[]>,
-		getGoodsFx: Effect<void, any>
+		getGoodsFx: Effect<any, any>
 	}
 }) => {
 	const goods = useStore(goodsList.$goods)
-	console.log(goods)
+	const cart = useStore(cartModel.$cart)
 	return (
 		<div>
-			
-			{goods?.map((item) => {
-				return (
-					<div key={item.id}>
-						<GoodCard image={item.url} price={item.price} type={item.type} title={item.title} id={item.id}/>
-					</div>
-				)
-			})}
-		
+			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-10">
+				{goods?.map(({id, price,title,type,url, description}) => {
+					return (
+						<div key={id} className='w-full'>
+							<GoodCard price={price} title={title} type={type} url={url}
+							addToCard={() => startAddingToCart({id, price, title,type,url,description})}/>
+						</div>
+					)
+				})}
+			</div>
 		</div>
 	)
 }

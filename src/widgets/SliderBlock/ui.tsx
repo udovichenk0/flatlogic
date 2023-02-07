@@ -38,7 +38,7 @@ export const SliderBlock = ({children}:PropsWithChildren) => {
 		]
 	  )
 	return (
-		<div className='navigation-wrapper flex items-center w-full h-[530px] relative'>
+		<div className='navigation-wrapper flex items-center w-full h-[530px] relative mb-20'>
 			<span className="absolute z-10">
 				<SliderArrow onClick={() => instanceRef.current?.prev()} left/>
 			</span>
