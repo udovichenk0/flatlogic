@@ -7,16 +7,20 @@ export const getSessionUser = async () => {
   return { ...sessionUser.data(), id: sessionUser.id } as User;
 };
 
-// export const getCart = () => {
-//   const docRef = doc(db, "users", "SF");
-// const docSnap = await getDoc(docRef);
-// }
-
-export const addToCard = async (data: CartItem, id: string) => {
+export const getCart = async () => {
+  const docRef = doc(db, "users", "SF");
+  const docSnap = await getDoc(docRef);
+};
+//TODO make catch errors
+export const addToCart = async (data: CartItem, id: string) => {
   const usersRef = doc(db, "users", id);
   const cart = await updateDoc(usersRef, {
     cart: arrayUnion(data),
   });
-  console.log(cart);
   return cart;
+};
+
+export const updateCart = async (userId: string, cart: CartItem[]) => {
+  const userRef = doc(db, "users", userId);
+  const cartItems = updateDoc(userRef, { cart });
 };

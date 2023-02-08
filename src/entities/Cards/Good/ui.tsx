@@ -1,13 +1,14 @@
 import { Like } from '@/shared/ui/Buttons/like'
 import { useState } from 'react'
-export const GoodCard = ({type,url,price,title, addToCard, isAdded}:
+export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCart}:
 	{
 	type: string,
 	url: string,
 	price: number,
 	title: string,
 	isAdded: boolean,
-	addToCard: () => void
+	addToCard: () => void,
+	removeFromCart: () => void
 }) => {
 	const [hovered, hover] = useState<boolean>(false)
 	return (
@@ -17,7 +18,7 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded}:
 				<img src={url} alt={type} />
 			</button>
 				<div className='absolute right-4'>
-					<Like action={addToCard} isAdded={isAdded}/>
+					<Like action={isAdded? removeFromCart : addToCard} isAdded={isAdded}/>
 				</div>
 			</div>
 			<button className='flex flex-col gap-2 mb-2'>

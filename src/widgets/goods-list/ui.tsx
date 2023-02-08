@@ -23,7 +23,7 @@ import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
-import { startAddingToCart } from "@/features/save/save-to-cart"
+import { removeItemTriggered, startAddingToCart } from "@/features/save/save-to-cart"
 
 
 
@@ -37,7 +37,8 @@ export const GoodsList = ({goods}:{goods:Good[]}) => {
 						<div key={id} className='w-full'>
 							<GoodCard price={price} title={title} type={type} url={url}
 							isAdded={isItemInCart(cart, id)}
-							addToCard={() => startAddingToCart({id, price, title,type,url,description})}/>
+							addToCard={() => startAddingToCart({id, price, title,type,url,description})}
+							removeFromCart={() => removeItemTriggered({cart, id})}/>
 						</div>
 					)
 				})}
