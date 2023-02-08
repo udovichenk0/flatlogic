@@ -15,6 +15,22 @@ $$model.store.on({
 })
 */
 
+/*
+export const notification = ({
+	store,
+	modelTriggered,
+	mode,
+	message}:{
+		store: Store<any>,
+		modelTriggered: Event<any>,
+		mode: 'success' | 'info' | 'error",
+		message: string
+	}) => {
+		
+}
+*/
+
+
 import { useStore } from "effector-react"
 
 import { Good } from "@/shared/api/Goods"

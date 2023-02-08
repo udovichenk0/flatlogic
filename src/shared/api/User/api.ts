@@ -7,10 +7,6 @@ export const getSessionUser = async () => {
   return { ...sessionUser.data(), id: sessionUser.id } as User;
 };
 
-export const getCart = async () => {
-  const docRef = doc(db, "users", "SF");
-  const docSnap = await getDoc(docRef);
-};
 //TODO make catch errors
 export const addToCart = async (data: CartItem, id: string) => {
   const userRef = doc(db, "users", id);

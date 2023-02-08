@@ -64,7 +64,9 @@ export const createCartModel = () => {
 
   return {
     startAddingToCart,
+    successAddedToCart,
     itemRemoveTriggered,
+    addToCartFx,
   };
 };
 

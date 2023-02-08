@@ -2,8 +2,8 @@ import { cartModel } from '@/entities/cart'
 import { sessionModel } from '@/entities/session'
 import { sample } from 'effector'
 import { View } from '../pages'
-import { ProviderRoute } from './config'
-
+import { ProviderRoute, ToastifyProvider } from './config/providers'
+import "react-toastify/dist/ReactToastify.css";
 //TODO make checking auth and setting to the stores in proccess
 sessionModel.getUserFx()
 sample({
@@ -17,11 +17,11 @@ sample({
 })
 function App() {
   return (
-    <div className="App">
       <ProviderRoute>
-        <View/>
+        <ToastifyProvider>
+          <View/>
+        </ToastifyProvider>
       </ProviderRoute>
-    </div>
   )
 }
 
