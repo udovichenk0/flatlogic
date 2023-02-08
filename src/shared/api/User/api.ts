@@ -13,14 +13,23 @@ export const getCart = async () => {
 };
 //TODO make catch errors
 export const addToCart = async (data: CartItem, id: string) => {
-  const usersRef = doc(db, "users", id);
-  const cart = await updateDoc(usersRef, {
+  const userRef = doc(db, "users", id);
+  await updateDoc(userRef, {
     cart: arrayUnion(data),
   });
-  return cart;
+  return data;
 };
 
-export const updateCart = async (userId: string, cart: CartItem[]) => {
+export const removeFromCart = async (userId: string, deleteId: string) => {
   const userRef = doc(db, "users", userId);
-  const cartItems = updateDoc(userRef, { cart });
+  const user = await getDoc(userRef);
+  const userData = user.data() as User;
+  await updateDoc(userRef, {
+    cart: userData.cart.filter(({ id }) => id !== deleteId),
+  });
+  const response = await getDoc(userRef).then((cart) => {
+    const cartData = (cart.data() as User).cart;
+    return cartData;
+  });
+  return response;
 };
