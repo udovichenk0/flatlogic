@@ -12,7 +12,7 @@ import {
 export const createCartModel = () => {
   const startAddingToCart = createEvent<CartItem>();
   const successAddedToCart = createEvent();
-  const failAddedToCard = createEvent();
+  const successRemovedFromCart = createEvent();
   const itemRemoveTriggered = createEvent<{ deleteId: string }>();
 
   const addToCartFx = createEffect(
@@ -64,9 +64,11 @@ export const createCartModel = () => {
 
   return {
     startAddingToCart,
+    successRemovedFromCart,
     successAddedToCart,
     itemRemoveTriggered,
     addToCartFx,
+    removeFromCartFx,
   };
 };
 

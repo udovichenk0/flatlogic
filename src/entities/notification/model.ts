@@ -8,6 +8,7 @@ const displayNotification = createEffect(
       type,
       pauseOnFocusLoss: false,
       pauseOnHover: false,
+      icon: false,
     });
   }
 );

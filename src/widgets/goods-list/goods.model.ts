@@ -8,9 +8,19 @@ sample({
   clock: featureCartModel.addToCartFx.done,
   target: featureCartModel.successAddedToCart,
 });
+sample({
+  clock: featureCartModel.removeFromCartFx,
+  target: featureCartModel.successRemovedFromCart,
+});
 
 notification({
   clock: featureCartModel.successAddedToCart,
   type: "success",
-  message: "product successfully added to your cart",
+  message: "product added to your cart",
+});
+
+notification({
+  clock: featureCartModel.successRemovedFromCart,
+  type: "success",
+  message: "product removed from your cart",
 });

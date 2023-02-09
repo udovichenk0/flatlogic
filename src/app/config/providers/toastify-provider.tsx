@@ -11,6 +11,7 @@ export const ToastifyProvider = ({children}:PropsWithChildren) => {
 			newestOnTop={false}
 			pauseOnHover={false}
 			pauseOnFocusLoss={false}
+			limit={4}
 			closeOnClick
 			rtl={false}
 			theme="light"/>
