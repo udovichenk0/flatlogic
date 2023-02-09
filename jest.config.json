@@ -4,7 +4,10 @@
 	"preset": "ts-jest",
   "testEnvironment": "node",
   "transform": {
-    "^.+\\.ts?$": "ts-jest"
+    "\\.[jt]sx?$": "babel-jest"
+  },
+  "moduleNameMapper":{
+    "^@/(.*)$": "<rootDir>/src/$1"
   },
   "transformIgnorePatterns": ["<rootDir>/node_modules/"]
   }

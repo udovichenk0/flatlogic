@@ -40,7 +40,8 @@ import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
 import { featureCartModel } from "./goods.model"
-
+import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
+import { Fragment } from "react"
 
 
 
@@ -50,14 +51,16 @@ export const GoodsList = ({goods}:{goods:Good[]}) => {
 	return (
 		<div>
 			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-10">
-				{goods?.map(({id, price,title,type,url, description}) => {
+				{!goods.length
+				? <SkeletonCards length={14}/>
+				: goods?.map(({id, price,title,type,url, description}) => {
 					return (
-						<div key={id} className='w-full'>
+						<Fragment key={id}>
 							<GoodCard price={price} title={title} type={type} url={url}
 							isAdded={isItemInCart(cart, id)}
 							addToCard={() => featureCartModel.startAddingToCart({id, price, title,type,url,description})}
 							removeFromCart={() => featureCartModel.itemRemoveTriggered({deleteId: id})}/>
-						</div>
+						</Fragment>
 					)
 				})}
 			</div>

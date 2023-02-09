@@ -1,5 +1,5 @@
 import { Like } from '@/shared/ui/Buttons/like'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCart}:
 	{
 	type: string,
@@ -14,8 +14,8 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCa
 	return (
 		<div onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} className="w-full max-w-[245px] flex flex-col">
 			<div className='flex relative items-center'>
-			<button className={`mb-5 ${hovered && 'scale-[1.04]'} transition-transform duration-200`}>
-				<img src={url} alt={type} />
+			<button className={`mb-5 ${hovered && 'scale-[1.04]'} w-[245px] h-[245px] transition-transform duration-200`}>
+				<img className='w-full h-auto' src={url} alt={type} />
 			</button>
 				<div className='absolute right-4'>
 					<Like action={isAdded? removeFromCart : addToCard} isAdded={isAdded}/>

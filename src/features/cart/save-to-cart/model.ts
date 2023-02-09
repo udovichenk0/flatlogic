@@ -2,33 +2,32 @@ import { cartModel } from "@/entities/cart";
 import { sessionModel } from "@/entities/session";
 import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
 import {
-  attach,
   createEffect,
   createEvent,
   createStore,
   sample,
+  split,
 } from "effector";
 
 export const createCartModel = () => {
   const startAddingToCart = createEvent<CartItem>();
   const successAddedToCart = createEvent();
   const successRemovedFromCart = createEvent();
+  const $isPending = createStore(true);
   const itemRemoveTriggered = createEvent<{ deleteId: string }>();
-
   const addToCartFx = createEffect(
     async ({ id, data }: { id: string; data: CartItem }) => {
       const response = await addToCart(data, id);
       return response;
     }
   );
-
   const removeFromCartFx = createEffect(
     async ({ userId, deleteId }: { userId: string; deleteId: string }) => {
       const cart = await removeFromCart(userId, deleteId);
       return cart;
     }
   );
-
+  // trigger addToCartFx by strtAddingToCart
   sample({
     clock: startAddingToCart,
     source: sessionModel.$session,
@@ -38,7 +37,7 @@ export const createCartModel = () => {
     }),
     target: addToCartFx,
   });
-
+  // trigger removeFromCartFx by itemRemoveTriggered
   sample({
     clock: itemRemoveTriggered,
     source: sessionModel.$session,
@@ -49,12 +48,14 @@ export const createCartModel = () => {
     target: removeFromCartFx,
   });
 
+  // add new product when addToCartFx is resolved
   sample({
     clock: addToCartFx.doneData,
     source: cartModel.$cart,
     fn: (cart, newItem) => [...cart, newItem],
     target: cartModel.$cart,
   });
+  //update the cart when removeFromCartFx is resolved
   sample({
     clock: removeFromCartFx.doneData,
     source: cartModel.$cart,
@@ -69,6 +70,7 @@ export const createCartModel = () => {
     itemRemoveTriggered,
     addToCartFx,
     removeFromCartFx,
+    $isPending,
   };
 };
 

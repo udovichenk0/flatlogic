@@ -2,9 +2,8 @@
 
 import { getGoods, Good } from "@/shared/api/Goods";
 import { createEffect, createEvent, createStore, sample } from "effector";
-//TODO put createGoodsList into babel factory
 
-export const createGoodsList = ({
+export const createGoodsListModel = ({
   limit,
 }: {
   limit: number;

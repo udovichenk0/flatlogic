@@ -3,7 +3,6 @@ import { createCartModel } from "@/features/cart/save-to-cart";
 import { sample } from "effector";
 
 export const featureCartModel = createCartModel();
-
 sample({
   clock: featureCartModel.addToCartFx.done,
   target: featureCartModel.successAddedToCart,

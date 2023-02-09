@@ -9,23 +9,31 @@ export const getSessionUser = async () => {
 
 //TODO make catch errors
 export const addToCart = async (data: CartItem, id: string) => {
-  const userRef = doc(db, "users", id);
-  await updateDoc(userRef, {
-    cart: arrayUnion(data),
-  });
-  return data;
+  try {
+    const userRef = doc(db, "users", id);
+    await updateDoc(userRef, {
+      cart: arrayUnion(data),
+    });
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
 
 export const removeFromCart = async (userId: string, deleteId: string) => {
-  const userRef = doc(db, "users", userId);
-  const user = await getDoc(userRef);
-  const userData = user.data() as User;
-  await updateDoc(userRef, {
-    cart: userData.cart.filter(({ id }) => id !== deleteId),
-  });
-  const response = await getDoc(userRef).then((cart) => {
-    const cartData = (cart.data() as User).cart;
-    return cartData;
-  });
-  return response;
+  try {
+    const userRef = doc(db, "users", userId);
+    const user = await getDoc(userRef);
+    const userData = user.data() as User;
+    await updateDoc(userRef, {
+      cart: userData.cart.filter(({ id }) => id !== deleteId),
+    });
+    const response = await getDoc(userRef).then((cart) => {
+      const cartData = (cart.data() as User).cart;
+      return cartData;
+    });
+    return response;
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };

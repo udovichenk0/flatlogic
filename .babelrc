@@ -16,10 +16,10 @@
 	],
 	"plugins": [
 		[
-		"effector-logger/babel-plugin",
+		"effector/babel-plugin",
 		{
 			"inspector": true,
-			"factories": ["@farfetched/core", "atomic-router"]
+			"factories": ["@farfetched/core", "atomic-router", "@/features/cart/save-to-cart"]
 		}
 	]
 	]
