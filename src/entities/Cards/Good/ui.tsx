@@ -4,7 +4,7 @@ import {Event} from 'effector'
 import { Like } from '@/shared/ui/Buttons/like'
 import { SearchSvgButton } from '@/shared/ui/Buttons/search-svg-button'
 
-export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCart, openModal, id}:
+export const GoodCard = ({type,url,price,title, isAdded, openModal, id, toggle}:
 	{
 	type: string,
 	url: string,
@@ -12,8 +12,7 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCa
 	title: string,
 	isAdded: boolean,
 	id: string,
-	addToCard: () => void,
-	removeFromCart: () => void,
+	toggle: () => void
 	openModal: Event<any>
 }) => {
 	const [hovered, hover] = useState<boolean>(false)
@@ -23,8 +22,8 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCa
 			<button className={`mb-5 ${hovered && 'scale-[1.04]'} w-[245px] h-[245px] transition-transform duration-200`}>
 				<img className='w-full h-auto' src={url} alt={type} />
 			</button>
-				<div className={`absolute right-4 flex flex-col gap-2`}>
-					<Like action={isAdded? removeFromCart : addToCard} isAdded={isAdded}/>
+				<div className={`absolute right-4 flex flex-col gap-4 fill-base-dark`}>
+					<Like action={toggle} isAdded={isAdded}/>
 					<SearchSvgButton action={() => openModal(id)}/>
 				</div>
 			</div>

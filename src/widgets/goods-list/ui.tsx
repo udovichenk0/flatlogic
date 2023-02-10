@@ -39,7 +39,7 @@ import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
-import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
+import { $openedModal, check, featureCartModel, modal, openModalById } from "./goods.model"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 import { Fragment } from "react"
 import { Modal } from "./ui/modal"
@@ -57,14 +57,20 @@ export const GoodsList = ({goods}:{goods:Good[]}) => {
 				? <SkeletonCards length={14}/>
 				: goods?.map((product) => {
 					const {id, price,title,type,url, description} = product
+					const addToCart = () => featureCartModel.startAddingToCart({id, price, title,type,url,description})
+					const removeFromCart = () => featureCartModel.itemRemoveTriggered({deleteId: id})
+					const isInBasket = isItemInCart(cart, id)
 					return (
 						<Fragment key={id}>
 							<GoodCard price={price} title={title} type={type} url={url} id={id}
 							isAdded={isItemInCart(cart, id)}
-							addToCard={() => featureCartModel.startAddingToCart({id, price, title,type,url,description})}
-							removeFromCart={() => featureCartModel.itemRemoveTriggered({deleteId: id})}
-							openModal={openModalById}/>
-							{openedModal == id && <Modal modal={modal} product={product}/>}
+							openModal={openModalById}
+							toggle={isInBasket? removeFromCart : addToCart}/>
+							{openedModal == id &&
+							<Modal modal={modal}
+							product={product}
+							isAdded={isItemInCart(cart, id)}
+							toggle={isInBasket? removeFromCart : addToCart}/>}
 						</Fragment>
 					)
 				})}

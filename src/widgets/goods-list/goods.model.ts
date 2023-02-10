@@ -1,10 +1,11 @@
-import { createEvent, createStore, sample } from "effector";
+import { createEvent, createStore, sample, split, Store } from "effector";
 
 import { notification } from "@/entities/notification";
 
 import { createCartModel } from "@/features/cart/save-to-cart";
 import { createModal } from "@/shared/lib/modal";
-import { debug } from "patronum";
+import { condition, debug } from "patronum";
+import { cartModel } from "@/entities/cart";
 
 export const featureCartModel = createCartModel();
 sample({
@@ -28,14 +29,18 @@ notification({
   message: "product removed from your cart",
 });
 
+const reset = createEvent();
 const closeOnOverlayClick = createEvent<{
   ref: HTMLInputElement | null;
   target: EventTarget;
 }>();
 export const modal = createModal({ closeOnOverlayClick });
+
 export const openModalById = createEvent<string>();
-const reset = createEvent();
 export const $openedModal = createStore<string>("").reset(reset);
+
+export const check = createEvent<string>();
+
 sample({
   clock: openModalById,
   target: $openedModal,
