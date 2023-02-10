@@ -5,7 +5,7 @@ export const SkeletonCards = ({length}:{length: number}) => {
 	const skeletonCardsNumber = new Array(length).fill(0)
 	return (
 		<>
-		{skeletonCardsNumber.map((id) => {
+		{skeletonCardsNumber.map((_, id) => {
 			return (
 				<Fragment key={id}>
 					<ContentLoader 

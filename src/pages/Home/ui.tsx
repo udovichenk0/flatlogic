@@ -9,7 +9,14 @@ import { $$goodsList, redirectToShop } from './home.module'
 import { GoodsList } from '@/widgets/goods-list'
 import { BrownAnimatedButton } from '@/shared/ui/Buttons/brown-animated-button'
 import { useStore } from 'effector-react'
+import { createEvent, sample } from 'effector'
 
+const event = createEvent()
+
+sample({
+	clock: event,
+	fn: (s) => console.log(s)
+})
 
 const Home = () => {
 	const goods = useStore($$goodsList.$goods)

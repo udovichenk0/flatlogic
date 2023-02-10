@@ -1,14 +1,20 @@
+import { useState } from 'react'
+import {Event} from 'effector'
+
 import { Like } from '@/shared/ui/Buttons/like'
-import { useEffect, useState } from 'react'
-export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCart}:
+import { SearchSvgButton } from '@/shared/ui/Buttons/search-svg-button'
+
+export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCart, openModal, id}:
 	{
 	type: string,
 	url: string,
 	price: number,
 	title: string,
 	isAdded: boolean,
+	id: string,
 	addToCard: () => void,
-	removeFromCart: () => void
+	removeFromCart: () => void,
+	openModal: Event<any>
 }) => {
 	const [hovered, hover] = useState<boolean>(false)
 	return (
@@ -17,8 +23,9 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCa
 			<button className={`mb-5 ${hovered && 'scale-[1.04]'} w-[245px] h-[245px] transition-transform duration-200`}>
 				<img className='w-full h-auto' src={url} alt={type} />
 			</button>
-				<div className='absolute right-4'>
+				<div className={`absolute right-4 flex flex-col gap-2`}>
 					<Like action={isAdded? removeFromCart : addToCard} isAdded={isAdded}/>
+					<SearchSvgButton action={() => openModal(id)}/>
 				</div>
 			</div>
 			<button className='flex flex-col gap-2 mb-2'>
@@ -29,3 +36,4 @@ export const GoodCard = ({type,url,price,title, addToCard, isAdded, removeFromCa
 		</div>
 	)
 }
+//${hovered && 'opacity-100'} transition-opacity duration-200

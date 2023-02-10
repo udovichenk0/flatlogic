@@ -39,27 +39,32 @@ import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
-import { featureCartModel } from "./goods.model"
+import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 import { Fragment } from "react"
+import { Modal } from "./ui/modal"
 
 
 
 
 export const GoodsList = ({goods}:{goods:Good[]}) => {
 	const cart = useStore(cartModel.$cart)
+	const openedModal = useStore($openedModal)
 	return (
 		<div>
 			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-10">
 				{!goods.length
 				? <SkeletonCards length={14}/>
-				: goods?.map(({id, price,title,type,url, description}) => {
+				: goods?.map((product) => {
+					const {id, price,title,type,url, description} = product
 					return (
 						<Fragment key={id}>
-							<GoodCard price={price} title={title} type={type} url={url}
+							<GoodCard price={price} title={title} type={type} url={url} id={id}
 							isAdded={isItemInCart(cart, id)}
 							addToCard={() => featureCartModel.startAddingToCart({id, price, title,type,url,description})}
-							removeFromCart={() => featureCartModel.itemRemoveTriggered({deleteId: id})}/>
+							removeFromCart={() => featureCartModel.itemRemoveTriggered({deleteId: id})}
+							openModal={openModalById}/>
+							{openedModal == id && <Modal modal={modal} product={product}/>}
 						</Fragment>
 					)
 				})}

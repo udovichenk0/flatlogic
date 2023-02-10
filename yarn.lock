@@ -1129,11 +1129,6 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.16.17.tgz#c5a1a4bfe1b57f0c3e61b29883525c6da3e5c091"
   integrity sha512-y+EHuSchhL7FjHgvQL/0fnnFmO4T1bhvWANX6gcnqTjtnKWbTvUMCpGnv2+t+31d7RzyEAYAd4u2fnIhHL6N/Q==
 
-"@farfetched/core@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@farfetched/core/-/core-0.6.4.tgz#1d428ebbac6cfdb9bc54c05b9fc19601c73ab4e6"
-  integrity sha512-lOhFJhohxNsrvFCK6olKpSkweRje8Xf2w0e8q86f2GqA8zvY8PWOzUGUVwVswgofGNR+uMIlM+Nc7LJPuirAJg==
-
 "@firebase/analytics-compat@0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-compat/-/analytics-compat-0.2.1.tgz#bec4f3773ae901ffb08a939ed4bc48ad2ec0d6ee"

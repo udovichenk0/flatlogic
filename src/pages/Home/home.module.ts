@@ -1,6 +1,8 @@
 import { GoodModel } from "@/entities/Cards/Good";
+import { createModal } from "@/shared/lib/modal";
 import { createRoute, redirect } from "atomic-router";
 import { createEvent, sample } from "effector";
+import { debug } from "patronum";
 import { lazy } from "react";
 import { MainLayout } from "../../widgets/Layouts/main-layout";
 const HomePageLazy = lazy(() => import("./ui"));
@@ -34,6 +36,7 @@ export const HomePage = {
   view: HomePageLazy,
   layout: MainLayout,
 };
+
 /*
 make saveFactory factory in feature like
 

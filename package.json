@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.20.12",
-    "@farfetched/core": "^0.6.4",
     "atomic-router": "^0.8.0",
     "atomic-router-react": "^0.8.1",
     "babel-jest": "^29.4.2",

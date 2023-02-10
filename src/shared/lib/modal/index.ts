@@ -1,10 +1,17 @@
-import { createEvent, createStore, sample } from "effector";
+import { createEvent, createStore, sample, Event } from "effector";
+import { debug } from "patronum";
 
-export const createModal = () => {
+export const createModal = ({
+  closeOnOverlayClick,
+}: {
+  closeOnOverlayClick?: Event<{
+    ref: HTMLInputElement | null;
+    target: EventTarget;
+  }>;
+}) => {
   const $isOpened = createStore(false);
   const close = createEvent();
   const open = createEvent();
-
   sample({
     clock: open,
     fn: () => true,
@@ -16,9 +23,17 @@ export const createModal = () => {
     target: $isOpened,
   });
 
+  if (closeOnOverlayClick) {
+    sample({
+      clock: closeOnOverlayClick,
+      filter: ({ ref, target }) => ref === target,
+      target: close,
+    });
+  }
   return {
     $isOpened,
     close,
     open,
+    closeOnOverlayClick,
   };
 };
