@@ -1,18 +1,11 @@
 import { cartModel } from "@/entities/cart";
+import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
 import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
-import {
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-  split,
-} from "effector";
+import { createEffect, createEvent, createStore, sample } from "effector";
 
 export const createCartModel = () => {
   const startAddingToCart = createEvent<CartItem>();
-  const successAddedToCart = createEvent();
-  const successRemovedFromCart = createEvent();
   const $isPending = createStore(true);
   const itemRemoveTriggered = createEvent<{ deleteId: string }>();
   const addToCartFx = createEffect(
@@ -63,10 +56,22 @@ export const createCartModel = () => {
     target: cartModel.$cart,
   });
 
+  // show toasts when FX are done
+  notification({
+    clock: addToCartFx.done,
+    type: "success",
+    message: "product added to your cart",
+  });
+
+  notification({
+    clock: removeFromCartFx.done,
+    type: "success",
+    message: "product removed from your cart",
+  });
+  //TODO show notification on failed try to add to the store
+
   return {
     startAddingToCart,
-    successRemovedFromCart,
-    successAddedToCart,
     itemRemoveTriggered,
     addToCartFx,
     removeFromCartFx,

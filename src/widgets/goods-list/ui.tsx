@@ -39,7 +39,7 @@ import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
-import { $openedModal, check, featureCartModel, modal, openModalById } from "./goods.model"
+import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 import { Fragment } from "react"
 import { Modal } from "./ui/modal"
