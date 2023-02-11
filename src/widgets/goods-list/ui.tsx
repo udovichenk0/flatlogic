@@ -52,9 +52,9 @@ export const GoodsList = ({goods}:{goods:Good[]}) => {
 	const openedModal = useStore($openedModal)
 	return (
 		<div>
-			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-10">
+			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-16">
 				{!goods.length
-				? <SkeletonCards length={14}/>
+				? <SkeletonCards length={8}/>
 				: goods?.map((product) => {
 					const {id, price,title,type,url, description} = product
 					const addToCart = () => featureCartModel.startAddingToCart({id, price, title,type,url,description})

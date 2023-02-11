@@ -1,11 +1,14 @@
+import {Event} from 'effector'
+
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 
-export const SliderHeroCard = ({type, title, description, backImage} :
+export const SliderHeroCard = ({type, title, description, backImage, action} :
 	{
 	type: string,
 	title: string,
 	description: string,
-	backImage: any
+	backImage: any,
+	action: Event<void>
 }) => {
 	return (
 		<div style={{backgroundImage: `url(${backImage})`}} className={`container keen-slider__slide w-full h-auto object-cover bg-no-repeat bg-cover`}>
@@ -14,7 +17,7 @@ export const SliderHeroCard = ({type, title, description, backImage} :
 				<h2 className="text-[28px]">{title}</h2>
 				<h1 className="font-bold text-[35px]">{description.toUpperCase()}</h1>
 				<span>
-				<BrownAnimatedButton text="VIEW MORE" arrow={true} 	animation={'leftToRight'}/>
+				<BrownAnimatedButton text="VIEW MORE" arrow={true} animation={'leftToRight'} onClick={() => action()}/>
 				</span>
 			</div>
 		</div>

@@ -34,7 +34,7 @@ export const Modal = ({modal, product, toggle, isAdded}:{modal:Modal, product:Ca
 					<h3 className="text-[21px] mb-4">{product.title}</h3>
 					<p className="text-gray text-sm mb-4">{product.description}</p>
 					<div>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 mb-4">
 							<span className="text-gray font-bold">PRICE</span>
 							<span className="text-base-dark font-bold">{product.price}$</span>
 						</div>

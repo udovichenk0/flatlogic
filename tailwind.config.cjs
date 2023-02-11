@@ -13,7 +13,8 @@ module.exports = {
     colors: {
       "brown": "#bd744c",
       "gray": "#555555",
-      "base-dark": "#262626"
+      "base-dark": "#262626",
+      "white": '#ffffff',
     },
   },
   plugins: [],
