@@ -2,79 +2,89 @@ import { cartModel } from "@/entities/cart";
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
 import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
-import { createEffect, createEvent, createStore, sample } from "effector";
+import {
+  attach,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+} from "effector";
+import { debug } from "patronum";
 
 export const createCartModel = () => {
-  const startAddingToCart = createEvent<CartItem>();
   const $isPending = createStore(true);
-  const itemRemoveTriggered = createEvent<{ deleteId: string }>();
-  const addToCartFx = createEffect(
-    async ({ id, data }: { id: string; data: CartItem }) => {
-      const response = await addToCart(data, id);
-      return response;
-    }
-  );
-  const removeFromCartFx = createEffect(
-    async ({ userId, deleteId }: { userId: string; deleteId: string }) => {
-      const cart = await removeFromCart(userId, deleteId);
-      return cart;
-    }
-  );
-  // trigger addToCartFx by strtAddingToCart
+  const favoriteToggled = createEvent<CartItem>();
+  const successAdded = createEvent();
+  const successRemoved = createEvent();
+  // add/remove product to/from cart
+  const toggleFavoriteFx = attach({
+    source: cartModel.$cart,
+    mapParams: ({ data, id }, cart) => ({
+      product: data,
+      userId: id,
+      cart,
+    }),
+    effect: createEffect(
+      async ({
+        cart,
+        product,
+        userId,
+      }: {
+        cart: CartItem[];
+        product: CartItem;
+        userId: string;
+      }) => {
+        const isInCart = cart.find(({ id }) => id == product.id);
+        if (isInCart) {
+          const cart = await removeFromCart(userId, isInCart.id);
+          return cart;
+        }
+        const response = await addToCart(userId, product);
+        return response;
+      }
+    ),
+  });
+  // toggleFavorite on event triggered
   sample({
-    clock: startAddingToCart,
+    clock: favoriteToggled,
     source: sessionModel.$session,
     fn: (session, data) => ({
       id: session.id,
       data,
     }),
-    target: addToCartFx,
+    target: toggleFavoriteFx,
   });
-  // trigger removeFromCartFx by itemRemoveTriggered
+  // update cart
   sample({
-    clock: itemRemoveTriggered,
-    source: sessionModel.$session,
-    fn: (session, { deleteId }) => ({
-      userId: session.id,
-      deleteId,
-    }),
-    target: removeFromCartFx,
+    clock: toggleFavoriteFx.doneData,
+    filter: (favorites) => Array.isArray(favorites),
+    fn: (favProducts) => [...(favProducts as CartItem[])],
+    target: [cartModel.$cart, successAdded],
   });
-
-  // add new product when addToCartFx is resolved
   sample({
-    clock: addToCartFx.doneData,
+    clock: toggleFavoriteFx.doneData,
     source: cartModel.$cart,
-    fn: (cart, newItem) => [...cart, newItem],
-    target: cartModel.$cart,
-  });
-  //update the cart when removeFromCartFx is resolved
-  sample({
-    clock: removeFromCartFx.doneData,
-    source: cartModel.$cart,
-    fn: (_, newCart) => newCart,
-    target: cartModel.$cart,
+    filter: (_, favorite) => !Array.isArray(favorite),
+    fn: (cart, favorite) => [...cart, favorite as CartItem],
+    target: [cartModel.$cart, successRemoved],
   });
 
   // show toasts when FX are done
   notification({
-    clock: addToCartFx.done,
+    clock: successAdded,
     type: "success",
     message: "product added to your cart",
   });
-
   notification({
-    clock: removeFromCartFx.done,
+    clock: successRemoved,
     type: "success",
     message: "product removed from your cart",
   });
   //TODO show notification on failed try to add to the store
 
   return {
-    startAddingToCart,
-    itemRemoveTriggered,
-    addToCartFx,
-    removeFromCartFx,
+    toggleFavoriteFx,
+    favoriteToggled,
     $isPending,
   };
 };

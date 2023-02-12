@@ -58,21 +58,18 @@ export const GoodsList = ({goodsModel}:any) => {
 				{isFetching
 				? <SkeletonCards length={8}/>
 				: goods?.map((product) => {
-					const {id, price,title,type,url, description} = product
-					const addToCart = () => featureCartModel.startAddingToCart({id, price, title,type,url,description})
-					const removeFromCart = () => featureCartModel.itemRemoveTriggered({deleteId: id})
-					const isInBasket = isItemInCart(cart, id)
+					const {id, price,title,type,url} = product
 					return (
 						<Fragment key={id}>
 							<GoodCard price={price} title={title} type={type} url={url} id={id}
 							isAdded={isItemInCart(cart, id)}
 							openModal={openModalById}
-							toggle={isInBasket? removeFromCart : addToCart}/>
+							toggle={() => featureCartModel.favoriteToggled(product)}/>
 							{openedModal == id &&
 							<Modal modal={modal}
 							product={product}
 							isAdded={isItemInCart(cart, id)}
-							toggle={isInBasket? removeFromCart : addToCart}/>}
+							toggle={() => featureCartModel.favoriteToggled(product)}/>}
 						</Fragment>
 					)
 				})}

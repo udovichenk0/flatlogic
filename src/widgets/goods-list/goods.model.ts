@@ -1,6 +1,6 @@
 import { createEvent, createStore, sample } from "effector";
 
-import { createCartModel } from "@/features/cart/save-to-cart";
+import { createCartModel } from "@/features/cart/toggle-favorite";
 import { createModal } from "@/shared/lib/modal";
 
 const reset = createEvent();

@@ -34,6 +34,7 @@ sample({
   clock: rangeChanged,
   target: filteredGoodsFx,
 });
+
 sample({
   clock: filteredGoodsFx.doneData,
   fn: ({ goods }) => goods,

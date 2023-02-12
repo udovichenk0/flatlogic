@@ -8,7 +8,7 @@ export const getSessionUser = async () => {
 };
 
 //TODO make catch errors
-export const addToCart = async (data: CartItem, id: string) => {
+export const addToCart = async (id: string, data: CartItem) => {
   try {
     const userRef = doc(db, "users", id);
     await updateDoc(userRef, {
