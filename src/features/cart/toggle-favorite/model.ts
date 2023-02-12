@@ -55,18 +55,20 @@ export const createCartModel = () => {
     target: toggleFavoriteFx,
   });
   // update cart
+  //remove from the cart
   sample({
     clock: toggleFavoriteFx.doneData,
     filter: (favorites) => Array.isArray(favorites),
     fn: (favProducts) => [...(favProducts as CartItem[])],
-    target: [cartModel.$cart, successAdded],
+    target: [cartModel.$cart, successRemoved],
   });
+  // added to the cart
   sample({
     clock: toggleFavoriteFx.doneData,
     source: cartModel.$cart,
     filter: (_, favorite) => !Array.isArray(favorite),
     fn: (cart, favorite) => [...cart, favorite as CartItem],
-    target: [cartModel.$cart, successRemoved],
+    target: [cartModel.$cart, successAdded],
   });
 
   // show toasts when FX are done
