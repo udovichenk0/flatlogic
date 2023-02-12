@@ -1,2 +1,2 @@
 export * from "./ui";
-export * as GoodModel from "./model";
+export * as goodModel from "./model";

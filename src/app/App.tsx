@@ -4,6 +4,7 @@ import { sample } from 'effector'
 import { View } from '../pages'
 import { ProviderRoute, ToastifyProvider } from './config/providers'
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from 'react'
 //TODO make checking auth and setting to the stores in proccess
 sessionModel.getUserFx()
 sample({
@@ -19,7 +20,9 @@ function App() {
   return (
       <ProviderRoute>
         <ToastifyProvider>
+          <Suspense fallback={'loading...'}>
           <View/>
+          </Suspense>
         </ToastifyProvider>
       </ProviderRoute>
   )

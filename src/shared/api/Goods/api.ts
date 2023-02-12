@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   startAfter,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Good } from "./types";
@@ -25,7 +26,6 @@ export const getGoods = async ({
         query(
           collection(db, "Goods"),
           limit(goodsLimit),
-          orderBy(documentId()),
           startAfter(lastItemId)
         )
       );

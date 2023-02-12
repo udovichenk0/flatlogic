@@ -20,7 +20,7 @@ export const routes = [
       { path: goToHomeRoute, label: "Wishlist" },
     ],
   },
-  { path: goToHomeRoute, label: "Shop" },
+  { path: goToShopRoute, label: "Shop" },
   { path: goToHomeRoute, label: "Blog" },
 ];
 

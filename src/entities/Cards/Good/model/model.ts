@@ -5,7 +5,8 @@ import { createEffect, createEvent, createStore, sample } from "effector";
 
 export const createGoodsListModel = ({
   limit,
-}: {
+}: //filters
+{
   limit: number;
   lastItemId?: string;
 }) => {

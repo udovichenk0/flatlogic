@@ -13,7 +13,6 @@ import { $$goodsList, redirectToShop } from './home.module'
 
 import 'keen-slider/keen-slider.min.css'
 
-
 const Home = () => {
 	const goods = useStore($$goodsList.$goods)
 	return (
@@ -37,7 +36,7 @@ const Home = () => {
 				</span>
 			</div>
 
-			<div style={{backgroundImage: `url(${chair})`}} className='flex items-center mb-5 h-[500px] bg-no-repeat bg-right bg-[#f5f5f5]'>
+			<div style={{backgroundImage: `url(${chair})`}} className='flex items-center mb-20 h-[500px] bg-no-repeat bg-right bg-[#f5f5f5]'>
 				<div className='container text-base-dark'>
 					<h2 className='font-bold text-lg'>NEWS AND INSPIRATION</h2>
 					<h1 className='font-bold text-[50px] my-0 pt-5 py-7 mb-8 after:content-[""] relative after:bg-brown after:w-16 after:h-2 after:rounded-md after:bottom-0 after:left-0 after:absolute'>NEW ARRIVALS</h1>

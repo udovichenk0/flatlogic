@@ -1,8 +1,7 @@
 import { createRoutesView } from "atomic-router-react";
 import { HomePage } from "./Home";
-import { shopPage } from "./Shop";
+import { ShopPage } from "./Shop";
 
 
-const routes = [HomePage, shopPage]
-
+const routes = [HomePage, ShopPage]
 export const View = createRoutesView({routes})
