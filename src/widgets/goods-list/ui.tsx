@@ -47,13 +47,15 @@ import { Modal } from "./ui/modal"
 
 
 
-export const GoodsList = ({goods}:{goods:Good[]}) => {
+export const GoodsList = ({goodsModel}:any) => {
 	const cart = useStore(cartModel.$cart)
+	const goods:Good[] = useStore(goodsModel.$goods)
+	const isFetching = useStore(goodsModel.$isFetching)
 	const openedModal = useStore($openedModal)
 	return (
 		<div>
 			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-16">
-				{!goods.length
+				{isFetching
 				? <SkeletonCards length={8}/>
 				: goods?.map((product) => {
 					const {id, price,title,type,url, description} = product

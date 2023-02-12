@@ -15,11 +15,15 @@ import { Good } from "./types";
 export const getGoods = async ({
   goodsLimit,
   lastItemId,
+  priceRange,
 }: {
   goodsLimit: number;
   lastItemId?: string;
+  priceRange?: number[];
 }) => {
   try {
+    const MIN = priceRange ? priceRange[0] : 0;
+    const MAX = priceRange ? priceRange[1] : 100000;
     if (lastItemId) {
       //get last goods
       const nextGoods = await getDocs(
@@ -39,7 +43,12 @@ export const getGoods = async ({
     } else {
       //get goods with limit
       const goods = await getDocs(
-        query(collection(db, "Goods"), limit(goodsLimit))
+        query(
+          collection(db, "Goods"),
+          where("price", ">=", MIN),
+          where("price", "<=", MAX),
+          limit(goodsLimit)
+        )
       );
       const snap = await getCountFromServer(collectionGroup(db, "Goods"));
       const count = snap.data().count;

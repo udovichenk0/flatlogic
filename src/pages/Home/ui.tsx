@@ -14,7 +14,6 @@ import { $$goodsList, redirectToShop } from './home.module'
 import 'keen-slider/keen-slider.min.css'
 
 const Home = () => {
-	const goods = useStore($$goodsList.$goods)
 	return (
 		<div>
 			<SliderBlock>
@@ -29,7 +28,7 @@ const Home = () => {
 			</div>
 
 			<div className='container'>
-				<GoodsList goods={goods}/>
+				<GoodsList goodsModel={$$goodsList}/>
 				<span className="flex justify-center mb-16">
 					<BrownAnimatedButton text="VIEW MORE" animation='leftToRight'
 					onClick={() => redirectToShop()}/>

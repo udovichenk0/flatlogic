@@ -2,17 +2,20 @@
 
 import { getGoods, Good } from "@/shared/api/Goods";
 import { createEffect, createEvent, createStore, sample } from "effector";
+import { debug } from "patronum";
 
 export const createGoodsListModel = ({
   limit,
 }: //filters
 {
   limit: number;
+  priceRange?: number[];
   lastItemId?: string;
 }) => {
   //All goods
   const $goods = createStore<Good[]>([]);
 
+  const $isFetching = createStore(true);
   //id of last item
   const $lastItemId = createStore("");
 
@@ -22,9 +25,18 @@ export const createGoodsListModel = ({
   const changeLastItemId = createEvent<string>();
 
   // get goods data from bd
-  const getGoodsFx = createEffect(async ({ lastItemId }: any) => {
-    const goods = await getGoods({ goodsLimit: limit, lastItemId });
+  const getGoodsFx = createEffect(async ({ priceRange }: any) => {
+    const goods = await getGoods({
+      goodsLimit: limit,
+      priceRange,
+    });
     return goods;
+  });
+
+  sample({
+    clock: getGoodsFx.done,
+    fn: () => false,
+    target: $isFetching,
   });
 
   // store data into $goods when fx is done
@@ -67,6 +79,7 @@ export const createGoodsListModel = ({
   */
   return {
     $goods,
+    $isFetching,
     getGoodsFx,
     changeLastItemId,
     $total,
