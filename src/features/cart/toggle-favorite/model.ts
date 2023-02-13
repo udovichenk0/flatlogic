@@ -44,16 +44,20 @@ export const createCartModel = () => {
       }
     ),
   });
-  // toggleFavorite on event triggered
+  // toggleFavorite on event triggered // when user is authenticated
   sample({
     clock: favoriteToggled,
     source: sessionModel.$session,
+    filter: (session) => !!session.id,
     fn: (session, data) => ({
       id: session.id,
       data,
     }),
     target: toggleFavoriteFx,
   });
+
+  //TODO write logic, when user is anonymous // add to localStorage, then merge products from LS with bd
+
   // update cart
   //remove from the cart
   sample({

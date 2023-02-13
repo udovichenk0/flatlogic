@@ -22,7 +22,7 @@ export const GoodCard = ({type,url,price,title, isAdded, openModal, id, toggle}:
 			<button className={`mb-5 ${hovered && 'scale-[1.04]'} w-[245px] h-[245px] transition-transform duration-200`}>
 				<img className='w-full h-auto' src={url} alt={type} />
 			</button>
-				<div className={`absolute right-4 flex flex-col gap-4 fill-base-dark`}>
+				<div className={`absolute right-4 flex flex-col gap-4 fill-base-dark opacity-0 ${hovered && 'opacity-[100]'} transition-opacity duration-200`}>
 					<Like action={toggle} isAdded={isAdded}/>
 					<SearchSvgButton action={() => openModal(id)}/>
 				</div>

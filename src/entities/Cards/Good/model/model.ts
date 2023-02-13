@@ -1,88 +1,119 @@
 // import { createJsonQuery } from "@farfetched/core";
 
 import { getGoods, Good } from "@/shared/api/Goods";
-import { createEffect, createEvent, createStore, sample } from "effector";
+import {
+  attach,
+  combine,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+  split,
+} from "effector";
 import { debug } from "patronum";
+
+type Paginate = {
+  id: string;
+  direction: "prev" | "next";
+};
 
 export const createGoodsListModel = ({
   limit,
-}: //filters
-{
+  minDefaultPrice = 1,
+  maxDefaultPrice = 100000,
+}: {
   limit: number;
-  priceRange?: number[];
-  lastItemId?: string;
+  minDefaultPrice?: number;
+  maxDefaultPrice?: number;
 }) => {
-  //All goods
+  const startFetching = createEvent();
+  const changeLastItemId = createEvent<Paginate>();
+  const changeRange = createEvent<number[]>();
+
   const $goods = createStore<Good[]>([]);
-
-  const $isFetching = createStore(true);
-  //id of last item
-  const $lastItemId = createStore("");
-
-  //total items in the db
+  const $isFetching = createStore(false).on(startFetching, () => true);
+  const $lastItemId = createStore<Paginate>({} as Paginate);
+  const $filterRange = createStore<{ min: number; max: number }>({
+    min: minDefaultPrice,
+    max: maxDefaultPrice,
+  });
+  const $filterByOrder = createStore<"asc" | "desc">("asc");
   const $total = createStore<number>(0);
 
-  const changeLastItemId = createEvent<string>();
-
+  const $filters = combine($filterRange, $filterByOrder);
   // get goods data from bd
-  const getGoodsFx = createEffect(async ({ priceRange }: any) => {
-    const goods = await getGoods({
-      goodsLimit: limit,
-      priceRange,
-    });
-    return goods;
+
+  const getGoodsFx = attach({
+    source: $filters,
+    mapParams: (_, [priceRange, orderBy]) => {
+      return {
+        priceRange,
+        filterByOrder: orderBy,
+      };
+    },
+    effect: createEffect(
+      async ({
+        priceRange,
+        filterByOrder,
+      }: {
+        priceRange: { min: number; max: number };
+        filterByOrder?: "asc" | "desc";
+      }) => {
+        const goods = await getGoods({
+          goodsLimit: limit,
+          filterByOrder,
+          priceRange,
+        });
+        return goods;
+      }
+    ),
   });
 
+  // update price range
   sample({
-    clock: getGoodsFx.done,
+    clock: changeRange,
+    fn: ([min, max]) => ({
+      min,
+      max,
+    }),
+    target: $filterRange,
+  });
+  // after range changed fetch goods
+  sample({
+    clock: [changeRange],
+    target: getGoodsFx,
+  });
+  // TODO REFACTOR THIS
+  //put goods and total goods into stores
+  sample({
+    clock: getGoodsFx.doneData,
+    fn: ({ goods }) => goods,
+    target: $goods,
+  });
+  sample({
+    clock: getGoodsFx.doneData,
+    fn: ({ total }) => total,
+    target: $total,
+  });
+  // toggle fetching
+  sample({
+    clock: getGoodsFx,
+    fn: () => true,
+    target: $isFetching,
+  });
+  sample({
+    clock: [getGoodsFx.done, getGoodsFx.fail],
     fn: () => false,
     target: $isFetching,
   });
-
-  // store data into $goods when fx is done
-  sample({
-    clock: getGoodsFx.doneData,
-    source: $goods,
-    fn: (goods, newGoods) => {
-      return [...goods, ...newGoods.goods];
-    },
-    target: $goods,
-  });
-  //TODO PAGINATION
-
-  //set id of last item
-  sample({
-    clock: changeLastItemId,
-    target: $lastItemId,
-  });
-
-  // when id of last item is changed fetch getGoodFx
-  sample({
-    clock: $lastItemId,
-    fn: (lastItemId: string) => ({ lastItemId }),
-    target: getGoodsFx,
-  });
-
-  // set total after first fetch
-  sample({
-    clock: getGoodsFx.doneData,
-    source: $total,
-    filter: (total) => !total,
-    fn: (_, count) => {
-      return count.total;
-    },
-    target: $total,
-  });
-  /*
-  TODO make here sort sample
-  
-  */
   return {
     $goods,
     $isFetching,
     getGoodsFx,
     changeLastItemId,
     $total,
+    changeRange,
+    $filters,
   };
 };
 

@@ -1,47 +1,14 @@
-/*export const createModel = () => {
-	const open = createEvent()
-	const close = createEvent()
-	const $store = createStore(false)
-	const $data = createStore<Data>()
-	.on(open, state => true)
-	.on(close, state => false)
-	return {store, open, close}
-}
-
-
-$$model.store.on({
-	clock: open,
-
-})
-*/
-
-/*
-export const notification = ({
-	store,
-	modelTriggered,
-	mode,
-	message}:{
-		store: Store<any>,
-		modelTriggered: Event<any>,
-		mode: 'success' | 'info' | 'error",
-		message: string
-	}) => {
-		
-}
-*/
-
-
+import { Fragment } from "react"
 import { useStore } from "effector-react"
 
 import { Good } from "@/shared/api/Goods"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
+import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/Cards/Good"
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
-import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
-import { Fragment } from "react"
 import { Modal } from "./ui/modal"
 
 
@@ -74,7 +41,12 @@ export const GoodsList = ({goodsModel}:any) => {
 					)
 				})}
 			</div>
+			{
+			!isFetching && !goods.length &&
+			<div className="flex items-center justify-center">
+				<h2 className="font-bold text-[30px] text-base-dark">There is no such products :(</h2>
+			</div>
+			}
 		</div>
 	)
 }
-{/* <Model model={$$model} like={likeToggle} description={item.description} image={item.image} ... other props/> */}
