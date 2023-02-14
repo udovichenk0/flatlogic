@@ -6,10 +6,10 @@ import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
 import { cartModel } from "@/entities/cart"
-import { GoodCard } from "@/entities/Cards/Good"
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
 import { Modal } from "./ui/modal"
+import { GoodCard } from "@/entities/product"
 
 
 

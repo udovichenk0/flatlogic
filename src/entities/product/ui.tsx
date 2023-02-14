@@ -4,7 +4,7 @@ import {Event} from 'effector'
 import { Like } from '@/shared/ui/Buttons/like'
 import { SearchSvgButton } from '@/shared/ui/Buttons/search-svg-button'
 import { Link } from 'atomic-router-react'
-import { goToProductRoute } from './model'
+import { goToProductRoute } from '@/shared/routing'
 
 export const GoodCard = ({type,url,price,title, isAdded, openModal, id, toggle}:
 	{

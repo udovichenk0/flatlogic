@@ -1,28 +1,25 @@
 import {
   collection,
   collectionGroup,
-  documentId,
-  endBefore,
   getCountFromServer,
   getDocs,
   limit,
   orderBy,
   query,
-  startAfter,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Good } from "./types";
+
+//get all products, with filters(optional)
+
 export const getGoods = async ({
   goodsLimit,
   priceRange,
-  pagination,
   filterByOrder = "asc",
-}: // orderBy
-{
+}: {
   goodsLimit: number;
   priceRange: { min: number; max: number };
-  pagination?: { id: string; direction: "prev" | "next" };
   filterByOrder?: "asc" | "desc";
 }) => {
   try {
@@ -44,6 +41,19 @@ export const getGoods = async ({
         id: doc.id,
       })) as Good[],
     };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+//get single product by id
+
+export const getProduct = async (id: string) => {
+  try {
+    const product = await getDocs(
+      query(collection(db, "Goods"), where("id", "==", id))
+    );
+    return product.docs;
   } catch (error: any) {
     throw new Error(error);
   }

@@ -1,7 +1,6 @@
 // import { createJsonQuery } from "@farfetched/core";
 
 import { getGoods, Good } from "@/shared/api/Goods";
-import { createRoute } from "atomic-router";
 import {
   attach,
   combine,
@@ -9,10 +8,7 @@ import {
   createEvent,
   createStore,
   sample,
-  split,
 } from "effector";
-
-export const goToProductRoute = createRoute();
 
 export const createGoodsListModel = ({
   limit,

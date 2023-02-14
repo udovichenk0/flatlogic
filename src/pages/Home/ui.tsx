@@ -1,7 +1,5 @@
-import { Fragment } from 'react'
-import { useStore } from 'effector-react'
 import { BrownAnimatedButton } from '@/shared/ui/Buttons/brown-animated-button'
-import { SliderHeroCard } from '@/entities/Cards/SliderCard'
+import { SliderHeroCard } from '@/shared/ui/slider-card'
 import { GoodsList } from '@/widgets/goods-list'
 import { SliderBlock } from '@/widgets/SliderBlock'
 

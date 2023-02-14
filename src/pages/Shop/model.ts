@@ -2,9 +2,8 @@ import { lazy } from "react";
 import { attach, createEvent, createStore, sample } from "effector";
 import { createRoute } from "atomic-router";
 
-import { createGoodsListModel } from "@/entities/Cards/Good/model";
-
 import { MainLayout } from "@/widgets/Layouts/main-layout";
+import { createGoodsListModel } from "@/entities/product/model";
 
 const Shop = lazy(() => import("./ui"));
 const route = createRoute();

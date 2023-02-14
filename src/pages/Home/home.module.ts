@@ -1,4 +1,4 @@
-import { goodModel } from "@/entities/Cards/Good";
+import { goodModel } from "@/entities/product";
 import { createRoute, redirect } from "atomic-router";
 import { createEvent, sample } from "effector";
 import { lazy } from "react";

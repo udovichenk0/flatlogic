@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { homeRoutes } from "@/pages/Home";
 import { shopRoutes } from "@/pages/Shop/model";
 import { productRoute } from "@/pages/Product";
-import { controls } from "@/shared/routing";
+import { controls, goToProductRoute } from "@/shared/routing";
 
 const history = createBrowserHistory();
 const routes = [
@@ -20,7 +20,7 @@ const routes = [
       homeRoutes.goToShopRoute,
     ],
   },
-  { path: "/product/:id", route: [productRoute.route] },
+  { path: "/product/:id", route: [productRoute.route, goToProductRoute] },
 ];
 
 export const router = createHistoryRouter({ routes, controls });
