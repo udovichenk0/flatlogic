@@ -1,7 +1,9 @@
 import {
   collection,
   collectionGroup,
+  doc,
   getCountFromServer,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -9,7 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { Good } from "./types";
+import { Product } from "./types";
 
 //get all products, with filters(optional)
 
@@ -39,7 +41,7 @@ export const getGoods = async ({
       goods: goods.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-      })) as Good[],
+      })) as Product[],
     };
   } catch (error: any) {
     throw new Error(error);
@@ -50,10 +52,8 @@ export const getGoods = async ({
 
 export const getProduct = async (id: string) => {
   try {
-    const product = await getDocs(
-      query(collection(db, "Goods"), where("id", "==", id))
-    );
-    return product.docs;
+    const product = await getDoc(doc(db, "Goods", id));
+    return { ...product.data(), id: product.id } as Product;
   } catch (error: any) {
     throw new Error(error);
   }

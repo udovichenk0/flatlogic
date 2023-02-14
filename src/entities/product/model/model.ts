@@ -1,6 +1,7 @@
 // import { createJsonQuery } from "@farfetched/core";
 
-import { getGoods, Good } from "@/shared/api/Goods";
+import { getGoods, getProduct, Product } from "@/shared/api/Goods";
+import { CartItem } from "@/shared/api/User";
 import {
   attach,
   combine,
@@ -10,6 +11,7 @@ import {
   sample,
 } from "effector";
 
+//list of goods
 export const createGoodsListModel = ({
   limit,
   minDefaultPrice = 1,
@@ -21,7 +23,7 @@ export const createGoodsListModel = ({
 }) => {
   const changeRange = createEvent<number[]>();
 
-  const $goods = createStore<Good[]>([]);
+  const $goods = createStore<Product[]>([]);
   const $isFetching = createStore(false);
   const $filterRange = createStore<{ min: number; max: number }>({
     min: minDefaultPrice,
@@ -105,4 +107,22 @@ export const createGoodsListModel = ({
   };
 };
 
-//TODO Make test for the createGoodsList
+export const createProductModel = () => {
+  const $product = createStore<Product>({} as Product);
+
+  // get single product by id
+  const getProductFx = createEffect(async ({ id }: { id: string }) => {
+    const product = await getProduct(id);
+    return product;
+  });
+
+  sample({
+    clock: getProductFx.doneData,
+    target: $product,
+  });
+
+  return {
+    getProductFx,
+    $product,
+  };
+};

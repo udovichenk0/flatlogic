@@ -1,4 +1,4 @@
-export type Good = {
+export type Product = {
   description: string;
   id: string;
   price: number;
