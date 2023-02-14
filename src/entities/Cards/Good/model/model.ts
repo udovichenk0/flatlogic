@@ -1,6 +1,7 @@
 // import { createJsonQuery } from "@farfetched/core";
 
 import { getGoods, Good } from "@/shared/api/Goods";
+import { createRoute } from "atomic-router";
 import {
   attach,
   combine,
@@ -10,12 +11,8 @@ import {
   sample,
   split,
 } from "effector";
-import { debug } from "patronum";
 
-type Paginate = {
-  id: string;
-  direction: "prev" | "next";
-};
+export const goToProductRoute = createRoute();
 
 export const createGoodsListModel = ({
   limit,
@@ -26,13 +23,10 @@ export const createGoodsListModel = ({
   minDefaultPrice?: number;
   maxDefaultPrice?: number;
 }) => {
-  const startFetching = createEvent();
-  const changeLastItemId = createEvent<Paginate>();
   const changeRange = createEvent<number[]>();
 
   const $goods = createStore<Good[]>([]);
-  const $isFetching = createStore(false).on(startFetching, () => true);
-  const $lastItemId = createStore<Paginate>({} as Paginate);
+  const $isFetching = createStore(false);
   const $filterRange = createStore<{ min: number; max: number }>({
     min: minDefaultPrice,
     max: maxDefaultPrice,
@@ -68,7 +62,6 @@ export const createGoodsListModel = ({
       }
     ),
   });
-
   // update price range
   sample({
     clock: changeRange,
@@ -110,7 +103,6 @@ export const createGoodsListModel = ({
     $goods,
     $isFetching,
     getGoodsFx,
-    changeLastItemId,
     $total,
     changeRange,
     $filters,

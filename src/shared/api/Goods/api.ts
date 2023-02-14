@@ -26,14 +26,13 @@ export const getGoods = async ({
   filterByOrder?: "asc" | "desc";
 }) => {
   try {
-    //get goods with limit
     const goods = await getDocs(
       query(
         collection(db, "Goods"),
-        where("price", ">=", priceRange.min),
-        where("price", "<=", priceRange.max),
         orderBy("price", filterByOrder),
-        limit(goodsLimit)
+        limit(goodsLimit),
+        where("price", ">=", priceRange.min),
+        where("price", "<=", priceRange.max)
       )
     );
     const snap = await getCountFromServer(collectionGroup(db, "Goods"));

@@ -7,6 +7,7 @@ const HomePageLazy = lazy(() => import("./ui"));
 
 //rouring
 const route = createRoute();
+const goToShopRoute = createRoute();
 export const redirectToShop = createEvent();
 
 export const $$goodsList = goodModel.createGoodsListModel({ limit: 5 });
@@ -21,12 +22,12 @@ sample({
   target: $$goodsList.getGoodsFx,
 });
 
-// redirect({
-//   clock: redirectToShop,
-//   route: goToShopRoute,
-// });
+redirect({
+  clock: redirectToShop,
+  route: goToShopRoute,
+});
 
-export const homeRoutes = { route };
+export const homeRoutes = { route, goToShopRoute };
 
 export const HomePage = {
   route,

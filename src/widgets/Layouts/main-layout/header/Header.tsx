@@ -7,7 +7,7 @@ export const Header = () => {
 	return (
 		<header className="h-[60px] flex shadow-[0_4px_20px_rgb(38,38,38,0.1)]">
 			<div className="container px-5 h-full flex items-center justify-between">
-				<Link to={navigationRoutes.goToShopRoute} className="font-bold text-[17.5px]">Flatlogic</Link>
+				<Link to={navigationRoutes.goToHomeRoute} className="font-bold text-[17.5px]">Flatlogic</Link>
 				<nav className="flex gap-2 h-full">
 					{routes.map(({path, label, dropItems}) => {
 						return (

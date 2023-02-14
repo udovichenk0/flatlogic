@@ -5,12 +5,9 @@ import 'rc-slider/assets/index.css';
 import { GoodsList } from "@/widgets/goods-list"
 
 import { $$goodsList, MAX, MAX_DEFAULT, MIN } from "./model"
-import { Pagination } from "@/shared/ui/pagination";
 import { useStore } from "effector-react";
 
 const Shop = () => {
-	const goods = useStore($$goodsList.$goods)
-	const total = useStore($$goodsList.$total)
 	const [range] = useStore($$goodsList.$filters)
 	const [values, setValue] = useState<number[]>([range.min,range.max])
 	return (
@@ -28,9 +25,6 @@ const Shop = () => {
 					</div>
 				</div>
 				<GoodsList goodsModel={$$goodsList}/>
-				<Pagination total={total} current={1}
-				actionPrev={() => $$goodsList.changeLastItemId({id: goods[goods.length-1].id, direction: 'prev'})}
-				actionNext={() => $$goodsList.changeLastItemId({id: goods[0].id, direction: 'next'})}/>
 			</div>
 		</div>
 	)

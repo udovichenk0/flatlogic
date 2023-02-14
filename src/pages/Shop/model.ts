@@ -23,11 +23,6 @@ export const $$goodsList = createGoodsListModel({
 //fetch goods when page is opened and there is ampty store with goods
 sample({
   clock: route.opened,
-  source: $$goodsList.$filters,
-  fn: ([priceRange, filterByOrder]) => ({
-    priceRange,
-    filterByOrder,
-  }),
   target: $$goodsList.getGoodsFx,
 });
 

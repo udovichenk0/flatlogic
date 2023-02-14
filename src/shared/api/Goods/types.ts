@@ -6,4 +6,5 @@ export type Good = {
   title: string;
   type: string;
   url: string;
+  product_id: string;
 };
