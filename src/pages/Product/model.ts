@@ -1,4 +1,6 @@
 import { productModel } from "@/entities/product";
+import { createCartModel } from "@/features/cart/toggle-favorite";
+import { createModal } from "@/shared/lib/modal";
 import { controls } from "@/shared/routing";
 import { MainLayout } from "@/widgets/Layouts/main-layout";
 import { createRoute, createRouterControls, querySync } from "atomic-router";
@@ -7,8 +9,14 @@ import { debounce, debug } from "patronum";
 import { lazy } from "react";
 const ProductLazy = lazy(() => import("./ui"));
 
-const $$product = productModel.createProductModel();
+export const closeOnOverlayClick = createEvent<{
+  ref: HTMLInputElement | null;
+  target: EventTarget;
+}>();
 
+export const $$product = productModel.createProductModel();
+export const $$modal = createModal({ closeOnOverlayClick });
+export const featureCartModel = createCartModel();
 const route = createRoute();
 
 sample({

@@ -8,7 +8,7 @@ import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 import { cartModel } from "@/entities/cart"
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
-import { Modal } from "./ui/modal"
+import { Modal } from "./ui/modal/ui"
 import { GoodCard } from "@/entities/product"
 
 
