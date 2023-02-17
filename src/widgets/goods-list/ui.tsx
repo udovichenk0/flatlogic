@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 import { useStore } from "effector-react"
 
-import { Product } from "@/shared/api/Goods"
+import { Product } from "@/shared/api/Products"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 

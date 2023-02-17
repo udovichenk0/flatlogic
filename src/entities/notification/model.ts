@@ -12,13 +12,11 @@ const displayNotification = createEffect(
     });
   }
 );
-export const notification = <T, K>({
-  store,
+export const notification = <K>({
   clock,
   type,
   message,
 }: {
-  store?: Store<T>;
   clock: Event<K>;
   type: notificationType;
   message: string;

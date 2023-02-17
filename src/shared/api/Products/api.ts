@@ -8,6 +8,7 @@ import {
   limit,
   orderBy,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -15,7 +16,7 @@ import { Product } from "./types";
 
 //get all products, with filters(optional)
 
-export const getGoods = async ({
+export const getProducts = async ({
   goodsLimit,
   priceRange,
   filterByOrder = "asc",
@@ -54,6 +55,35 @@ export const getProduct = async (id: string) => {
   try {
     const product = await getDoc(doc(db, "Goods", id));
     return { ...product.data(), id: product.id } as Product;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+//update reviews in single product
+
+type Review = {
+  rate: number;
+  fullname: string;
+  avatar_url: string;
+  comment: string;
+  date: Date;
+};
+
+export const leaveProductReview = async ({
+  id,
+  review,
+}: {
+  id: string;
+  review: Review;
+}) => {
+  try {
+    const productRef = await getDoc(doc(db, "Goods", id));
+    const product = productRef.data() as Product;
+    const oldReviews = product.reviews;
+    await updateDoc(doc(db, "Goods", id), {
+      reviews: [...oldReviews, review],
+    });
   } catch (error: any) {
     throw new Error(error);
   }

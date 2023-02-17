@@ -1,6 +1,6 @@
 // import { createJsonQuery } from "@farfetched/core";
 
-import { getGoods, getProduct, Product } from "@/shared/api/Goods";
+import { getProducts, getProduct, Product } from "@/shared/api/Products";
 import { CartItem } from "@/shared/api/User";
 import {
   attach,
@@ -51,7 +51,7 @@ export const createGoodsListModel = ({
         priceRange: { min: number; max: number };
         filterByOrder?: "asc" | "desc";
       }) => {
-        const goods = await getGoods({
+        const goods = await getProducts({
           goodsLimit: limit,
           filterByOrder,
           priceRange,
@@ -108,8 +108,9 @@ export const createGoodsListModel = ({
 };
 
 export const createProductModel = () => {
-  const $product = createStore<Product>({} as Product);
+  const reset = createEvent();
 
+  const $product = createStore<Product>({} as Product).reset(reset);
   // get single product by id
   const getProductFx = createEffect(async ({ id }: { id: string }) => {
     const product = await getProduct(id);
@@ -120,9 +121,9 @@ export const createProductModel = () => {
     clock: getProductFx.doneData,
     target: $product,
   });
-
   return {
     getProductFx,
     $product,
+    reset,
   };
 };

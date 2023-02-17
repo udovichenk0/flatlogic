@@ -13,6 +13,6 @@ export type User = {
   cart: CartItem[];
   email: string;
   name: string;
-  second_ame: string;
+  second_name: string;
   id: string;
 };
