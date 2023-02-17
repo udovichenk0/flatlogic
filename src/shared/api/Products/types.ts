@@ -7,3 +7,12 @@ export type Product = {
   type: string;
   url: string;
 };
+
+export type Feedback = {
+  rate: number;
+  fullname: string;
+  avatar_url: string;
+  comment: string;
+  date: Date;
+  userId: string;
+};

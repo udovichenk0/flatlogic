@@ -1,11 +1,17 @@
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
-import { leaveProductReview } from "@/shared/api/Products";
+import {
+  getFeedbacks,
+  isUserCommented,
+  leaveFeedback,
+  updateFeedback,
+} from "@/shared/api/Products";
 import {
   combine,
   createDomain,
   createEffect,
   createEvent,
+  createStore,
   sample,
 } from "effector";
 
@@ -41,7 +47,12 @@ export const leaveReviewFx = createEffect(
       userId: string;
     };
   }) => {
-    const response = await leaveProductReview({ id, review });
+    const feedbacks = await isUserCommented(id, review.userId);
+    if (feedbacks) {
+      const response = await updateFeedback(id, review);
+      return response;
+    }
+    const response = await leaveFeedback({ id, review });
     return response;
   }
 );

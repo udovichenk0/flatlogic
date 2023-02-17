@@ -1,10 +1,9 @@
 import { CartItem } from "@/shared/api/User";
 import { BrownButton } from "@/shared/ui/Buttons/brown-button";
-import { Star } from "@/shared/ui/Buttons/star";
+import { Stars } from "@/shared/ui/Buttons/star";
 import { useStore } from "effector-react";
-import { $starRate, $textareaValue, feedbackSubmitted, rateChanged, textareaChanged } from "./model";
+import { $starRate, $textareaValue, feedbackSubmitted, rateChanged, textareaChanged } from "../../model";
 
-const starLength = new Array(5).fill(0)
 export const FeedbackForm = ({product}:{product:CartItem}) => {
 	const starRate = useStore($starRate)
 	const textareaValue = useStore($textareaValue)
@@ -21,15 +20,10 @@ export const FeedbackForm = ({product}:{product:CartItem}) => {
 			</div>
 			<div className="flex gap-2 items-center mb-5">
 				<h2 className="text-sm font-bold text-base-dark">Rate Product: </h2>
-				{starLength.map((_, id) => {
-					return (
-						<div key={id}>
-							<Star isActive={id < starRate} action={() => rateChanged(id + 1)}/>
-						</div>
-					)
-				})}
+				<Stars starRate={starRate} action={rateChanged}/>
 			</div>
-			<textarea value={textareaValue} onChange={(e) => textareaChanged(e.currentTarget.value)} placeholder="Add your comment" className="w-full border-2 border-[#ddd] p-4 h-[200px] outline-none" name="" id=""></textarea>
+			<textarea value={textareaValue} onChange={(e) => textareaChanged(e.currentTarget.value)} placeholder="Add your comment"
+			className="w-full border-2 border-[#ddd] p-4 h-[200px] outline-none mb-5" name="" id=""></textarea>
 			<BrownButton text={"LEAVE FEEDBACK"} action={() => feedbackSubmitted(product.id)}/>
 		</div>
 	)

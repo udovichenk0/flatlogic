@@ -1,13 +1,18 @@
-import { productModel } from "@/entities/product";
+import { createProductModel } from "@/entities/product";
+import { createFeedbackModel } from "@/entities/feedback";
+import { sessionModel } from "@/entities/session";
 import { createCartModel } from "@/features/cart/toggle-favorite";
-import { feedbackReset, leaveReviewFx } from "@/features/feedback-form/model";
+import {
+  feedbackReset,
+  feedbackSubmitted,
+  leaveReviewFx,
+} from "@/features/feedback";
 import { createModal } from "@/shared/lib/modal";
-import { controls } from "@/shared/routing";
 import { MainLayout } from "@/widgets/Layouts/main-layout";
-import { createRoute, createRouterControls, querySync } from "atomic-router";
-import { createEvent, createStore, sample } from "effector";
-import { debounce, debug } from "patronum";
+import { createRoute } from "atomic-router";
+import { combine, createEvent, sample } from "effector";
 import { lazy } from "react";
+import { combineEvents } from "patronum";
 const ProductLazy = lazy(() => import("./ui"));
 
 export const closeOnOverlayClick = createEvent<{
@@ -15,16 +20,21 @@ export const closeOnOverlayClick = createEvent<{
   target: EventTarget;
 }>();
 
-export const $$product = productModel.createProductModel();
+export const $$product = createProductModel();
+export const $$feedback = createFeedbackModel();
+const $sessionUser = sessionModel.$session;
+
 export const $$modal = createModal({ closeOnOverlayClick });
 export const featureCartModel = createCartModel();
 const route = createRoute();
 
+// close modal when leaveReviewFx success
 sample({
   clock: leaveReviewFx.done,
   target: [feedbackReset, $$modal.close],
 });
 
+// fetch product on opened/updated page
 sample({
   clock: [route.opened, route.updated],
   source: route.$params,
@@ -32,6 +42,19 @@ sample({
   target: $$product.getProductFx,
 });
 
+// fetch reviews on opened/updated page
+sample({
+  clock: [route.opened, route.updated, $sessionUser, leaveReviewFx.done],
+  source: combine(route.$params, $sessionUser),
+  filter: ([_, session]) => !!session.id,
+  fn: ([params, session]: any) => ({
+    productId: params.id,
+    userId: session.id,
+  }),
+  target: $$feedback.getReviewsFx,
+});
+
+// reset store on closed page
 sample({
   clock: route.closed,
   target: $$product.reset,

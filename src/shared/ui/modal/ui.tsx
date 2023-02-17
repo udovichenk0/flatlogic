@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useEffect, useRef } from "react"
+import { ReactNode, useEffect, useRef } from "react"
 import {Event, Store} from 'effector'
 import { useStore } from "effector-react"
 
@@ -14,7 +14,9 @@ export const Modal = ({children,modal}:{children: ReactNode, modal: Modal}) => {
 
 	const overlayRef = useRef<HTMLInputElement>(null)
 	useEffect(() => {
-		document.body.style.overflow = 'hidden'
+		if(isOpened){
+			document.body.style.overflow = 'hidden'
+		}
 		return () => {
 			document.body.style.overflow = 'visible'
 		}

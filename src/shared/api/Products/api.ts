@@ -12,7 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { Product } from "./types";
+import { Product, Feedback } from "./types";
 
 //get all products, with filters(optional)
 
@@ -62,21 +62,12 @@ export const getProduct = async (id: string) => {
 
 //update reviews in single product
 
-type Review = {
-  rate: number;
-  fullname: string;
-  avatar_url: string;
-  comment: string;
-  date: Date;
-  userId: string;
-};
-
-export const leaveProductReview = async ({
+export const leaveFeedback = async ({
   id,
   review,
 }: {
   id: string;
-  review: Review;
+  review: Feedback;
 }) => {
   try {
     const productRef = await getDoc(doc(db, "Goods", id));
@@ -88,4 +79,32 @@ export const leaveProductReview = async ({
   } catch (error: any) {
     throw new Error(error);
   }
+};
+
+export const getFeedbacks = async (id: string, userId: string) => {
+  const productRef = await getDoc(doc(db, "Goods", id));
+  const product = productRef.data() as Product;
+  const usersReview = product.reviews.find((review) => review.userId == userId);
+  const reviews = product.reviews.filter((review) => review.userId != userId);
+  return usersReview ? [usersReview, ...reviews] : [...reviews];
+};
+export const isUserCommented = async (productId: string, userId: string) => {
+  const productRef = await getDoc(doc(db, "Goods", productId));
+  const product = productRef.data() as Product;
+  const usersReview = !!product.reviews.find(
+    (review) => review.userId == userId
+  );
+
+  return usersReview;
+};
+
+export const updateFeedback = async (id: string, review: Feedback) => {
+  const productRef = await getDoc(doc(db, "Goods", id));
+  const product = productRef.data() as Product;
+  const filteredFeedbacks = product.reviews.filter(
+    ({ userId }) => userId != review.userId
+  );
+  await updateDoc(doc(db, "Goods", id), {
+    reviews: [review, ...filteredFeedbacks],
+  });
 };

@@ -1,14 +1,17 @@
 import { cartModel } from "@/entities/cart"
-import { FeedbackForm } from "@/features/feedback-form"
+import { FeedbackCard } from "@/entities/feedback"
+import { FeedbackForm } from "@/features/feedback"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Modal } from "@/shared/ui/modal"
 import { useStore } from "effector-react"
-import { $$modal, $$product, featureCartModel } from "./model"
+import { $$feedback, $$modal, $$product, featureCartModel } from "./model"
 
 const Product = () => {
 	const product = useStore($$product.$product)
 	const cart = useStore(cartModel.$cart)
+	const feedbacks = useStore($$feedback.$reviews)
+	const isFeedbackPending = useStore($$feedback.$isPending)
 	return (
 		<div>
 			<div className="container">
@@ -41,7 +44,19 @@ const Product = () => {
 						<FeedbackForm product={product}/>
 					</Modal>
 				</div>
-				
+				<div className="mb-14 flex flex-col gap-8">
+					{!isFeedbackPending || feedbacks.length ? feedbacks.map((feedback, id) => {
+						return (
+							<div key={id}>
+								<FeedbackCard feedback={feedback}/>
+							</div>
+						)
+					})
+				: <div className="flex items-center justify-center">
+					<h2 className="font-bold text-xl text-base-dark">No one left a feedback</h2>
+				</div>}
+				{isFeedbackPending && <div className="bg-base-dark w-[500px] h-[500px]">Loading...</div>}
+				</div>
 			</div>
 		</div>
 	)

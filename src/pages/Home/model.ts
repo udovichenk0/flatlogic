@@ -1,4 +1,4 @@
-import { productModel } from "@/entities/product";
+import { createGoodsListModel } from "@/entities/product";
 import { createRoute, redirect } from "atomic-router";
 import { createEvent, sample } from "effector";
 import { lazy } from "react";
@@ -10,7 +10,7 @@ const route = createRoute();
 const goToShopRoute = createRoute();
 export const redirectToShop = createEvent();
 
-export const $$goodsList = productModel.createGoodsListModel({ limit: 5 });
+export const $$goodsList = createGoodsListModel({ limit: 5 });
 
 //when page is opened fetch data
 sample({
