@@ -41,6 +41,7 @@ const Product = () => {
 						<FeedbackForm product={product}/>
 					</Modal>
 				</div>
+				
 			</div>
 		</div>
 	)

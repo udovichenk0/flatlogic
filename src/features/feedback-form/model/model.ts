@@ -38,6 +38,7 @@ export const leaveReviewFx = createEffect(
       avatar_url: string;
       comment: string;
       date: Date;
+      userId: string;
     };
   }) => {
     const response = await leaveProductReview({ id, review });
@@ -66,6 +67,7 @@ sample({
         avatar_url: session.avatar_url,
         comment,
         date: new Date(),
+        userId: session.id,
       },
     };
   },

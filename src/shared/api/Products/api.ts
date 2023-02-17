@@ -68,6 +68,7 @@ type Review = {
   avatar_url: string;
   comment: string;
   date: Date;
+  userId: string;
 };
 
 export const leaveProductReview = async ({
