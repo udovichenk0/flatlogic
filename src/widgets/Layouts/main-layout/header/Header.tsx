@@ -20,7 +20,7 @@ export const Header = () => {
 				<div className="flex gap-3">
 					{iconNavigations.map(({path, Icon}, id) => {
 						return (
-							<Link to={path} key={id} className='hover:text-[#bd744c] duration-300 p-2'>
+							<Link to={path} activeClassName={'text-brown'} key={id} className='hover:text-[#bd744c] duration-300 p-2'>
 								<Icon/>
 							</Link>
 						)

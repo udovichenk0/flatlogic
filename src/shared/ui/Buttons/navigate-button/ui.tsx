@@ -12,7 +12,7 @@ const [hovered, hover] = useState(false)
 return (
 	<div onMouseLeave={() => hover(false)} onMouseEnter={() => hover(true)} className='h-full relative z-10 text-[14px]'>
 		<div className={`h-full gap-1 flex items-center ${hovered && 'fill-[#bd744c]'} px-4 relative text-[#3c484f] transition-all duration-300 h-full before:content-[''] before:w-[14px] before:bg-[#bd744c] before:h-[1px] before:absolute before:top-[28px] before:left-[-19px] before:opacity-0 before:duration-300 ${hovered && 'before:opacity-100 before:left-[-5px]'}`}>
-			<Link to={path} className={`${hovered && 'text-brown'}`}>
+			<Link to={path} activeClassName='text-brown' className={`${hovered && 'text-brown'}`}>
 				{label}
 			</Link>
 			{dropItems && <span className="rotate-90">
@@ -23,7 +23,7 @@ return (
 			{dropItems && <div className="flex flex-col">
 				{dropItems.map(({path,label}) => {
 					return (
-						<Link to={path} key={label} className='bg-[#fff] w-[180px] hover:text-[#bd744c] p-4'>
+						<Link to={path} key={label} activeClassName='text-brown' className='bg-[#fff] w-[180px] hover:text-[#bd744c] p-4'>
 							{label}
 						</Link>
 					)

@@ -13,15 +13,12 @@ import { MainLayout } from "@/widgets/Layouts/main-layout";
 import { createRoute } from "atomic-router";
 import { combine, createEvent, sample } from "effector";
 import { lazy } from "react";
-import { debug } from "patronum";
 const ProductLazy = lazy(() => import("./ui"));
 
 export const closeOnOverlayClick = createEvent<{
   ref: HTMLInputElement | null;
   target: EventTarget;
 }>();
-
-export const loaded = createEvent();
 
 export const $$product = createProductModel();
 export const $$feedback = createFeedbackModel();
@@ -41,7 +38,7 @@ sample({
 
 // fetch reviews on opened/updated page and when we leave new feedback(to update veiw)
 sample({
-  clock: [route.opened, route.updated, loaded, leaveReviewFx.done],
+  clock: [route.opened, route.updated, $sessionUser, leaveReviewFx.done],
   source: combine(route.$params, $sessionUser),
   filter: ([_, session]) => !!session.id,
   fn: ([params, session]: any) => ({

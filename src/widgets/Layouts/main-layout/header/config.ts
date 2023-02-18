@@ -5,7 +5,7 @@ const goToHomeRoute = createRoute();
 const goToPagesRoute = createRoute();
 const goToShopRoute = createRoute();
 const goToBlogRoute = createRoute();
-
+const goToAccountRoute = createRoute();
 const goToAboutPage = createRoute();
 export const routes = [
   { path: goToHomeRoute, label: "Home" },
@@ -26,7 +26,7 @@ export const routes = [
 
 export const iconNavigations = [
   { Icon: SearchSvg, path: goToHomeRoute },
-  { Icon: UserSvg, path: goToHomeRoute },
+  { Icon: UserSvg, path: goToAccountRoute },
   { Icon: CardSvg, path: goToHomeRoute },
 ];
 
@@ -35,4 +35,5 @@ export const navigationRoutes = {
   goToPagesRoute,
   goToShopRoute,
   goToBlogRoute,
+  goToAccountRoute,
 };

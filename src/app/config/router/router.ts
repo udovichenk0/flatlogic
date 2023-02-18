@@ -5,6 +5,7 @@ import { homeRoutes } from "@/pages/Home";
 import { shopRoutes } from "@/pages/Shop/model";
 import { productRoute } from "@/pages/Product";
 import { controls, goToProductRoute } from "@/shared/routing";
+import { accountRoute } from "@/pages/Account";
 
 const history = createBrowserHistory();
 const routes = [
@@ -21,6 +22,10 @@ const routes = [
     ],
   },
   { path: "/product/:id", route: [productRoute.route, goToProductRoute] },
+  {
+    path: "/account",
+    route: [accountRoute.route, navigationRoutes.goToAccountRoute],
+  },
 ];
 
 export const router = createHistoryRouter({ routes, controls });

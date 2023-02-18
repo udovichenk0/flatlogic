@@ -7,8 +7,7 @@ import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Stars } from "@/shared/ui/Buttons/star"
 import { Modal } from "@/shared/ui/modal"
 import { useStore } from "effector-react"
-import { useEffect } from "react"
-import { $$feedback, $$modal, $$product, featureCartModel, loaded } from "./model"
+import { $$feedback, $$modal, $$product, featureCartModel } from "./model"
 
 const Product = () => {
 	const product = useStore($$product.$product)
@@ -16,9 +15,6 @@ const Product = () => {
 	const rates = useStore($$feedback.$rates)
 	const feedbacks = useStore($$feedback.$reviews)
 	const isFeedbackPending = useStore($$feedback.$isPending)
-	useEffect(() => {
-		loaded()
-	}, [])
 	return (
 		<div>
 			<div className="container">
