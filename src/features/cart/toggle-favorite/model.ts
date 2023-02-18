@@ -1,4 +1,4 @@
-import { cartModel } from "@/entities/cart";
+import { $$cartModel } from "@/entities/cart";
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
 import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
@@ -18,7 +18,7 @@ export const createCartModel = () => {
   const successRemoved = createEvent();
   // add/remove product to/from cart
   const toggleFavoriteFx = attach({
-    source: cartModel.$cart,
+    source: $$cartModel.$cart,
     mapParams: ({ data, id }, cart) => ({
       product: data,
       userId: id,
@@ -64,15 +64,15 @@ export const createCartModel = () => {
     clock: toggleFavoriteFx.doneData,
     filter: (favorites) => Array.isArray(favorites),
     fn: (favProducts) => [...(favProducts as CartItem[])],
-    target: [cartModel.$cart, successRemoved],
+    target: [$$cartModel.$cart, successRemoved],
   });
   // added to the cart
   sample({
     clock: toggleFavoriteFx.doneData,
-    source: cartModel.$cart,
+    source: $$cartModel.$cart,
     filter: (_, favorite) => !Array.isArray(favorite),
     fn: (cart, favorite) => [...cart, favorite as CartItem],
-    target: [cartModel.$cart, successAdded],
+    target: [$$cartModel.$cart, successAdded],
   });
 
   // show toasts when FX are done

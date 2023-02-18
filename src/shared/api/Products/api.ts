@@ -88,12 +88,10 @@ export const getFeedbacks = async (id: string, userId: string) => {
   const reviews = product.reviews.filter((review) => review.userId != userId);
   return usersReview ? [usersReview, ...reviews] : [...reviews];
 };
-export const isUserCommented = async (productId: string, userId: string) => {
+export const getUsersFeedback = async (productId: string, userId: string) => {
   const productRef = await getDoc(doc(db, "Goods", productId));
   const product = productRef.data() as Product;
-  const usersReview = !!product.reviews.find(
-    (review) => review.userId == userId
-  );
+  const usersReview = product.reviews.find((review) => review.userId == userId);
 
   return usersReview;
 };

@@ -1,1 +1,1 @@
-export * as cartModel from "./model";
+export * as $$cartModel from "./model";

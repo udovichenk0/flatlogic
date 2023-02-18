@@ -1,4 +1,4 @@
-import { cartModel } from '@/entities/cart'
+import { $$cartModel } from '@/entities/cart'
 import { sessionModel } from '@/entities/session'
 import { sample } from 'effector'
 import { View } from '../pages'
@@ -14,7 +14,7 @@ sample({
 sample({
   clock: sessionModel.getUserFx.doneData,
   fn: (data) => data.cart,
-  target: cartModel.$cart
+  target: $$cartModel.$cart
 })
 function App() {
   return (

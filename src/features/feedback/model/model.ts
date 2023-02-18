@@ -1,12 +1,14 @@
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
 import {
+  Feedback,
   getFeedbacks,
-  isUserCommented,
+  getUsersFeedback,
   leaveFeedback,
   updateFeedback,
 } from "@/shared/api/Products";
 import {
+  attach,
   combine,
   createDomain,
   createEffect,
@@ -17,38 +19,21 @@ import {
 
 const $session = sessionModel.$session;
 
-const domain = createDomain();
-domain.onCreateStore((st) => {
-  st.reset(feedbackReset);
-});
-
 export const feedbackReset = createEvent();
 export const rateChanged = createEvent<number>();
 export const textareaChanged = createEvent<string>();
 export const feedbackSubmitted = createEvent<string>();
 
-export const $starRate = domain.createStore(1);
-export const $textareaValue = domain.createStore("");
+export const $starRate = createStore(1);
+export const $textareaValue = createStore("");
+export const $isCommented = createStore(false);
 
 const $review = combine($starRate, $textareaValue, $session);
 
 export const leaveReviewFx = createEffect(
-  async ({
-    id,
-    review,
-  }: {
-    id: string;
-    review: {
-      rate: number;
-      fullname: string;
-      avatar_url: string;
-      comment: string;
-      date: Date;
-      userId: string;
-    };
-  }) => {
-    const feedbacks = await isUserCommented(id, review.userId);
-    if (feedbacks) {
+  async ({ id, review }: { id: string; review: Feedback }) => {
+    const feedbacks = await getUsersFeedback(id, review.userId);
+    if (!!feedbacks) {
       const response = await updateFeedback(id, review);
       return response;
     }

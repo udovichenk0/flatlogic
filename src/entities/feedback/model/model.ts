@@ -1,18 +1,27 @@
 import { getFeedbacks, Feedback } from "@/shared/api/Products";
 import { createEffect, createStore, sample } from "effector";
-import { debug } from "patronum";
 
 export const createFeedbackModel = () => {
   const $reviews = createStore<Feedback[]>([]);
   const $isPending = createStore(false);
-
+  const $rates = createStore<number[]>([]);
   // get all reviews
   const getReviewsFx = createEffect(
     async ({ productId, userId }: { productId: string; userId: string }) => {
-      const reviews = await getFeedbacks(productId, userId);
+      const reviews = (await getFeedbacks(productId, userId)) as Feedback[];
       return reviews;
     }
   );
+
+  sample({
+    clock: getReviewsFx.doneData,
+    fn: (reviews) => {
+      return reviews.map(({ rate }) => rate);
+    },
+    target: $rates,
+  });
+
+  //TODO Delete feedback
   //fill the store
   sample({
     clock: getReviewsFx.doneData,
@@ -32,6 +41,7 @@ export const createFeedbackModel = () => {
   });
   return {
     $isPending,
+    $rates,
     $reviews,
     getReviewsFx,
   };

@@ -5,7 +5,7 @@ import { Product } from "@/shared/api/Products"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
-import { cartModel } from "@/entities/cart"
+import { $$cartModel } from "@/entities/cart"
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
 import { Modal } from "./ui/modal/ui"
@@ -15,7 +15,7 @@ import { GoodCard } from "@/entities/product"
 
 
 export const GoodsList = ({goodsModel}:any) => {
-	const cart = useStore(cartModel.$cart)
+	const cart = useStore($$cartModel.$cart)
 	const goods:Product[] = useStore(goodsModel.$goods)
 	const isFetching = useStore(goodsModel.$isFetching)
 	const openedModal = useStore($openedModal)
