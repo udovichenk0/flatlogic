@@ -8,6 +8,7 @@
 @layer base{
   html {
     font-family: Montserrat, DejaVu Sans, Verdana, sans‑serif;
+    font-display: swap;
   }
 }
 .Toastify__progress-bar--success {

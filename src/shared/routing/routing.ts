@@ -2,9 +2,10 @@ import { createRoute, createRouterControls } from "atomic-router";
 
 export const controls = createRouterControls();
 
-export const productRoute = createRoute();
+const productRoute = createRoute();
 const accountRoute = createRoute();
-export const homeRoute = createRoute();
+const homeRoute = createRoute();
+const shopRoute = createRoute();
 
 const goToShopRoute = createRoute();
 
@@ -19,6 +20,10 @@ export const accountRoutes = {
 export const homeRoutes = {
   route: homeRoute,
   goToShopRoute,
+};
+
+export const shopRoutes = {
+  route: shopRoute,
 };
 
 export const goToProductRoute = createRoute();

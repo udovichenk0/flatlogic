@@ -7,11 +7,10 @@ import {
   goToProductRoute,
   homeRoutes,
   productRoutes,
+  shopRoutes,
 } from "@/shared/routing";
 
 import { navigationRoutes } from "@/widgets/Layouts/main-layout/header";
-
-import { shopRoutes } from "@/pages/Shop/model";
 
 const history = createBrowserHistory();
 const routes = [
