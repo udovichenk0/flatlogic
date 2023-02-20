@@ -1,5 +1,7 @@
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+
 import { db } from "../firebase";
+
 import { CartItem, User } from "./types";
 
 export const getSessionUser = async () => {

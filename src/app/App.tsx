@@ -1,10 +1,13 @@
+import { sample } from 'effector'
+import { Suspense } from 'react'
+
 import { $$cartModel } from '@/entities/cart'
 import { sessionModel } from '@/entities/session'
-import { sample } from 'effector'
+
 import { View } from '../pages'
+
 import { ProviderRoute, ToastifyProvider } from './config/providers'
 import "react-toastify/dist/ReactToastify.css";
-import { Suspense } from 'react'
 //TODO make checking auth and setting to the stores in proccess
 sessionModel.getUserFx()
 sample({

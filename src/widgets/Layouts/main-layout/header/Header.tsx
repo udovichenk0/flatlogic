@@ -1,5 +1,7 @@
-import { NavigateButton } from "@/shared/ui/Buttons/navigate-button"
 import { Link } from "atomic-router-react"
+
+import { NavigateButton } from "@/shared/ui/Buttons/navigate-button"
+
 import { iconNavigations, navigationRoutes, routes } from "./config"
 
 

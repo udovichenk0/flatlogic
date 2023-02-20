@@ -1,15 +1,19 @@
 import { useStore } from "effector-react"
+import { Fragment } from "react"
 
+import { WishCard } from "@/entities/cart"
 import { $cart } from "@/entities/cart/model"
 
 import { Block } from "./ui/block"
-import { WishCard } from "@/entities/cart"
-import { Fragment } from "react"
+// import { rateChanged } from "./DAFJSODFJSIODFJ"
 
 const Account = () => {
 	const cart = useStore($cart)
 	return (
 		<div className="container">
+			{/* <button onClick={() => rateChanged(2)}>
+				afsfdf
+			</button> */}
 			<div className="mb-10">
 				<h1 className="font-bold text-base-dark text-2xl pt-3">My Account</h1>
 				<div className="flex gap-5">

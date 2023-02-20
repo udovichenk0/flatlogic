@@ -1,12 +1,13 @@
-import { RouteInstance } from "atomic-router"
+import { RouteInstance, RouteParams } from "atomic-router"
 import { Link } from "atomic-router-react"
 import { useState } from "react"
+
 import { ArrowSvg } from "./arrow.svg"
 export const NavigateButton = ({path, label, dropItems}:
 	{
-	path: RouteInstance<any>,
+	path: RouteInstance<RouteParams>,
 	label: string,
-	dropItems?: {path: RouteInstance<any>, label:string}[]
+	dropItems?: {path: RouteInstance<RouteParams>, label:string}[]
 }) => {
 const [hovered, hover] = useState(false)
 return (

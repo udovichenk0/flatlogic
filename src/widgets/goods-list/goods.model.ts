@@ -1,8 +1,9 @@
+import { createRoute } from "atomic-router";
 import { createEvent, createStore, sample } from "effector";
 
-import { createCartModel } from "@/features/cart/toggle-favorite";
 import { createModal } from "@/shared/lib/modal";
-import { createRoute } from "atomic-router";
+
+import { createCartModel } from "@/features/cart/toggle-favorite";
 const reset = createEvent();
 const closeOnOverlayClick = createEvent<{
   ref: HTMLInputElement | null;

@@ -1,7 +1,8 @@
-import { CartItem } from "@/shared/api/User";
-import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button";
 import { Store, Event } from "effector"
 import { useEffect, useRef } from "react";
+
+import { CartItem } from "@/shared/api/User";
+import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button";
 
 type Modal = {
 	$isOpened: Store<boolean>,

@@ -11,7 +11,9 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+
 import { db } from "../firebase";
+
 import { Product, Feedback } from "./types";
 
 //get all products, with filters(optional)

@@ -1,21 +1,20 @@
-import { notification } from "@/entities/notification";
-import { sessionModel } from "@/entities/session";
 import {
-  Feedback,
-  getFeedbacks,
-  getUsersFeedback,
-  leaveFeedback,
-  updateFeedback,
-} from "@/shared/api/Products";
-import {
-  attach,
   combine,
-  createDomain,
   createEffect,
   createEvent,
   createStore,
   sample,
 } from "effector";
+
+import {
+  Feedback,
+  getUsersFeedback,
+  leaveFeedback,
+  updateFeedback,
+} from "@/shared/api/Products";
+
+import { notification } from "@/entities/notification";
+import { sessionModel } from "@/entities/session";
 
 const $session = sessionModel.$session;
 
@@ -33,7 +32,7 @@ const $review = combine($starRate, $textareaValue, $session);
 export const leaveReviewFx = createEffect(
   async ({ id, review }: { id: string; review: Feedback }) => {
     const feedbacks = await getUsersFeedback(id, review.userId);
-    if (!!feedbacks) {
+    if (feedbacks) {
       const response = await updateFeedback(id, review);
       return response;
     }

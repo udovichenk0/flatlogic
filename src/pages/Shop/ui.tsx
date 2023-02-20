@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useStore } from "effector-react";
 import Range from 'rc-slider';
+import { useState } from "react";
 import 'rc-slider/assets/index.css';
 
 import { GoodsList } from "@/widgets/goods-list"
 
 import { $$goodsList, MAX, MAX_DEFAULT, MIN } from "./model"
-import { useStore } from "effector-react";
+
 
 const Shop = () => {
 	const [range] = useStore($$goodsList.$filters)

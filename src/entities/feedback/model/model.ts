@@ -1,5 +1,6 @@
-import { getFeedbacks, Feedback } from "@/shared/api/Products";
 import { createEffect, createStore, sample } from "effector";
+
+import { getFeedbacks, Feedback } from "@/shared/api/Products";
 
 export const createFeedbackModel = () => {
   const $reviews = createStore<Feedback[]>([]);

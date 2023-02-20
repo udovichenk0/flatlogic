@@ -1,20 +1,17 @@
-import { createGoodsListModel } from "@/entities/product";
-import { createRoute, redirect } from "atomic-router";
 import { createEvent, sample } from "effector";
-import { lazy } from "react";
-import { MainLayout } from "../../widgets/Layouts/main-layout";
-const HomePageLazy = lazy(() => import("./ui"));
 
-//rouring
-const route = createRoute();
-const goToShopRoute = createRoute();
+import { homeRoutes } from "@/shared/routing";
+
+import { createGoodsListModel } from "@/entities/product";
+
 export const redirectToShop = createEvent();
-
 export const $$goodsList = createGoodsListModel({ limit: 5 });
+
+const pageOpened = createEvent();
 
 //when page is opened fetch data
 sample({
-  clock: route.opened,
+  clock: [homeRoutes.route.opened, pageOpened],
   source: $$goodsList.$goods,
   filter: (goods) => {
     return !goods.length;
@@ -22,19 +19,10 @@ sample({
   target: $$goodsList.getGoodsFx,
 });
 
-redirect({
-  clock: redirectToShop,
-  route: goToShopRoute,
-});
-
-export const homeRoutes = { route, goToShopRoute };
-
-export const HomePage = {
-  route,
-  view: HomePageLazy,
-  layout: MainLayout,
-};
-
+// redirect({
+//   clock: redirectToShop,
+//   route: homeRoutes.goToShopRoute,
+// });
 /*
 make saveFactory factory in feature like
 
@@ -42,3 +30,4 @@ const togleSaveGoods = ({type}:{type: 'CART' | 'WISHLIST'}) => {
   
 }
 */
+pageOpened();

@@ -1,7 +1,3 @@
-import { $$cartModel } from "@/entities/cart";
-import { notification } from "@/entities/notification";
-import { sessionModel } from "@/entities/session";
-import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
 import {
   attach,
   createEffect,
@@ -10,6 +6,12 @@ import {
   sample,
 } from "effector";
 import { debug } from "patronum";
+
+import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
+
+import { $$cartModel } from "@/entities/cart";
+import { notification } from "@/entities/notification";
+import { sessionModel } from "@/entities/session";
 
 export const createCartModel = () => {
   const $isPending = createStore(true);

@@ -1,22 +1,27 @@
-import { Fragment } from "react"
+import { Store } from "effector"
 import { useStore } from "effector-react"
+import { Fragment } from "react"
 
 import { Product } from "@/shared/api/Products"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
 import { $$cartModel } from "@/entities/cart"
-
-import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
-import { Modal } from "./ui/modal/ui"
 import { GoodCard } from "@/entities/product"
 
 
+import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
+import { Modal } from "./ui/modal/ui"
 
 
-export const GoodsList = ({goodsModel}:any) => {
+type GoodModel <T> ={
+	$goods: Store<T>,
+	$isFetching: Store<boolean>,
+}
+
+export const GoodsList = ({goodsModel}:{goodsModel: GoodModel<Product[]>}) => {
 	const cart = useStore($$cartModel.$cart)
-	const goods:Product[] = useStore(goodsModel.$goods)
+	const goods = useStore(goodsModel.$goods)
 	const isFetching = useStore(goodsModel.$isFetching)
 	const openedModal = useStore($openedModal)
 	return (
@@ -42,7 +47,7 @@ export const GoodsList = ({goodsModel}:any) => {
 				})}
 			</div>
 			{
-			!isFetching && !goods.length &&
+			!isFetching && goods.length == 0 &&
 			<div className="flex items-center justify-center">
 				<h2 className="font-bold text-[30px] text-base-dark">There is no such products :(</h2>
 			</div>

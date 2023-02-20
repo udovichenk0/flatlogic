@@ -1,6 +1,6 @@
-import { ReactNode, useEffect, useRef } from "react"
 import {Event, Store} from 'effector'
 import { useStore } from "effector-react"
+import { ReactNode, useEffect, useRef } from "react"
 
 type Modal = {
 	$isOpened: Store<boolean>,

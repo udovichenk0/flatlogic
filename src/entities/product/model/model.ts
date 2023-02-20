@@ -1,7 +1,5 @@
 // import { createJsonQuery } from "@farfetched/core";
 
-import { getProducts, getProduct, Product } from "@/shared/api/Products";
-import { CartItem } from "@/shared/api/User";
 import {
   attach,
   combine,
@@ -10,6 +8,8 @@ import {
   createStore,
   sample,
 } from "effector";
+
+import { getProducts, getProduct, Product } from "@/shared/api/Products";
 
 //list of goods
 export const createGoodsListModel = ({

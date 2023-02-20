@@ -1,4 +1,5 @@
 import { createRoute } from "atomic-router";
+
 import { CardSvg, SearchSvg, UserSvg } from "./assets";
 
 const goToHomeRoute = createRoute();

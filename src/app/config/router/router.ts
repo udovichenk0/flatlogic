@@ -1,11 +1,17 @@
-import { navigationRoutes } from "@/widgets/Layouts/main-layout/header";
 import { createHistoryRouter } from "atomic-router";
 import { createBrowserHistory } from "history";
-import { homeRoutes } from "@/pages/Home";
+
+import {
+  accountRoutes,
+  controls,
+  goToProductRoute,
+  homeRoutes,
+  productRoutes,
+} from "@/shared/routing";
+
+import { navigationRoutes } from "@/widgets/Layouts/main-layout/header";
+
 import { shopRoutes } from "@/pages/Shop/model";
-import { productRoute } from "@/pages/Product";
-import { controls, goToProductRoute } from "@/shared/routing";
-import { accountRoute } from "@/pages/Account";
 
 const history = createBrowserHistory();
 const routes = [
@@ -21,10 +27,10 @@ const routes = [
       homeRoutes.goToShopRoute,
     ],
   },
-  { path: "/product/:id", route: [productRoute.route, goToProductRoute] },
+  { path: "/product/:id", route: [productRoutes.route, goToProductRoute] },
   {
     path: "/account",
-    route: [accountRoute.route, navigationRoutes.goToAccountRoute],
+    route: [accountRoutes.route, navigationRoutes.goToAccountRoute],
   },
 ];
 

@@ -1,10 +1,11 @@
-import { SliderArrow } from "@/shared/ui/Buttons/Arrow"
 import { useKeenSlider } from "keen-slider/react"
 import { PropsWithChildren } from "react"
+
+import { SliderArrow } from "@/shared/ui/Buttons/Arrow"
 export const SliderBlock = ({children}:PropsWithChildren) => {
 	const [sliderRef, instanceRef] = useKeenSlider(
 		{
-		  loop: true
+		loop: true
 		},
 		[
 		(slider) => {
@@ -24,19 +25,19 @@ export const SliderBlock = ({children}:PropsWithChildren) => {
 				slider.container.addEventListener("mouseover", () => {
 					mouseOver = true
 					clearNextTimeout()
-				  })
-				  slider.container.addEventListener("mouseout", () => {
+				})
+				slider.container.addEventListener("mouseout", () => {
 					mouseOver = false
 					nextTimeout()
-				  })
-				  nextTimeout()
+				})
+				nextTimeout()
 				})
 				slider.on("dragStarted", clearNextTimeout)
 				slider.on("animationEnded", nextTimeout)
 				slider.on("updated", nextTimeout)
-			  },
+			},
 		]
-	  )
+	)
 	return (
 		<div className='navigation-wrapper flex items-center w-full h-[530px] relative mb-20'>
 			<span className="absolute z-10">

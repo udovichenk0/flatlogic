@@ -1,14 +1,5 @@
-import { MainLayout } from "@/widgets/Layouts/main-layout";
-import { createRoute } from "atomic-router";
-import { lazy } from "react";
+import { createEvent, sample } from "effector";
 
-const AccountPageLazy = lazy(() => import("./ui"));
-const route = createRoute();
+import { accountRoutes } from "@/shared/routing";
 
-export const accountRoute = { route };
-
-export const AccountPage = {
-  route,
-  view: AccountPageLazy,
-  layout: MainLayout,
-};
+const event = createEvent();

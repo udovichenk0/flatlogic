@@ -1,5 +1,6 @@
 import { BrownAnimatedButton } from '@/shared/ui/Buttons/brown-animated-button'
 import { SliderHeroCard } from '@/shared/ui/slider-card'
+
 import { GoodsList } from '@/widgets/goods-list'
 import { SliderBlock } from '@/widgets/SliderBlock'
 
@@ -7,6 +8,7 @@ import firstCard from '/first.webp'
 import secondCard from '/second.webp'
 import thirdCard from '/third.webp'
 import chair from '/chair.png'
+
 import { $$goodsList, redirectToShop } from './model'
 
 import 'keen-slider/keen-slider.min.css'

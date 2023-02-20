@@ -7,7 +7,7 @@ export const SliderHeroCard = ({type, title, description, backImage, action} :
 	type: string,
 	title: string,
 	description: string,
-	backImage: any,
+	backImage: string,
 	action: Event<void>
 }) => {
 	return (

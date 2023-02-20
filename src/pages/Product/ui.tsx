@@ -1,12 +1,16 @@
-import { $$cartModel } from "@/entities/cart"
-import { FeedbackCard } from "@/entities/feedback"
-import { FeedbackForm } from "@/features/feedback"
+import { useStore } from "effector-react"
+
 import { averageRate } from "@/shared/lib/average-rate"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Stars } from "@/shared/ui/Buttons/star"
 import { Modal } from "@/shared/ui/modal"
-import { useStore } from "effector-react"
+
+import { $$cartModel } from "@/entities/cart"
+import { FeedbackCard } from "@/entities/feedback"
+
+import { FeedbackForm } from "@/features/feedback"
+
 import { $$feedback, $$modal, $$product, featureCartModel } from "./model"
 
 const Product = () => {
@@ -48,7 +52,7 @@ const Product = () => {
 					</Modal>
 				</div>
 				<div className="mb-14 flex flex-col gap-8">
-					{!isFeedbackPending || feedbacks.length ? feedbacks.map((feedback, id) => {
+					{!isFeedbackPending || feedbacks.length !=0 ? feedbacks.map((feedback, id) => {
 						return (
 							<div key={id}>
 								<FeedbackCard feedback={feedback}/>
