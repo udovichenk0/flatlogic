@@ -6,9 +6,10 @@ const productRoute = createRoute();
 const accountRoute = createRoute();
 const homeRoute = createRoute();
 const shopRoute = createRoute();
-const loginRoute = createRoute();
 const goToShopRoute = createRoute();
 
+const loginRoute = createRoute();
+const registerRoute = createRoute();
 export const productRoutes = {
   route: productRoute,
 };
@@ -28,6 +29,10 @@ export const shopRoutes = {
 
 export const signInRoutes = {
   route: loginRoute,
+};
+
+export const signUpRoutes = {
+  route: registerRoute,
 };
 
 export const goToProductRoute = createRoute();

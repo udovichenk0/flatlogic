@@ -20,4 +20,9 @@ export const rules = {
     validator: (value) => Boolean(value),
     errorText: "This field is required",
   }),
+  confirm: (): Rule<string> => ({
+    name: "confirm",
+    validator: (confirmation, { password }) => confirmation === password,
+    errorText: "",
+  }),
 };

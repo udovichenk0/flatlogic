@@ -9,6 +9,7 @@ import {
   signInRoutes,
   productRoutes,
   shopRoutes,
+  signUpRoutes,
 } from "@/shared/routing";
 
 import { navigationRoutes } from "@/widgets/Layouts/main-layout/header";
@@ -35,6 +36,10 @@ const routes = [
   {
     path: "/signin",
     route: [signInRoutes.route],
+  },
+  {
+    path: "/signup",
+    route: [signUpRoutes.route],
   },
 ];
 
