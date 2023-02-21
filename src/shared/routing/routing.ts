@@ -6,7 +6,7 @@ const productRoute = createRoute();
 const accountRoute = createRoute();
 const homeRoute = createRoute();
 const shopRoute = createRoute();
-
+const loginRoute = createRoute();
 const goToShopRoute = createRoute();
 
 export const productRoutes = {
@@ -24,6 +24,10 @@ export const homeRoutes = {
 
 export const shopRoutes = {
   route: shopRoute,
+};
+
+export const signInRoutes = {
+  route: loginRoute,
 };
 
 export const goToProductRoute = createRoute();

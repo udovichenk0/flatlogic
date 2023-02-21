@@ -1,5 +1,3 @@
-// import { createJsonQuery } from "@farfetched/core";
-
 import {
   attach,
   combine,
@@ -22,9 +20,10 @@ export const createGoodsListModel = ({
   maxDefaultPrice?: number;
 }) => {
   const changeRange = createEvent<number[]>();
+  const reset = createEvent();
 
   const $goods = createStore<Product[]>([]);
-  const $isFetching = createStore(false);
+  $goods.reset(reset);
   const $filterRange = createStore<{ min: number; max: number }>({
     min: minDefaultPrice,
     max: maxDefaultPrice,
@@ -86,24 +85,14 @@ export const createGoodsListModel = ({
     fn: ({ total }) => total,
     target: $total,
   });
-  // toggle fetching
-  sample({
-    clock: getGoodsFx,
-    fn: () => true,
-    target: $isFetching,
-  });
-  sample({
-    clock: [getGoodsFx.done, getGoodsFx.fail],
-    fn: () => false,
-    target: $isFetching,
-  });
   return {
-    $goods,
-    $isFetching,
-    getGoodsFx,
-    $total,
     changeRange,
+    reset,
+    $goods,
+    $isFetching: getGoodsFx.pending,
     $filters,
+    $total,
+    getGoodsFx,
   };
 };
 

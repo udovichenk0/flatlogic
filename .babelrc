@@ -19,7 +19,7 @@
 		"effector/babel-plugin",
 		{
 			"inspector": true,
-			"factories": ["atomic-router", "@/features/cart/save-to-cart"]
+			"factories": ["atomic-router"]
 		}
 	]
 	]

@@ -10,6 +10,8 @@ export type CartItem = {
 export type User = {
   avatar_url: string;
   billing_address: string;
+  delivery_address: string;
+  payment_method: string;
   cart: CartItem[];
   email: string;
   name: string;

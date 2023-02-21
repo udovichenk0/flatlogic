@@ -2797,6 +2797,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+effector-forms@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/effector-forms/-/effector-forms-0.0.24.tgz#2ff2ee251b4aa059baa9f6883866da0758a896bb"
+  integrity sha512-bFExfHd2WKwAuDbCQ6kdGU/5ivx+C3N6cEcLBXcdTJefpnh5D0+Sp59ai8+xV+xUEVC1RTB1jA8WCeYbgG04fQ==
+
 effector-inspector@^0.10.3:
   version "0.10.5"
   resolved "https://registry.yarnpkg.com/effector-inspector/-/effector-inspector-0.10.5.tgz#6b4f982638b263cfc600fa2ca696f55d2f975fb8"

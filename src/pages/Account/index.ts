@@ -2,13 +2,16 @@ import { lazy } from "react";
 
 import { accountRoutes } from "@/shared/routing";
 
-import { MainLayout } from "@/widgets/Layouts/main-layout";
+import { chainAuthorized } from "@/entities/session/model/authorized-route";
 
+import { MainLayout } from "@/widgets/Layouts/main-layout";
 
 const AccountPageLazy = lazy(() => import("./ui"));
 
+const authorizedRoute = chainAuthorized(accountRoutes.route);
+
 export const AccountPage = {
-  route: accountRoutes.route,
+  route: authorizedRoute,
   view: AccountPageLazy,
   layout: MainLayout,
 };

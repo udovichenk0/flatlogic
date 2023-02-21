@@ -18,7 +18,7 @@ const Shop = () => {
 					<div className="w-[300px]">
 						<div className="mb-3">Price Range: ${values[0]} - ${values[1]}</div>
 						<Range min={MIN} max={MAX} step={1}
-						range defaultValue={[MIN, MAX_DEFAULT]} railStyle={{backgroundColor: '#eee'}}
+						range defaultValue={[range.min, range.max]} railStyle={{backgroundColor: '#eee'}}
 						onChange={(value:any) => setValue(value)}
 						onAfterChange={(value:any) => $$goodsList.changeRange(value)}
 						trackStyle={{backgroundColor: '#bd744c'}}

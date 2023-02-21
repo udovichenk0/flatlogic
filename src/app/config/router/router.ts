@@ -6,6 +6,7 @@ import {
   controls,
   goToProductRoute,
   homeRoutes,
+  signInRoutes,
   productRoutes,
   shopRoutes,
 } from "@/shared/routing";
@@ -30,6 +31,10 @@ const routes = [
   {
     path: "/account",
     route: [accountRoutes.route, navigationRoutes.goToAccountRoute],
+  },
+  {
+    path: "/signin",
+    route: [signInRoutes.route],
   },
 ];
 
