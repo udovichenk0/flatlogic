@@ -14,7 +14,7 @@ const SignUp = () => {
 					<Link className='font-bold text-base-dark text-[22px] mb-[100px]' to={homeRoutes.route}>
 						Flatlogic<span className='text-brown'>.</span>
 					</Link>
-					<span className='font-bold text-lg mb-5'>Login</span>
+					<span className='font-bold text-lg mb-5'>Sign up</span>
 					<SignUpForm/>
 				</div>
 			</div>

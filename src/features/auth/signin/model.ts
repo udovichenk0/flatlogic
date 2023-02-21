@@ -1,6 +1,8 @@
 import { sample } from "effector";
 import { createForm } from "effector-forms";
 
+import { signInRoutes } from "@/shared/routing";
+
 import { rules } from "../config";
 
 export const loginForm = createForm({
@@ -19,4 +21,9 @@ export const loginForm = createForm({
 sample({
   clock: loginForm.formValidated,
   fn: () => console.log("asdpofasdjp"),
+});
+
+sample({
+  clock: signInRoutes.route.closed,
+  target: loginForm.reset,
 });

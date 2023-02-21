@@ -1,6 +1,8 @@
 import { sample } from "effector";
 import { createForm } from "effector-forms";
 
+import { signUpRoutes } from "@/shared/routing";
+
 import { rules } from "../config";
 
 export const registerForm = createForm({
@@ -23,4 +25,9 @@ export const registerForm = createForm({
       ],
     },
   },
+});
+
+sample({
+  clock: signUpRoutes.route.closed,
+  target: registerForm.reset,
 });

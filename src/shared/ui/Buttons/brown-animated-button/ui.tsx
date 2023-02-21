@@ -11,7 +11,7 @@ export const BrownAnimatedButton = ({text, arrow, onClick, animation}:
 
 	return (
 		<button onClick={onClick} onMouseEnter={() => hovered(true)} onMouseLeave={() => hovered(false)}
-		className={`border-[1px] border-brown font-bold px-[42px] py-[14px] flex items-center gap-1 ${animation == 'leftToRight'? `hover:shadow-[inset_240px_0_0_0_#bd744c]` : `hover:bg-[#bd744c]`}  hover:text-[#fff] hover:fill-[#ffffff] fill-brown text-brown transition-all duration-300`}>
+		className={`border-[1px] border-brown font-bold px-[42px] py-[14px] flex items-center gap-1 ${animation == 'leftToRight'? `hover:shadow-[inset_240px_0_0_0_#bd744c]` : `hover:bg-[#bd744c]`} hover:text-white hover:fill-[#ffffff] fill-brown text-brown transition-all duration-300`}>
 			<span>
 				{text}
 			</span>

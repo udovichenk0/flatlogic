@@ -46,7 +46,7 @@ export const SignUpForm = () => {
 					<Link to={signInRoutes.route} className='text-sm text-brown'>Log In to your account</Link>
 					<button onSubmit={onSubmit}
 					className='px-[30px] py-[14px] bg-brown hover:bg-[#af6c47] transition-colors duration-200 font-bold text-sm text-white'>
-						REGISTER
+						SIGN UP
 					</button>
 				</div>
 			</form>
