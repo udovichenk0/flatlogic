@@ -23,6 +23,6 @@ export const rules = {
   confirm: (): Rule<string> => ({
     name: "confirm",
     validator: (confirmation, { password }) => confirmation === password,
-    errorText: "",
+    errorText: "Repeat your password correct",
   }),
 };

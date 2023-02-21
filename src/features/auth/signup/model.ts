@@ -1,3 +1,4 @@
+import { sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { rules } from "../config";

@@ -15,7 +15,6 @@ export const SignInForm = () => {
 		e.preventDefault()
 		submit()
 	}
-	fields.email.onChange
 	return (
 		<div>
 			<form className='flex flex-col gap-5' onSubmit={onSubmit}>
@@ -25,6 +24,7 @@ export const SignInForm = () => {
 				name={'Email'}
 				onChange={fields.email.onChange}
 				disable={false}
+				errorText={errorText('email')}
 				/>
 				<AuthInput
 				value={fields.password.value}
@@ -32,6 +32,7 @@ export const SignInForm = () => {
 				name={'Password'}
 				onChange={fields.password.onChange}
 				disable={false}
+				errorText={errorText('password')}
 				/>
 				<div className='flex justify-between items-center'>
 					<Link to={signUpRoutes.route} className='text-sm text-brown'>Create an account</Link>

@@ -24,6 +24,7 @@ export const SignUpForm = () => {
 				name={'Email'}
 				onChange={fields.email.onChange}
 				disable={false}
+				errorText={errorText('email')}
 				/>
 				<AuthInput
 				value={fields.password.value}
@@ -31,13 +32,15 @@ export const SignUpForm = () => {
 				name={'Password'}
 				onChange={fields.password.onChange}
 				disable={false}
+				errorText={errorText('password')}
 				/>
 				<AuthInput
-				value={fields.password.value}
+				value={fields.confirmation.value}
 				placeholder={'Password'}
 				name={'Repeat Password'}
-				onChange={fields.password.onChange}
+				onChange={fields.confirmation.onChange}
 				disable={false}
+				errorText={errorText('confirmation')}
 				/>
 				<div className='flex justify-between items-center'>
 					<Link to={signInRoutes.route} className='text-sm text-brown'>Log In to your account</Link>
