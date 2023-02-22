@@ -1,13 +1,9 @@
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../firebase";
 
 import { CartItem, User } from "./types";
-
-export const getSessionUser = async () => {
-  const sessionUser = await getDoc(doc(db, "users", "xVoU1CfS4uLTgPz3gkJK"));
-  return { ...sessionUser.data(), id: sessionUser.id } as User;
-};
 
 //TODO make catch errors
 export const addToCart = async (id: string, data: CartItem) => {
@@ -38,4 +34,33 @@ export const removeFromCart = async (userId: string, deleteId: string) => {
   } catch (error: any) {
     throw new Error(error);
   }
+};
+
+export const createAccountWithEmail = async (
+  email: string,
+  password: string
+) => {
+  const auth = getAuth();
+  return await createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredentials) => {
+      const user = userCredentials.user;
+      return {
+        email: user.email,
+        uid: user.uid,
+      };
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const saveUserToBD = async (data: User) => {
+  const user = await setDoc(doc(db, "users", data.id), data);
+  return user;
+};
+
+export const getUser = async (id: string) => {
+  const userRef = await getDoc(doc(db, "users", id));
+  const user = userRef.data() as User;
+  return user;
 };

@@ -10,7 +10,7 @@ export const Profile = ({session}:{session: User}) => {
 					</div>
 					<div className="flex gap-1 text-brown text-lg font-bold mb-2">
 						<span>{session.name}</span>
-						<span>{session.second_name}</span>
+						<span>{session.surname}</span>
 					</div>
 					<span className="font-sm text-gray">{session.email}</span>
 				</div>

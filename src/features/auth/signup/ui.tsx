@@ -14,10 +14,27 @@ export const SignUpForm = () => {
 		e.preventDefault()
 		submit()
 	}
-	fields.email.onChange
 	return (
 		<div>
 			<form className='flex flex-col gap-5' onSubmit={onSubmit}>
+				<div className='flex gap-5'>
+					<AuthInput
+					value={fields.name.value}
+					placeholder={'Name'}
+					name={'Name'}
+					onChange={fields.name.onChange}
+					disable={false}
+					errorText={errorText('name')}
+					/>
+					<AuthInput
+					value={fields.surname.value}
+					placeholder={'Surname'}
+					name={'Surname'}
+					onChange={fields.surname.onChange}
+					disable={false}
+					errorText={errorText('surname')}
+					/>
+				</div>
 				<AuthInput
 				value={fields.email.value}
 				placeholder={'Email'}

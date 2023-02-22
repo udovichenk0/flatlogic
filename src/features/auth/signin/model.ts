@@ -1,6 +1,8 @@
-import { sample } from "effector";
+import { createEffect, sample } from "effector";
 import { createForm } from "effector-forms";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+import { getUser } from "@/shared/api/User";
 import { signInRoutes } from "@/shared/routing";
 
 import { rules } from "../config";

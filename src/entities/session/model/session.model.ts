@@ -1,11 +1,15 @@
-import { createEffect, createStore, sample } from "effector";
+import { createEffect, createEvent, createStore, sample } from "effector";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { getSessionUser, User } from "@/shared/api/User";
+import { getUser, User } from "@/shared/api/User";
+
+export const authFailed = createEvent();
 
 export const $session = createStore({} as User);
 export const $isAuthenticated = createStore(false);
-export const getUserFx = createEffect(async () => {
-  const user = await getSessionUser();
+
+export const getUserFx = createEffect(async ({ uid }: { uid: string }) => {
+  const user = await getUser(uid);
   return user;
 });
 
