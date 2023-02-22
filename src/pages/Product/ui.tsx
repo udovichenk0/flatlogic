@@ -6,7 +6,7 @@ import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Stars } from "@/shared/ui/Buttons/star"
 import { Modal } from "@/shared/ui/modal"
 
-import { $$cartModel } from "@/entities/cart"
+import { cartModel } from "@/entities/cart"
 import { FeedbackCard } from "@/entities/feedback"
 
 import { FeedbackForm } from "@/features/feedback"
@@ -15,7 +15,7 @@ import { $$feedback, $$modal, $$product, featureCartModel } from "./model"
 
 const Product = () => {
 	const product = useStore($$product.$product)
-	const cart = useStore($$cartModel.$cart)
+	const cart = useStore(cartModel.$cart)
 	const rates = useStore($$feedback.$rates)
 	const feedbacks = useStore($$feedback.$reviews)
 	const isFeedbackPending = useStore($$feedback.$isPending)

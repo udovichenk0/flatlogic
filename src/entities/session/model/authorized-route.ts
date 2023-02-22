@@ -6,16 +6,11 @@ import {
   redirect,
 } from "atomic-router";
 import { createEvent, createStore, sample } from "effector";
-import { and, debug, not } from "patronum";
+import { and, not } from "patronum";
 
 import { signInRoutes } from "@/shared/routing";
 
-import {
-  $isAuthenticated,
-  $session,
-  authFailed,
-  getUserFx,
-} from "./session.model";
+import { $isAuthenticated, authFailed, getUserFx } from "./session.model";
 
 export function chainAuthorized<Params extends RouteParams>(
   route: RouteInstance<Params>
@@ -29,15 +24,15 @@ export function chainAuthorized<Params extends RouteParams>(
   });
 
   sample({
-    clock: authFailed,
-    filter: and(not($isAuthenticated), route.$isOpened),
+    clock: [authFailed, checkStarted],
+    filter: and(not($isAuthenticated), route.$isOpened, $selfLoaded),
     target: redirect({ route: signInRoutes.route }),
   });
-  sample({
-    clock: [checkStarted],
-    filter: and(not($isAuthenticated), $selfLoaded),
-    target: redirect({ route: signInRoutes.route }),
-  });
+  // sample({
+  //   clock: checkStarted,
+  //   filter: and(not($isAuthenticated), $selfLoaded),
+  //   target: redirect({ route: signInRoutes.route }),
+  // });
   sample({
     clock: authFailed,
     fn: () => true,

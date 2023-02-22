@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 
 import { getUser } from '@/shared/api/User'
 
+import { cartModel } from '@/entities/cart'
 import { sessionModel } from '@/entities/session'
 import { authFailed, getUserFx } from '@/entities/session/model'
 
@@ -24,6 +25,11 @@ const onAuthStateChangedFx = createEffect(async () => {
       sample({
         clock: getUserFx.doneData,
         target: sessionModel.$session,
+      });
+      sample({
+        clock: getUserFx.doneData,
+        fn: user => user.cart,
+        target: cartModel.$cart,
       });
     }
     else {

@@ -3,7 +3,7 @@ import { Fragment } from "react"
 
 import { WishCard } from "@/entities/cart"
 import { $cart } from "@/entities/cart/model"
-import { $session } from "@/entities/session/model"
+import { sessionModel } from "@/entities/session"
 
 import { Block } from "./ui/block"
 import { Profile } from "./ui/profile"
@@ -11,7 +11,8 @@ import { CartItemSkeleton } from "./ui/skeleton"
 
 const Account = () => {
 	const cart = useStore($cart)
-	const session = useStore($session)
+	const session = useStore(sessionModel.$session)
+	const isPending = useStore(sessionModel.getUserFx.pending)
 	const skeletonLength = new Array(6).fill(0)
 	return (
 		<div className="container">
@@ -29,21 +30,25 @@ const Account = () => {
 						<span className="flex">PRICE</span>
 					</div>
 					<div className="flex flex-col gap-5 border-b-2 border-[#d3d3d3] pb-5">
-						{cart.length ?
-						cart.map((cartItem) => {
+						{isPending
+							? skeletonLength.map((_, id) => {
+								return (
+									<Fragment key={id}>
+										<CartItemSkeleton/>
+									</Fragment>
+								)
+							})
+						: cart.map((cartItem) => {
 							return (
 								<Fragment key={cartItem.id} >
 									<WishCard product={cartItem}/>
 								</Fragment>
 							)
 						})
-						: skeletonLength.map((_, id) => {
-							return (
-								<Fragment key={id}>
-									<CartItemSkeleton/>
-								</Fragment>
-							)
-						})
+					}
+					{
+					!isPending && !cart.length &&
+					<h2 className="font-base-dark font-bold text-xl flex items-center justify-center">Your cart is empty</h2>
 					}
 					</div>
 				</div>
