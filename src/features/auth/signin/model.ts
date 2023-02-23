@@ -36,11 +36,9 @@ sample({
   target: signInWithEmailAndPasswordFx,
 });
 
-// get user from bd if we signin
 sample({
-  clock: signInWithEmailAndPasswordFx.doneData,
-  fn: (response) => ({ uid: response.uid }),
-  target: getUserFx,
+  clock: signInWithEmailAndPasswordFx.done,
+  fn: () => localStorage.removeItem("products"),
 });
 
 sample({
@@ -49,7 +47,7 @@ sample({
 });
 
 //redirect user to the home when sign in
-redirect({
-  clock: signInWithEmailAndPasswordFx.done,
-  route: homeRoutes.route,
-});
+// redirect({
+//   clock: signInWithEmailAndPasswordFx.done,
+//   route: homeRoutes.route,
+// });

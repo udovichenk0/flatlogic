@@ -14,12 +14,12 @@ import { $openedModal, featureCartModel, modal, openModalById } from "./goods.mo
 import { Modal } from "./ui/modal/ui"
 
 
-type GoodModel <T> ={
-	$goods: Store<T>,
+type GoodModel ={
+	$goods: Store<Product[]>,
 	$isFetching: Store<boolean>,
 }
 
-export const GoodsList = ({goodsModel}:{goodsModel: GoodModel<Product[]>}) => {
+export const GoodsList = ({goodsModel}:{goodsModel: GoodModel}) => {
 	const cart = useStore(cartModel.$cart)
 	const goods = useStore(goodsModel.$goods)
 	const isFetching = useStore(goodsModel.$isFetching)

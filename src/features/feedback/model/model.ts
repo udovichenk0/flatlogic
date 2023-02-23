@@ -58,7 +58,7 @@ sample({
       id,
       review: {
         rate: starRate,
-        fullname: `${session.name} ${session.second_name}`,
+        fullname: `${session.name} ${session.surname}`,
         avatar_url: session.avatar_url,
         comment,
         date: new Date(),

@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { Suspense } from 'react'
 
 import { cartModel } from '@/entities/cart'
-import { sessionModel } from '@/entities/session'
 import { authFailed, getUserFx } from '@/entities/session/model'
 
 import { View } from '../pages'
@@ -22,13 +21,12 @@ const onAuthStateChangedFx = createEffect(async () => {
       getUserFx({ uid: user.uid });
       sample({
         clock: getUserFx.doneData,
-        target: sessionModel.$session,
-      });
-      sample({
-        clock: getUserFx.doneData,
-        fn: user => user.cart,
-        target: cartModel.$cart,
-      });
+        source: cartModel.$cart,
+        fn: (cartFromLs, user) => {
+          return cartModel.mergeArrayOfObjects(user.cart, cartFromLs)
+        },
+        target: cartModel.$cart
+      })
     }
     else{
       sample({

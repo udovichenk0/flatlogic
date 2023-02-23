@@ -5,6 +5,8 @@ import { createForm } from "effector-forms";
 import { createAccountWithEmail, saveUserToBD, User } from "@/shared/api/User";
 import { homeRoutes, signUpRoutes } from "@/shared/routing";
 
+import { getUserFx } from "@/entities/session/model";
+
 import { rules } from "../config";
 
 export const registerForm = createForm({
@@ -86,9 +88,19 @@ sample({
   target: saveUserToFx,
 });
 
-redirect({
+// redirect({
+//   clock: signUpWithEmailAndPasswordFx.done,
+//   route: homeRoutes.route,
+// });
+sample({
+  clock: signUpWithEmailAndPasswordFx.doneData,
+  fn: (response) => ({ uid: response.uid }),
+  target: getUserFx,
+});
+
+sample({
   clock: signUpWithEmailAndPasswordFx.done,
-  route: homeRoutes.route,
+  fn: () => localStorage.removeItem("products"),
 });
 
 sample({

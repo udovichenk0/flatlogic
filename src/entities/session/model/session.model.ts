@@ -18,6 +18,11 @@ export const getUserFx = createEffect(async ({ uid }: { uid: string }) => {
 });
 
 sample({
+  clock: getUserFx.doneData,
+  target: $session,
+});
+
+sample({
   clock: getUserFx.done,
   fn: () => true,
   target: $isAuthenticated,

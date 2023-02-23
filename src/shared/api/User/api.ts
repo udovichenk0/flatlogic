@@ -28,6 +28,23 @@ export const addToCart = async (id: string, data: CartItem) => {
   }
 };
 
+export const updateCart = async (userId: string, cart: CartItem[]) => {
+  try {
+    const userRef = doc(db, "users", userId);
+    const user = await getDoc(userRef);
+    const userData = user.data() as User;
+    await updateDoc(userRef, {
+      cart,
+    });
+    const response = await getDoc(userRef).then((cart) => {
+      const cartData = (cart.data() as User).cart;
+      return cartData;
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const removeFromCart = async (userId: string, deleteId: string) => {
   try {
     const userRef = doc(db, "users", userId);
