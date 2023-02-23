@@ -31,6 +31,11 @@ const onAuthStateChangedFx = createEffect(async () => {
       });
     }
     else{
+      sample({
+        clock: authFailed,
+        fn: () => JSON.parse(localStorage.getItem("products") || "[]"),
+        target: cartModel.$cart
+      })
       authFailed()
     }
 
