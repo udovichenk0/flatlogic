@@ -5,7 +5,6 @@ import {
   createStore,
   sample,
 } from "effector";
-import { debug } from "patronum";
 
 import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
 
@@ -18,6 +17,7 @@ export const createCartModel = () => {
   const favoriteToggled = createEvent<CartItem>();
   const successAdded = createEvent();
   const successRemoved = createEvent();
+
   // add/remove product to/from cart
   const toggleFavoriteFx = attach({
     source: cartModel.$cart,
@@ -36,16 +36,39 @@ export const createCartModel = () => {
         product: CartItem;
         userId: string;
       }) => {
-        const isInCart = cart.find(({ id }) => id == product.id);
-        if (isInCart) {
-          const cart = await removeFromCart(userId, isInCart.id);
-          return cart;
+        const isProductInCart = cart.find(({ id }) => id == product.id);
+        if (isProductInCart) {
+          const newCart = await removeFromCart(userId, isProductInCart.id);
+          return newCart;
         }
-        const response = await addToCart(userId, product);
-        return response;
+        const newCart = await addToCart(userId, product);
+        return newCart;
       }
     ),
   });
+
+  const toggleCartFromLS = attach({
+    source: cartModel.$cart,
+    mapParams: ({ data }, cart) => ({
+      cart,
+      product: data,
+    }),
+    effect: createEffect(
+      async ({ cart, product }: { product: CartItem; cart: CartItem[] }) => {
+        const isProductInCart = cart.find(({ id }) => id == product.id);
+        // if product in localstorage then remove from it, else add to
+        if (isProductInCart) {
+          const newCart = cart.filter(({ id }) => id != product.id);
+          localStorage.setItem("products", JSON.stringify(newCart));
+          return JSON.parse(localStorage.getItem("products") || "[]");
+        } else {
+          localStorage.setItem("products", JSON.stringify([...cart, product]));
+          return JSON.parse(localStorage.getItem("products") || "[]");
+        }
+      }
+    ),
+  });
+
   // toggleFavorite on event triggered // when user is authenticated
   sample({
     clock: favoriteToggled,
@@ -57,6 +80,14 @@ export const createCartModel = () => {
     }),
     target: toggleFavoriteFx,
   });
+  // toggle favorite in localStorage when user is not authorized
+  sample({
+    clock: favoriteToggled,
+    source: sessionModel.$session,
+    filter: (session) => !session.id,
+    fn: (_, data) => ({ data }),
+    target: toggleCartFromLS,
+  });
 
   //TODO write logic, when user is anonymous // add to localStorage, then merge products from LS with bd
 
@@ -64,16 +95,33 @@ export const createCartModel = () => {
   //remove from the cart
   sample({
     clock: toggleFavoriteFx.doneData,
-    filter: (favorites) => Array.isArray(favorites),
-    fn: (favProducts) => [...(favProducts as CartItem[])],
+    source: cartModel.$cart,
+    filter: (cart, newCart) => cart.length > newCart.length,
+    fn: (_, newCart) => newCart,
     target: [cartModel.$cart, successRemoved],
   });
   // added to the cart
   sample({
     clock: toggleFavoriteFx.doneData,
     source: cartModel.$cart,
-    filter: (_, favorite) => !Array.isArray(favorite),
-    fn: (cart, favorite) => [...cart, favorite as CartItem],
+    filter: (cart, newCart) => cart.length < newCart.length,
+    fn: (_, newCart) => newCart,
+    target: [cartModel.$cart, successAdded],
+  });
+  // update cart from localStorage
+  sample({
+    clock: toggleCartFromLS.doneData,
+    source: cartModel.$cart,
+    filter: (cart, newCart) => cart.length > newCart.length,
+    fn: (_, newCart) => newCart,
+    target: [cartModel.$cart, successRemoved],
+  });
+
+  sample({
+    clock: toggleCartFromLS.doneData,
+    source: cartModel.$cart,
+    filter: (cart, newCart) => cart.length < newCart.length,
+    fn: (_, newCart) => newCart,
     target: [cartModel.$cart, successAdded],
   });
 

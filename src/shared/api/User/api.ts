@@ -14,10 +14,15 @@ import { CartItem, User } from "./types";
 export const addToCart = async (id: string, data: CartItem) => {
   try {
     const userRef = doc(db, "users", id);
+    const user = await getDoc(userRef);
     await updateDoc(userRef, {
       cart: arrayUnion(data),
     });
-    return data;
+    const response = await getDoc(userRef).then((cart) => {
+      const cartData = (cart.data() as User).cart;
+      return cartData;
+    });
+    return response;
   } catch (error: any) {
     throw new Error(error);
   }

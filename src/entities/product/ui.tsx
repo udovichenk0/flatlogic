@@ -37,4 +37,3 @@ export const GoodCard = ({type,url,price,title, isAdded, openModal, id, toggle}:
 		</div>
 	)
 }
-//${hovered && 'opacity-100'} transition-opacity duration-200
