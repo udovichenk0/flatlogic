@@ -1,8 +1,9 @@
+import { redirect } from "atomic-router";
 import { createEffect, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { createAccountWithEmail, saveUserToBD, User } from "@/shared/api/User";
-import { signUpRoutes } from "@/shared/routing";
+import { homeRoutes, signUpRoutes } from "@/shared/routing";
 
 import { rules } from "../config";
 
@@ -67,29 +68,27 @@ sample({
   }),
   target: signUpWithEmailAndPasswordFx,
 });
-// email: string;
-// id: string;
-// avatar_url: string;
-// billing_address: string;
-// delivery_address: string;
-// payment_method: string;
-// cart: CartItem[];
-// name: string;
-// second_name: string;
+
 sample({
   clock: signUpWithEmailAndPasswordFx.done,
   fn: ({ params, result }) => ({
-    email: params.email,
-    id: result.uid,
     avatar_url: "",
     billing_address: "",
     delivery_address: "",
     payment_method: "",
     cart: [],
+    email: params.email,
     name: params.name,
     surname: params.surname,
+    id: result.uid,
+    role: "USER",
   }),
   target: saveUserToFx,
+});
+
+redirect({
+  clock: signUpWithEmailAndPasswordFx.done,
+  route: homeRoutes.route,
 });
 
 sample({

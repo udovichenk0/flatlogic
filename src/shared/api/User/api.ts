@@ -1,7 +1,12 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 import { CartItem, User } from "./types";
 
@@ -40,7 +45,6 @@ export const createAccountWithEmail = async (
   email: string,
   password: string
 ) => {
-  const auth = getAuth();
   return await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredentials) => {
       const user = userCredentials.user;
@@ -52,6 +56,29 @@ export const createAccountWithEmail = async (
     .catch((err) => {
       throw new Error(err);
     });
+};
+
+export const loginWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
+  return await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredentials) => {
+      const user = userCredentials.user;
+      return {
+        email: user.email,
+        uid: user.uid,
+      };
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const logout = async () => {
+  return signOut(auth).catch((error) => {
+    throw new Error(error);
+  });
 };
 
 export const saveUserToBD = async (data: User) => {

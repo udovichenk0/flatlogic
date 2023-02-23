@@ -1,5 +1,7 @@
 import { User } from "@/shared/api/User"
 
+import { Logout } from "@/features/auth/logout"
+
 // eslint-disable-next-line import/no-internal-modules
 import userImage from './assets/user.png'
 
@@ -8,6 +10,9 @@ export const Profile = ({session}:{session: User}) => {
 		<div className="bg-[#f5f5f5] w-[300px] p-8">
 			<div className="flex flex-col items-center">
 				<div className="flex flex-col items-center w-full border-b-2 border-[#d3d3d3] pb-8 mb-8">
+					<div className="flex w-full justify-end mb-4">
+						<Logout/>
+					</div>
 					<div className="w-24 h-24 mb-4 border-2 border-[#d3d3d3] rounded-full flex items-center justify-center">
 						<img className="w-20 h-20 rounded-full" src={session.avatar_url || userImage} alt="" />
 					</div>

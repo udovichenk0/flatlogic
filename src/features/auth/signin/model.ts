@@ -1,9 +1,11 @@
+import { redirect } from "atomic-router";
 import { createEffect, sample } from "effector";
 import { createForm } from "effector-forms";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { getUser } from "@/shared/api/User";
-import { signInRoutes } from "@/shared/routing";
+import { loginWithEmailAndPassword } from "@/shared/api/User";
+import { homeRoutes, signInRoutes } from "@/shared/routing";
+
+import { getUserFx } from "@/entities/session/model";
 
 import { rules } from "../config";
 
@@ -20,12 +22,34 @@ export const loginForm = createForm({
   },
   validateOn: ["submit"],
 });
+
+const signInWithEmailAndPasswordFx = createEffect(
+  async ({ email, password }: { email: string; password: string }) => {
+    const response = await loginWithEmailAndPassword(email, password);
+    return response;
+  }
+);
+
+// login on form submitted
 sample({
   clock: loginForm.formValidated,
-  fn: () => console.log("asdpofasdjp"),
+  target: signInWithEmailAndPasswordFx,
+});
+
+// get user from bd if we signin
+sample({
+  clock: signInWithEmailAndPasswordFx.doneData,
+  fn: (response) => ({ uid: response.uid }),
+  target: getUserFx,
 });
 
 sample({
   clock: signInRoutes.route.closed,
   target: loginForm.reset,
+});
+
+//redirect user to the home when sign in
+redirect({
+  clock: signInWithEmailAndPasswordFx.done,
+  route: homeRoutes.route,
 });

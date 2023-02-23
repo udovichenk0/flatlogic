@@ -3,8 +3,6 @@ import { useStore } from 'effector-react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { Suspense } from 'react'
 
-import { getUser } from '@/shared/api/User'
-
 import { cartModel } from '@/entities/cart'
 import { sessionModel } from '@/entities/session'
 import { authFailed, getUserFx } from '@/entities/session/model'
@@ -32,9 +30,10 @@ const onAuthStateChangedFx = createEffect(async () => {
         target: cartModel.$cart,
       });
     }
-    else {
+    else{
       authFailed()
     }
+
   });
 });
 onAuthStateChangedFx()

@@ -5,9 +5,13 @@ import { getUser, User } from "@/shared/api/User";
 
 export const authFailed = createEvent();
 
-export const $session = createStore({} as User);
-export const $isAuthenticated = createStore(false);
+export const sessionReset = createEvent();
 
+export const $session = createStore({} as User);
+$session.reset(sessionReset);
+
+export const $isAuthenticated = createStore(false);
+$isAuthenticated.reset(sessionReset);
 export const getUserFx = createEffect(async ({ uid }: { uid: string }) => {
   const user = await getUser(uid);
   return user;
