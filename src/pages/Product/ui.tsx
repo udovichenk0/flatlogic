@@ -22,18 +22,18 @@ const Product = () => {
 	return (
 		<div>
 			<div className="container">
-				<div className="flex py-10 border-b-2 border-[#d9d9d9] mb-10">
-					<div className="w-[500px] h-[500px]">
-						<img className="w-auto h-full" src={product.url} alt="" />
+				<div className="md:flex items-center py-10 border-b-2 border-[#d9d9d9] mb-10">
+					<div className="w-[300px] max-md:mb-5 md:w-[475px]">
+						<img className="w-full h-auto" src={product.url} alt="" />
 					</div>
-					<div className="text-base-dark px-[21px] w-[50%] flex flex-col justify-between">
+					<div className="text-base-dark px-[21px] md:w-[50%] flex flex-col justify-between">
 						<div className=" h-full flex flex-col gap-9">
 							<div className="text-gray text-sm">{product.type}</div>
 							<h3 className="text-[21px] font-bold">{product.title}</h3>
 							<Stars starRate={averageRate(rates)}/>
 							<p className="text-gray text-sm">{product.description}</p>
 							<div>
-								<div className="flex flex-col gap-2">
+								<div className="flex md:flex-col mb-3 gap-2">
 									<span className="text-gray font-bold">PRICE</span>
 									<span className="text-base-dark font-bold">{product.price}$</span>
 								</div>

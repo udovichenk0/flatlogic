@@ -98,13 +98,14 @@ export const createGoodsListModel = ({
 
 export const createProductModel = () => {
   const reset = createEvent();
-
-  const $product = createStore<Product>({} as Product).reset(reset);
+  const $product = createStore<Product>({} as Product);
   // get single product by id
   const getProductFx = createEffect(async ({ id }: { id: string }) => {
     const product = await getProduct(id);
     return product;
   });
+
+  $product.reset(reset);
 
   sample({
     clock: getProductFx.doneData,

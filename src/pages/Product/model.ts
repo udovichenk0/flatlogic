@@ -42,7 +42,6 @@ sample({
     pageOpened,
   ],
   source: combine(productRoutes.route.$params, $sessionUser),
-  filter: ([_, session]) => !(session.id.length === 0),
   fn: ([params, session]: any) => ({
     productId: params.id,
     userId: session.id,

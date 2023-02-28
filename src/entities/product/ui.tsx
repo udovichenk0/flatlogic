@@ -22,7 +22,7 @@ export const GoodCard = ({type,url,price,title, isAdded, openModal, id, toggle}:
 		<div onMouseEnter={() => hover(true)} onMouseLeave={() => hover(false)} className="w-full max-w-[245px] flex flex-col">
 			<div className='flex relative items-center'>
 			<Link to={goToProductRoute} params={{id}} className={`mb-5 ${hovered && 'scale-[1.04]'} w-[245px] h-[245px] transition-transform duration-200`}>
-				<img className='w-[245px] h-[264px]' src={url} alt={type} />
+				<img className='w-full h-auto' src={url} alt={type} />
 			</Link>
 				<div className={`absolute right-4 flex flex-col gap-4 fill-base-dark opacity-0 ${hovered && 'opacity-[100]'} transition-opacity duration-200`}>
 					<Like action={toggle} isAdded={isAdded}/>

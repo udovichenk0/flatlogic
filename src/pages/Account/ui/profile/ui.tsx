@@ -3,7 +3,7 @@ import { User } from "@/shared/api/User"
 import { Logout } from "@/features/auth/logout"
 
 // eslint-disable-next-line import/no-internal-modules
-import userImage from './assets/user.png'
+import userImage from '/user.png'
 
 export const Profile = ({session}:{session: User}) => {
 	return (
