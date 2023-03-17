@@ -23,7 +23,7 @@ const Product = () => {
 		<div>
 			<div className="container">
 				<div className="md:flex items-center py-10 border-b-2 border-[#d9d9d9] mb-10">
-					<div className="w-[300px] max-md:mb-5 md:w-[475px]">
+					<div className="w-[300px] h-[512px] max-md:mb-5 md:w-[475px]">
 						<img className="w-full h-auto" src={product.url} alt="" />
 					</div>
 					<div className="text-base-dark px-[21px] md:w-[50%] flex flex-col justify-between">

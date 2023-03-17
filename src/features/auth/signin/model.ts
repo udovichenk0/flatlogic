@@ -5,7 +5,7 @@ import { createForm } from "effector-forms";
 import { loginWithEmailAndPassword } from "@/shared/api/User";
 import { homeRoutes, signInRoutes } from "@/shared/routing";
 
-import { getUserFx } from "@/entities/session/model";
+import {authSuccessed, getUserFx} from "@/entities/session/model";
 
 import { rules } from "../config";
 
@@ -30,6 +30,10 @@ const signInWithEmailAndPasswordFx = createEffect(
   }
 );
 
+const removeProductFromLsFx = createEffect(() => {
+  localStorage.removeItem("products")
+})
+
 // login on form submitted
 sample({
   clock: loginForm.formValidated,
@@ -38,7 +42,7 @@ sample({
 
 sample({
   clock: signInWithEmailAndPasswordFx.done,
-  fn: () => localStorage.removeItem("products"),
+  target: [removeProductFromLsFx, authSuccessed]
 });
 
 sample({

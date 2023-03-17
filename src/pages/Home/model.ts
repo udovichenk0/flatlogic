@@ -1,3 +1,4 @@
+import { redirect } from "atomic-router";
 import { createEvent, sample } from "effector";
 
 import { homeRoutes } from "@/shared/routing";
@@ -8,7 +9,6 @@ export const redirectToShop = createEvent();
 export const $$goodsList = createGoodsListModel({ limit: 5 });
 
 const pageOpened = createEvent();
-
 //when page is opened fetch data
 sample({
   clock: [homeRoutes.route.opened, pageOpened],
@@ -19,15 +19,14 @@ sample({
   target: $$goodsList.getGoodsFx,
 });
 
-// redirect({
-//   clock: redirectToShop,
-//   route: homeRoutes.goToShopRoute,
-// });
-/*
-make saveFactory factory in feature like
+sample({
+  clock: homeRoutes.route.closed,
+  target: $$goodsList.reset,
+});
 
-const togleSaveGoods = ({type}:{type: 'CART' | 'WISHLIST'}) => {
-  
-}
-*/
+redirect({
+  clock: redirectToShop,
+  route: homeRoutes.goToShopRoute,
+});
+
 pageOpened();

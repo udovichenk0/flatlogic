@@ -18,7 +18,7 @@ export function chainAuthorized<Params extends RouteParams>(
   const checkStarted = createEvent<RouteParamsAndQuery<Params>>();
   const $selfLoaded = createStore(false);
 
-  const alreadyAutorized = sample({
+  const alreadyAuthorized = sample({
     clock: checkStarted,
     filter: $isAuthenticated,
   });
@@ -37,6 +37,6 @@ export function chainAuthorized<Params extends RouteParams>(
   return chainRoute({
     route,
     beforeOpen: checkStarted,
-    openOn: [getUserFx.done, alreadyAutorized],
+    openOn: [getUserFx.done, alreadyAuthorized],
   });
 }

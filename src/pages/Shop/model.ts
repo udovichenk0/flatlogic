@@ -3,7 +3,6 @@ import { createEvent, sample } from "effector";
 import { shopRoutes } from "@/shared/routing";
 
 import { createGoodsListModel } from "@/entities/product/model";
-
 const pageOpened = createEvent();
 
 export const MIN = 1;

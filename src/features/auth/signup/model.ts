@@ -5,7 +5,7 @@ import { createForm } from "effector-forms";
 import { createAccountWithEmail, saveUserToBD, User } from "@/shared/api/User";
 import { homeRoutes, signUpRoutes } from "@/shared/routing";
 
-import { getUserFx } from "@/entities/session/model";
+import {authSuccessed, getUserFx} from "@/entities/session/model";
 
 import { rules } from "../config";
 
@@ -60,6 +60,10 @@ const saveUserToFx = createEffect(async (data: User) => {
   await saveUserToBD(data);
 });
 
+const removeProductFromLsFx = createEffect(() => {
+  localStorage.removeItem("products")
+})
+
 sample({
   clock: registerForm.formValidated,
   fn: ({ email, password, name, surname }) => ({
@@ -88,10 +92,6 @@ sample({
   target: saveUserToFx,
 });
 
-// redirect({
-//   clock: signUpWithEmailAndPasswordFx.done,
-//   route: homeRoutes.route,
-// });
 sample({
   clock: signUpWithEmailAndPasswordFx.doneData,
   fn: (response) => ({ uid: response.uid }),
@@ -100,7 +100,7 @@ sample({
 
 sample({
   clock: signUpWithEmailAndPasswordFx.done,
-  fn: () => localStorage.removeItem("products"),
+  target: [removeProductFromLsFx, authSuccessed],
 });
 
 sample({

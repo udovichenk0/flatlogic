@@ -2,8 +2,10 @@ import { createEffect, createEvent, createStore, sample } from "effector";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { getUser, User } from "@/shared/api/User";
+import {debug} from "patronum";
 
 export const authFailed = createEvent();
+export const authSuccessed = createEvent()
 
 export const sessionReset = createEvent();
 
@@ -16,6 +18,8 @@ export const getUserFx = createEffect(async ({ uid }: { uid: string }) => {
   const user = await getUser(uid);
   return user;
 });
+
+
 
 sample({
   clock: getUserFx.doneData,
