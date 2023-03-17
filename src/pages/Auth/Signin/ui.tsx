@@ -10,7 +10,7 @@ const SignIn = () => {
 	return (
 		<div className='flex h-screen justify-between'>
 			<div className='flex-1 flex justify-center'>
-				<div className='px-8 pt-24 flex max-w-[500px] flex-col w-full'>
+				<div className='px-8 flex max-w-[500px] flex-col w-full justify-center'>
 					<Link className='font-bold text-base-dark text-[22px] mb-[100px]' to={homeRoutes.route}>
 						Flatlogic<span className='text-brown'>.</span>
 					</Link>
