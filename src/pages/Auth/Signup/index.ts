@@ -2,9 +2,11 @@ import { lazy } from "react";
 
 import { signUpRoutes } from "@/shared/routing";
 
-const SignUp = lazy(() => import("./ui"));
+import {chainNotAuthorized} from "@/entities/session/model";
 
+const SignUp = lazy(() => import("./ui"));
+const notAuthorizedRoute = chainNotAuthorized(signUpRoutes.route)
 export const SignUpPage = {
-  route: signUpRoutes.route,
+  route: notAuthorizedRoute,
   view: SignUp,
 };

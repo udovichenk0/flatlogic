@@ -11,10 +11,10 @@ export const Header = () => {
 			<div className="container px-5 h-full flex items-center justify-between">
 				<Link to={navigationRoutes.goToHomeRoute} className="font-bold text-[17.5px]">Flatlogic</Link>
 				<nav className="flex gap-2 h-full">
-					{routes.map(({path, label, dropItems}) => {
+					{routes.map(({path, label}) => {
 						return (
 							<div key={label} className='h-full flex items-center'>
-								<NavigateButton path={path} label={label} dropItems={dropItems}/>
+								<NavigateButton path={path} label={label}/>
 							</div>
 						)
 					})}
