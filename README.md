@@ -12,7 +12,7 @@ Flatlogic is a e-commerce web application
 # Account with wishlist
 ![image](https://user-images.githubusercontent.com/112856770/225919967-69171b8f-4314-4787-81b1-d9e15b7d6bee.png)
 # Possibility to add feedbacks
-![image](https://user-images.githubusercontent.com/112856770/225920627-703ebabd-140e-4436-81f1-7f088234278f.png)
+![image](https://user-images.githubusercontent.com/112856770/225920953-94ecf324-8d5a-4c01-8a5a-6d3143ab8083.png)
 # Signin/SignUp 
 ![image](https://user-images.githubusercontent.com/112856770/225920768-d4d17bb8-26c6-4d1c-83a8-529ff7d2cc01.png)
 
