@@ -46,7 +46,7 @@ sample({
     productId: params.id,
     userId: session.id,
   }),
-  target: $$feedback.getReviewsFx,
+  target: $$feedback.getReviews,
 });
 
 // after we get feedbacks we need to take that one user left, then restore $starRate, $textareaValue with values from that feedback

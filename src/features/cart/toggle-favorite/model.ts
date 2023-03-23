@@ -11,12 +11,16 @@ import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
 import { cartModel } from "@/entities/cart";
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
+export const testEvent = createEvent<CartItem>()
+export const $testStore = createStore(0)
+    .on(testEvent, (state) => state+1)
 
-export const createCartModel = () => {
+  export const createCartModel = () => {
   const $isPending = createStore(true);
   const favoriteToggled = createEvent<CartItem>();
   const successAdded = createEvent();
   const successRemoved = createEvent();
+
 
   // add/remove product to/from cart
   const toggleFavoriteFx = attach({
@@ -46,12 +50,11 @@ export const createCartModel = () => {
       }
     ),
   });
-
-  const toggleCartFromLS = attach({
+  const toggleCartFromLSFx = attach({
     source: cartModel.$cart,
-    mapParams: ({ data }, cart) => ({
+    mapParams: (product:CartItem, cart:CartItem[]) => ({
       cart,
-      product: data,
+      product,
     }),
     effect: createEffect(
       async ({ cart, product }: { product: CartItem; cart: CartItem[] }) => {
@@ -80,14 +83,16 @@ export const createCartModel = () => {
     }),
     target: toggleFavoriteFx,
   });
+
   // toggle favorite in localStorage when user is not authorized
   sample({
     clock: favoriteToggled,
     source: sessionModel.$session,
     filter: (session) => !session.id,
-    fn: (_, data) => ({ data }),
-    target: toggleCartFromLS,
+    fn: (_, product) => product,
+    target: toggleCartFromLSFx,
   });
+
 
   //TODO write logic, when user is anonymous // add to localStorage, then merge products from LS with bd
 
@@ -110,7 +115,7 @@ export const createCartModel = () => {
   });
   // update cart from localStorage
   sample({
-    clock: toggleCartFromLS.doneData,
+    clock: toggleCartFromLSFx.doneData,
     source: cartModel.$cart,
     filter: (cart, newCart) => cart.length > newCart.length,
     fn: (_, newCart) => newCart,
@@ -118,7 +123,7 @@ export const createCartModel = () => {
   });
 
   sample({
-    clock: toggleCartFromLS.doneData,
+    clock: toggleCartFromLSFx.doneData,
     source: cartModel.$cart,
     filter: (cart, newCart) => cart.length < newCart.length,
     fn: (_, newCart) => newCart,
@@ -140,6 +145,7 @@ export const createCartModel = () => {
 
   return {
     toggleFavoriteFx,
+    toggleCartFromLSFx,
     favoriteToggled,
     $isPending,
   };

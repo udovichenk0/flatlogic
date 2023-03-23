@@ -1,8 +1,9 @@
-import { createEffect, createStore, sample } from "effector";
+import {createEffect, createEvent, createStore, sample} from "effector";
 
 import { getFeedbacks, Feedback } from "@/shared/api/Products";
 
 export const createFeedbackModel = () => {
+  const getReviews = createEvent<{productId: string, userId: string}>()
   const $reviews = createStore<Feedback[]>([]);
   const $isPending = createStore(false);
   const $rates = createStore<number[]>([]);
@@ -13,6 +14,11 @@ export const createFeedbackModel = () => {
       return reviews;
     }
   );
+
+  sample({
+    clock: getReviews,
+    target: getReviewsFx
+  })
 
   sample({
     clock: getReviewsFx.doneData,
@@ -44,6 +50,7 @@ export const createFeedbackModel = () => {
     $isPending,
     $rates,
     $reviews,
+    getReviews,
     getReviewsFx,
   };
 };
