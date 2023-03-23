@@ -18,7 +18,7 @@ export const $$goodsList = createGoodsListModel({
 //fetch goods when page is opened and there is ampty store with goods
 sample({
   clock: [shopRoutes.route.opened, pageOpened],
-  target: $$goodsList.getGoodsFx,
+  target: $$goodsList.getGoods,
 });
 
 sample({

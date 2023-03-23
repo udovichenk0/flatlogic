@@ -1,4 +1,4 @@
-import { useStore } from "effector-react"
+import {useStore, useUnit} from "effector-react"
 
 import { averageRate } from "@/shared/lib/average-rate"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
@@ -11,14 +11,16 @@ import { FeedbackCard } from "@/entities/feedback"
 
 import { FeedbackForm } from "@/features/feedback"
 
-import { $$feedback, $$modal, $$product, featureCartModel } from "./model"
+import {$$feedback, $$modal, $$product, featureCartModel} from "./model"
 
 const Product = () => {
-	const product = useStore($$product.$product)
-	const cart = useStore(cartModel.$cart)
-	const rates = useStore($$feedback.$rates)
-	const feedbacks = useStore($$feedback.$reviews)
-	const isFeedbackPending = useStore($$feedback.$isPending)
+	const [product, rates, reviews, isFeedbackPending,cart] = useUnit([
+		$$product.$product,
+		$$feedback.$rates,
+		$$feedback.$reviews,
+		$$feedback.$isPending,
+		cartModel.$cart,
+	])
 	return (
 		<div>
 			<div className="container">
@@ -52,7 +54,7 @@ const Product = () => {
 					</Modal>
 				</div>
 				<div className="mb-14 flex flex-col gap-8">
-					{!isFeedbackPending || feedbacks.length !=0 ? feedbacks.map((feedback, id) => {
+					{!isFeedbackPending || reviews.length !=0 ? reviews.map((feedback, id) => {
 						return (
 							<div key={id}>
 								<FeedbackCard feedback={feedback}/>

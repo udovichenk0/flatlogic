@@ -2,11 +2,13 @@ import {createEffect, createEvent, createStore, sample} from "effector";
 
 import { getFeedbacks, Feedback } from "@/shared/api/Products";
 
+
 export const createFeedbackModel = () => {
   const getReviews = createEvent<{productId: string, userId: string}>()
   const $reviews = createStore<Feedback[]>([]);
   const $isPending = createStore(false);
   const $rates = createStore<number[]>([]);
+
   // get all reviews
   const getReviewsFx = createEffect(
     async ({ productId, userId }: { productId: string; userId: string }) => {

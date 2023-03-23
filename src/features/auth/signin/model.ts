@@ -1,9 +1,8 @@
-import { redirect } from "atomic-router";
 import { createEffect, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { loginWithEmailAndPassword } from "@/shared/api/User";
-import { homeRoutes, signInRoutes } from "@/shared/routing";
+import { signInRoutes } from "@/shared/routing";
 
 import {authSuccessed, getUserFx} from "@/entities/session/model";
 
@@ -23,7 +22,8 @@ export const loginForm = createForm({
   validateOn: ["submit"],
 });
 
-const signInWithEmailAndPasswordFx = createEffect(
+
+export const signInWithEmailAndPasswordFx = createEffect(
   async ({ email, password }: { email: string; password: string }) => {
     const response = await loginWithEmailAndPassword(email, password);
     return response;
@@ -49,9 +49,3 @@ sample({
   clock: signInRoutes.route.closed,
   target: loginForm.reset,
 });
-
-//redirect user to the home when sign in
-// redirect({
-//   clock: signInWithEmailAndPasswordFx.done,
-//   route: homeRoutes.route,
-// });

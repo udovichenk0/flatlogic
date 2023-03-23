@@ -1,14 +1,16 @@
 import { combine, createEvent, sample } from "effector";
 
+import {spread} from "patronum";
 import { createModal } from "@/shared/lib/modal";
 import { productRoutes } from "@/shared/routing";
 
-import { createFeedbackModel } from "@/entities/feedback";
+import {createFeedbackModel} from "@/entities/feedback";
 import { createProductModel } from "@/entities/product";
 import { sessionModel } from "@/entities/session";
 
 import { createCartModel } from "@/features/cart/toggle-favorite";
-import { $starRate, $textareaValue, leaveReviewFx } from "@/features/feedback";
+import { leaveReviewFx, $starRate, $textareaValue} from "@/features/feedback";
+
 
 const pageOpened = createEvent();
 
@@ -17,8 +19,11 @@ const closeOnOverlayClick = createEvent<{
   target: EventTarget;
 }>();
 
+
+
 export const $$product = createProductModel();
 export const $$feedback = createFeedbackModel();
+
 const $sessionUser = sessionModel.$session;
 
 export const $$modal = createModal({ closeOnOverlayClick });
@@ -32,7 +37,7 @@ sample({
   target: $$product.getProductFx,
 });
 
-// fetch reviews on opened/updated page and when we leave new feedback(to update veiw)
+// fetch reviews on opened/updated page and when we leave new feedback(to update view)
 sample({
   clock: [
     productRoutes.route.opened,
@@ -55,19 +60,17 @@ sample({
   source: $sessionUser,
   fn: (user, data) => {
     const usersFeedback = data.find(({ userId }) => userId == user.id);
-    return usersFeedback ? usersFeedback.rate : 1;
+    return {
+      rate: usersFeedback?.rate || 1,
+      comment: usersFeedback?.comment || ""
+    }
   },
-  target: $starRate,
-});
-
-sample({
-  clock: $$feedback.getReviewsFx.doneData,
-  source: $sessionUser,
-  fn: (user, data) => {
-    const usersFeedback = data.find(({ userId }) => userId == user.id);
-    return usersFeedback ? usersFeedback.comment : "";
-  },
-  target: $textareaValue,
+  target: spread({
+    targets: {
+      rate: $starRate,
+      comment: $textareaValue
+    }
+  }),
 });
 
 //on close events

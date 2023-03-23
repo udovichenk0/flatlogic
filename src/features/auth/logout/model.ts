@@ -9,7 +9,7 @@ import { sessionModel } from "@/entities/session";
 
 export const logoutTriggered = createEvent();
 
-const logoutFx = createEffect(async () => {
+export const logoutFx = createEffect(async () => {
   return await logout();
 });
 

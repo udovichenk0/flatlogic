@@ -73,7 +73,6 @@ test('should toggle favorite', async () => {
             return [...cart, product]
         }
     })
-
     const scope = fork({
         handlers: [
             [$$cartModel.toggleCartFromLSFx, fn],

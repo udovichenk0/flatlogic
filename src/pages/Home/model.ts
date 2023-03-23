@@ -16,7 +16,7 @@ sample({
   filter: (goods) => {
     return !goods.length;
   },
-  target: $$goodsList.getGoodsFx,
+  target: $$goodsList.getGoods,
 });
 
 sample({

@@ -21,6 +21,8 @@ export const createGoodsListModel = ({
 }) => {
   const changeRange = createEvent<number[]>();
   const reset = createEvent();
+  const getGoods = createEvent()
+
 
   const $goods = createStore<Product[]>([]);
   $goods.reset(reset);
@@ -59,6 +61,11 @@ export const createGoodsListModel = ({
       }
     ),
   });
+  // after range changed fetch goods
+  sample({
+    clock: [getGoods,changeRange],
+    target: getGoodsFx,
+  });
   // update price range
   sample({
     clock: changeRange,
@@ -67,11 +74,6 @@ export const createGoodsListModel = ({
       max,
     }),
     target: $filterRange,
-  });
-  // after range changed fetch goods
-  sample({
-    clock: [changeRange],
-    target: getGoodsFx,
   });
   // TODO REFACTOR THIS
   //put goods and total goods into stores
@@ -87,6 +89,7 @@ export const createGoodsListModel = ({
   });
   return {
     changeRange,
+    getGoods,
     reset,
     $goods,
     $isFetching: getGoodsFx.pending,
