@@ -19,12 +19,12 @@ import { Product, Feedback } from "./types";
 //get all products, with filters(optional)
 
 export const getProducts = async ({
+  byPriceRange = {min: 1, max: 700},
   goodsLimit,
-  priceRange,
   filterByOrder = "asc",
 }: {
   goodsLimit: number;
-  priceRange: { min: number; max: number };
+  byPriceRange?: { min: number; max: number };
   filterByOrder?: "asc" | "desc";
 }) => {
   try {
@@ -33,8 +33,8 @@ export const getProducts = async ({
         collection(db, "Goods"),
         orderBy("price", filterByOrder),
         limit(goodsLimit),
-        where("price", ">=", priceRange.min),
-        where("price", "<=", priceRange.max)
+        where("price", ">=", byPriceRange.min),
+        where("price", "<=", byPriceRange.max)
       )
     );
     const snap = await getCountFromServer(collectionGroup(db, "Goods"));

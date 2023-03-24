@@ -5,11 +5,11 @@ import 'rc-slider/assets/index.css';
 
 import { GoodsList } from "@/widgets/goods-list"
 
-import { $$goodsList, MAX, MAX_DEFAULT, MIN } from "./model"
+import {$$goodsList, filterModel, MAX, MAX_DEFAULT, MIN} from "./model"
 
 
 const Shop = () => {
-	const [range] = useStore($$goodsList.$filters)
+	const [range] = useStore(filterModel.$filters)
 	const [values, setValue] = useState<number[]>([range.min,range.max])
 	return (
 		<div className="container">
@@ -20,7 +20,7 @@ const Shop = () => {
 						<Range min={MIN} max={MAX} step={1}
 						range defaultValue={[range.min, range.max]} railStyle={{backgroundColor: '#eee'}}
 						onChange={(value:any) => setValue(value)}
-						onAfterChange={(value:any) => $$goodsList.changeRange(value)}
+						onAfterChange={(value:any) => filterModel.filterRangeChanged(value)}
 						trackStyle={{backgroundColor: '#bd744c'}}
 						handleStyle={{backgroundColor: '#bd744c'}}/>
 					</div>

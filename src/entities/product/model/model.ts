@@ -6,94 +6,63 @@ import {
   createStore,
   sample,
 } from "effector";
+import {spread} from "patronum";
 
 import { getProducts, getProduct, Product } from "@/shared/api/Products";
-
 //list of goods
-export const createGoodsListModel = ({
-  limit,
-  minDefaultPrice = 1,
-  maxDefaultPrice = 100000,
-}: {
-  limit: number;
-  minDefaultPrice?: number;
-  maxDefaultPrice?: number;
-}) => {
-  const changeRange = createEvent<number[]>();
+export const createGoodsListModel = ({limit}: {limit: number; }) => {
   const reset = createEvent();
   const getGoods = createEvent()
 
-
   const $goods = createStore<Product[]>([]);
   $goods.reset(reset);
-  const $filterRange = createStore<{ min: number; max: number }>({
-    min: minDefaultPrice,
-    max: maxDefaultPrice,
-  });
-  const $filterByOrder = createStore<"asc" | "desc">("asc");
   const $total = createStore<number>(0);
-
-  const $filters = combine($filterRange, $filterByOrder);
   // get goods data from bd
 
-  const getGoodsFx = attach({
-    source: $filters,
-    mapParams: (_, [priceRange, orderBy]) => {
-      return {
-        priceRange,
-        filterByOrder: orderBy,
-      };
-    },
-    effect: createEffect(
+  const getGoodsFx = createEffect(
       async ({
-        priceRange,
-        filterByOrder,
-      }: {
-        priceRange: { min: number; max: number };
+               byPriceRange,
+               filterByOrder,
+             }: {
+        byPriceRange?: { min: number; max: number };
         filterByOrder?: "asc" | "desc";
       }) => {
-        const goods = await getProducts({
+        return await getProducts({
           goodsLimit: limit,
           filterByOrder,
-          priceRange,
+          byPriceRange,
         });
-        return goods;
       }
-    ),
-  });
-  // after range changed fetch goods
+  );
+
   sample({
-    clock: [getGoods,changeRange],
+    clock: [getGoods],
+    fn: () => ({}),
     target: getGoodsFx,
   });
-  // update price range
-  sample({
-    clock: changeRange,
-    fn: ([min, max]) => ({
-      min,
-      max,
-    }),
-    target: $filterRange,
-  });
+
   // TODO REFACTOR THIS
   //put goods and total goods into stores
   sample({
     clock: getGoodsFx.doneData,
-    fn: ({ goods }) => goods,
-    target: $goods,
+    fn: ({ goods, total }) => ({
+      goods,
+      total
+    }),
+    target: spread({
+      targets: {
+        goods: $goods,
+        total: $total
+      }
+    }),
   });
-  sample({
-    clock: getGoodsFx.doneData,
-    fn: ({ total }) => total,
-    target: $total,
-  });
+
+
   return {
-    changeRange,
     getGoods,
     reset,
     $goods,
     $isFetching: getGoodsFx.pending,
-    $filters,
     $total,
     getGoodsFx,
   };
