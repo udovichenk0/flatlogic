@@ -4,7 +4,7 @@ import { getFeedbacks, Feedback } from "@/shared/api/Products";
 
 
 export const createFeedbackModel = () => {
-  const getReviews = createEvent<{productId: string, userId: string}>()
+  const getReviewsTriggered = createEvent<{productId: string, userId: string}>()
   const $reviews = createStore<Feedback[]>([]);
   const $isPending = createStore(false);
   const $rates = createStore<number[]>([]);
@@ -12,13 +12,12 @@ export const createFeedbackModel = () => {
   // get all reviews
   const getReviewsFx = createEffect(
     async ({ productId, userId }: { productId: string; userId: string }) => {
-      const reviews = (await getFeedbacks(productId, userId)) as Feedback[];
-      return reviews;
+      return (await getFeedbacks(productId, userId)) as Feedback[];
     }
   );
 
   sample({
-    clock: getReviews,
+    clock: getReviewsTriggered,
     target: getReviewsFx
   })
 
@@ -52,7 +51,7 @@ export const createFeedbackModel = () => {
     $isPending,
     $rates,
     $reviews,
-    getReviews,
+    getReviewsTriggered,
     getReviewsFx,
   };
 };

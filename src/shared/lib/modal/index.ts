@@ -1,13 +1,9 @@
-import { createEvent, createStore, sample, Event } from "effector";
-import { debug } from "patronum";
+import { createEvent, createStore, sample } from "effector";
 
 export const createModal = ({
-  closeOnOverlayClick,
+  closeOnOverlayClick = true,
 }: {
-  closeOnOverlayClick?: Event<{
-    ref: HTMLInputElement | null;
-    target: EventTarget;
-  }>;
+  closeOnOverlayClick?:boolean
 }) => {
   const $isOpened = createStore(false);
   const close = createEvent();
@@ -23,9 +19,14 @@ export const createModal = ({
     target: $isOpened,
   });
 
+  const closeOnOverlayClickTriggered = createEvent<{
+    ref: HTMLInputElement | null;
+    target: EventTarget;
+  }>();
+
   if (closeOnOverlayClick) {
     sample({
-      clock: closeOnOverlayClick,
+      clock: closeOnOverlayClickTriggered,
       filter: ({ ref, target }) => ref === target,
       target: close,
     });
@@ -34,6 +35,6 @@ export const createModal = ({
     $isOpened,
     close,
     open,
-    closeOnOverlayClick,
+    closeOnOverlayClickTriggered,
   };
 };

@@ -6,7 +6,7 @@ type Modal = {
 	$isOpened: Store<boolean>,
 	open: Event<void>,
 	close: Event<void>,
-	closeOnOverlayClick?: Event<{ ref: HTMLInputElement | null; target: EventTarget }>
+	closeOnOverlayClickTriggered?: Event<{ ref: HTMLInputElement | null; target: EventTarget }>
 }
 
 export const Modal = ({children,modal}:{children: ReactNode, modal: Modal}) => {
@@ -25,7 +25,7 @@ export const Modal = ({children,modal}:{children: ReactNode, modal: Modal}) => {
 	return (
 		<div
 		ref={overlayRef}
-		onClick={(e) => modal.closeOnOverlayClick? modal.closeOnOverlayClick({ref: overlayRef.current, target: e.target}) : {}}
+		onClick={(e) => modal.closeOnOverlayClickTriggered? modal.closeOnOverlayClickTriggered({ref: overlayRef.current, target: e.target}) : {}}
 		className="fixed left-0 top-0 w-full h-full flex items-center justify-center bg-opacity-40 z-10 bg-base-dark">
 			<div className="bg-white w-[920px]">
 				<div className="p-9">

@@ -1,6 +1,6 @@
 import { combine, createEvent, sample } from "effector";
-
 import {spread} from "patronum";
+
 import { createModal } from "@/shared/lib/modal";
 import { productRoutes } from "@/shared/routing";
 
@@ -14,20 +14,11 @@ import { leaveReviewFx, $starRate, $textareaValue} from "@/features/feedback";
 
 const pageOpened = createEvent();
 
-const closeOnOverlayClick = createEvent<{
-  ref: HTMLInputElement | null;
-  target: EventTarget;
-}>();
-
-
-
 export const $$product = createProductModel();
 export const $$feedback = createFeedbackModel();
+export const $$modal = createModal({});
+export const $$featureCartModel = createCartModel();
 
-const $sessionUser = sessionModel.$session;
-
-export const $$modal = createModal({ closeOnOverlayClick });
-export const featureCartModel = createCartModel();
 
 // fetch product on opened/updated page
 sample({
@@ -42,22 +33,22 @@ sample({
   clock: [
     productRoutes.route.opened,
     productRoutes.route.updated,
-    $sessionUser,
+    sessionModel.$session,
     leaveReviewFx.done,
     pageOpened,
   ],
-  source: combine(productRoutes.route.$params, $sessionUser),
+  source: combine(productRoutes.route.$params, sessionModel.$session),
   fn: ([params, session]: any) => ({
     productId: params.id,
     userId: session.id,
   }),
-  target: $$feedback.getReviews,
+  target: $$feedback.getReviewsTriggered,
 });
 
 // after we get feedbacks we need to take that one user left, then restore $starRate, $textareaValue with values from that feedback
 sample({
   clock: $$feedback.getReviewsFx.doneData,
-  source: $sessionUser,
+  source: sessionModel.$session,
   fn: (user, data) => {
     const usersFeedback = data.find(({ userId }) => userId == user.id);
     return {

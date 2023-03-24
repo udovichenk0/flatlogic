@@ -1,4 +1,4 @@
-import {useStore, useUnit} from "effector-react"
+import {useUnit} from "effector-react"
 
 import { averageRate } from "@/shared/lib/average-rate"
 import { isItemInCart } from "@/shared/lib/isItemInCart"
@@ -11,7 +11,7 @@ import { FeedbackCard } from "@/entities/feedback"
 
 import { FeedbackForm } from "@/features/feedback"
 
-import {$$feedback, $$modal, $$product, featureCartModel} from "./model"
+import {$$feedback, $$modal, $$product, $$featureCartModel} from "./model"
 
 const Product = () => {
 	const [product, rates, reviews, isFeedbackPending,cart] = useUnit([
@@ -42,7 +42,7 @@ const Product = () => {
 							</div>
 						</div>
 						<div className="flex gap-2 items">
-							<BrownAnimatedButton text={isItemInCart(cart, product.id)? 'REMOVE FROM CART' : 'ADD TO CART'} animation="hover" onClick={() => featureCartModel.favoriteToggled(product)}/>
+							<BrownAnimatedButton text={isItemInCart(cart, product.id)? 'REMOVE FROM CART' : 'ADD TO CART'} animation="hover" onClick={() => $$featureCartModel.favoriteToggled(product)}/>
 						</div>
 					</div>
 				</div>
