@@ -26,8 +26,8 @@ export const Modal = ({modal, product, toggle, isAdded}:{modal:Modal, product:Ca
 		onClick={(e) => modal.closeOnOverlayClick? modal.closeOnOverlayClick({ref: overlayRef.current, target: e.target}) : {}}
 		className="fixed left-0 top-0 w-full h-full flex items-center justify-center bg-opacity-40 z-10 bg-base-dark">
 			<div className="relative z-20 h-[485px] max-w-[900px] flex flex-1 bg-[#fff]">
-			<div className="w-[485px] h-[485px]">
-				<img className="w-full h-full" src={product.url} alt="" />
+				<div className="w-[485px] h-[485px]">
+					<img className="w-full h-full" src={product.url} alt="" />
 				</div>
 				<div className="text-base-dark p-[21px] w-[50%] flex flex-col justify-between">
 				<div className="">

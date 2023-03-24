@@ -5,7 +5,8 @@ import 'rc-slider/assets/index.css';
 
 import { GoodsList } from "@/widgets/goods-list"
 
-import {$$goodsList, filterModel, MAX, MAX_DEFAULT, MIN} from "./model"
+import {MAX, MIN} from './config'
+import {$$goodsList, filterModel} from "./model"
 
 
 const Shop = () => {

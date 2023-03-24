@@ -1,14 +1,10 @@
-import {combine, createEvent, createStore, Effect, sample} from "effector";
+import {createEvent, sample} from "effector";
 
 import { shopRoutes } from "@/shared/routing";
 
 import { createFilterModel } from "@/entities/filter";
 import { createGoodsListModel } from "@/entities/product/model";
 const pageOpened = createEvent();
-
-export const MIN = 1;
-export const MAX = 1500;
-export const MAX_DEFAULT = 700;
 
 //factory
 export const $$goodsList = createGoodsListModel({limit: 5});
@@ -30,6 +26,8 @@ sample({
 //fetch goods when page is opened and there is empty store with goods
 sample({
   clock: [shopRoutes.route.opened, pageOpened],
+  source: $$goodsList.$goods,
+  filter: (goods) => !goods.length,
   target: $$goodsList.getGoods,
 });
 
