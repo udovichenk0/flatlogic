@@ -3,27 +3,33 @@ import { useEffect, useRef } from "react";
 
 import { CartItem } from "@/shared/api/User";
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button";
+import {useStore} from "effector-react";
 
 type Modal = {
 	$isOpened: Store<boolean>,
 	open: Event<void>,
 	close: Event<void>,
-	closeOnOverlayClick?: Event<{ ref: HTMLInputElement | null; target: EventTarget }>
+	closeOnOverlayClickTriggered?: Event<{ ref: HTMLInputElement | null; target: EventTarget }>
 }
 
 
 export const Modal = ({modal, product, toggle, isAdded}:{modal:Modal, product:CartItem, toggle: () => void, isAdded: boolean}) => {
+	const isOpened = useStore(modal.$isOpened)
+
 	const overlayRef = useRef<HTMLInputElement>(null)
 	useEffect(() => {
-		document.body.style.overflow = 'hidden'
+		if(isOpened){
+			document.body.style.overflow = 'hidden'
+		}
 		return () => {
 			document.body.style.overflow = 'visible'
 		}
 	})
+	if(!isOpened) return null
 	return (
 		<div
 		ref={overlayRef}
-		onClick={(e) => modal.closeOnOverlayClick? modal.closeOnOverlayClick({ref: overlayRef.current, target: e.target}) : {}}
+		onClick={(e) => modal.closeOnOverlayClickTriggered? modal.closeOnOverlayClickTriggered({ref: overlayRef.current, target: e.target}) : {}}
 		className="fixed left-0 top-0 w-full h-full flex items-center justify-center bg-opacity-40 z-10 bg-base-dark">
 			<div className="relative z-20 h-[485px] max-w-[900px] flex flex-1 bg-[#fff]">
 				<div className="w-[485px] h-[485px]">

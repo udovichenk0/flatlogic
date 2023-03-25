@@ -1,15 +1,13 @@
 import {chainRoute, redirect, RouteInstance, RouteParams, RouteParamsAndQuery} from "atomic-router";
-import {createEvent, createStore, sample} from "effector";
-import {and, debug, equals, not, or} from "patronum";
+import {createEvent, sample} from "effector";
+import {and, equals, not, or} from "patronum";
 
-import {homeRoutes, signInRoutes} from "@/shared/routing";
+import {homeRoutes} from "@/shared/routing";
 
 import {
     $isAuthenticated,
-    $selfLoaded, $session,
+    $selfLoaded,
     $sessionRole,
-    authFailed,
-    authSuccessed
 } from "@/entities/session/model/session.model";
 
 export function chainAdminRoute<Params extends RouteParams>(route: RouteInstance<Params>){
@@ -24,7 +22,6 @@ export function chainAdminRoute<Params extends RouteParams>(route: RouteInstance
         filter: and(or(not($isAuthenticated), equals($sessionRole, 'User')), route.$isOpened),
         target: redirect({ route: homeRoutes.route })
     })
-
 
     return chainRoute({
         route,
