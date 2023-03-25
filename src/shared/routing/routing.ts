@@ -7,9 +7,10 @@ const accountRoute = createRoute();
 const homeRoute = createRoute();
 const shopRoute = createRoute();
 const goToShopRoute = createRoute();
-
 const loginRoute = createRoute();
 const registerRoute = createRoute();
+const adminRoute = createRoute()
+
 export const goToProductRoute = createRoute();
 export const productRoutes = {
   route: productRoute,
@@ -37,3 +38,7 @@ export const signInRoutes = {
 export const signUpRoutes = {
   route: registerRoute,
 };
+
+export const adminRoutes = {
+  route: adminRoute
+}

@@ -8,7 +8,7 @@ import {
   signInRoutes,
   productRoutes,
   shopRoutes,
-  signUpRoutes,
+  signUpRoutes, adminRoutes,
 } from "@/shared/routing";
 
 import { navigationRoutes } from "@/widgets/Layouts/main-layout/header";
@@ -40,6 +40,10 @@ const routes = [
     path: "/signup",
     route: [signUpRoutes.route],
   },
+  {
+    path: '/admin',
+    route: adminRoutes.route
+  }
 ];
 
 export const router = createHistoryRouter({ routes, controls });

@@ -22,17 +22,15 @@ export function chainAuthorized<Params extends RouteParams>(
     clock: checkStarted,
     filter: $isAuthenticated,
   });
-
-  sample({
-    clock: [authFailed, checkStarted, $selfLoaded],
-    filter: and(not($isAuthenticated), route.$isOpened, $selfLoaded),
-    target: redirect({ route: signInRoutes.route }),
-  });
-
   sample({
     clock: authFailed,
     fn: () => true,
     target: $selfLoaded,
+  });
+  sample({
+    clock: [authFailed, checkStarted, $selfLoaded],
+    filter: and(not($isAuthenticated), route.$isOpened, $selfLoaded),
+    target: redirect({ route: signInRoutes.route }),
   });
   return chainRoute({
     route,

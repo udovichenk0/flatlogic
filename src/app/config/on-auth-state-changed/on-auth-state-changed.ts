@@ -15,7 +15,7 @@ export const onAuthStateChangedFx = createEffect(async () => {
         fn: (cartFromLs, user) => {
           return cartModel.mergeArrayOfObjects(user.cart, cartFromLs);
         },
-        target: cartModel.$cart,
+        target: [cartModel.$cart, sessionModel.authSuccessed],
       });
     } else {
       sample({
