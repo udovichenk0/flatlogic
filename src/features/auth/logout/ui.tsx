@@ -1,4 +1,4 @@
-import { logoutTriggered } from "./model"
+import { logoutTriggered } from "./logout.model"
 
 export const Logout = () => {
 	return (

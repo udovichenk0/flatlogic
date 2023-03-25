@@ -9,7 +9,7 @@ import secondCard from '/second.webp'
 import thirdCard from '/third.webp'
 import chair from '/chair.png'
 
-import { $$goodsList, redirectToShop } from './model'
+import { $$goodsList, redirectToShop } from './home.model'
 
 import 'keen-slider/keen-slider.min.css'
 
@@ -67,7 +67,7 @@ const Home = () => {
 		</div>
 	)
 }
-//$$goodsList.changeLastItemId(goods[goods.length-1].id)
+
 
 
 

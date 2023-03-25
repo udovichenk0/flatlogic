@@ -14,7 +14,7 @@ export const filterModel = createFilterModel()
 sample({
   clock: filterModel.filterRangeChanged,
   source: filterModel.$filters,
-  fn: ([byPriceRange, order]) => {
+  fn: ([byPriceRange]) => {
     return {
       byPriceRange,
     }

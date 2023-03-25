@@ -1,11 +1,10 @@
 import { useUnit } from "effector-react";
 
-import {Feedback} from "@/shared/api/Products";
 import { CartItem } from "@/shared/api/User";
 import { BrownButton } from "@/shared/ui/Buttons/brown-button";
 import { Stars } from "@/shared/ui/Buttons/star";
 
-import { $starRate, $textareaValue, feedbackSubmitted, rateChanged, textareaChanged } from "./model";
+import { $starRate, $textareaValue, feedbackSubmitted, rateChanged, textareaChanged } from "./feedback.model";
 export const FeedbackForm = (
 	{
 		product,

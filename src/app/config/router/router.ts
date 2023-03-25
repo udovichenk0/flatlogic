@@ -4,7 +4,6 @@ import { createBrowserHistory } from "history";
 import {
   accountRoutes,
   controls,
-  goToProductRoute,
   homeRoutes,
   signInRoutes,
   productRoutes,
@@ -28,7 +27,7 @@ const routes = [
       homeRoutes.goToShopRoute,
     ],
   },
-  { path: "/product/:id", route: [productRoutes.route, goToProductRoute] },
+  { path: "/product/:id", route: [productRoutes.route, homeRoutes.goToProductRoute, shopRoutes.goToProductRoute] },
   {
     path: "/account",
     route: [accountRoutes.route, navigationRoutes.goToAccountRoute],

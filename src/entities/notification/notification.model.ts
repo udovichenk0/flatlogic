@@ -1,4 +1,4 @@
-import { Store, Event, sample, attach, createEffect } from "effector";
+import { Event, sample, createEffect } from "effector";
 import { toast } from "react-toastify";
 type notificationType = "success" | "info" | "error";
 

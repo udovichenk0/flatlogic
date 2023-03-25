@@ -1,7 +1,7 @@
 import {expect, test, vi} from "vitest";
 import {allSettled, fork} from "effector";
 import {sessionModel} from '@/entities/session'
-import {logoutFx, logoutTriggered} from "@/features/auth/logout/model";
+import {logoutFx, logoutTriggered} from "@/features/auth/logout/logout.model";
 
 const  User1 = {
     avatar_url: 'string',

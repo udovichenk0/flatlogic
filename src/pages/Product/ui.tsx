@@ -11,7 +11,7 @@ import { FeedbackCard } from "@/entities/feedback"
 
 import { FeedbackForm } from "@/features/feedback"
 
-import {$$feedback, $$modal, $$product, $$featureCartModel} from "./model"
+import {$$feedback, $$modal, $$product, $$featureCartModel} from "./product.model"
 
 const Product = () => {
 	const [product, rates, reviews, isFeedbackPending,cart] = useUnit([

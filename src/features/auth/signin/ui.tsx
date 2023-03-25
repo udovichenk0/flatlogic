@@ -5,11 +5,10 @@ import { SyntheticEvent } from 'react'
 import { signUpRoutes } from '@/shared/routing'
 import { AuthInput } from '@/shared/ui/inputs/auth-imput'
 
-import { loginForm } from "./model"
+import { loginForm } from "./signin.model"
 
 export const SignInForm = () => {
-	const {fields, eachValid, errorText,submit} = useForm(loginForm)
-	const test = useForm(loginForm)
+	const {fields, errorText,submit} = useForm(loginForm)
 	
 	const onSubmit = (e:SyntheticEvent) => {
 		e.preventDefault()

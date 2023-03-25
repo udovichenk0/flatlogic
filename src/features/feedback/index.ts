@@ -1,2 +1,2 @@
-export * from "./model";
+export * from "./feedback.model";
 export * from './ui'

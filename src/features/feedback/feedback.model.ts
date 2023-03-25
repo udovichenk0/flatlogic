@@ -29,11 +29,9 @@ import { sessionModel } from "@/entities/session";
       async ({ id, review }: { id: string; review: Feedback }) => {
         const feedbacks = await getUsersFeedback(id, review.userId);
         if (feedbacks) {
-          const response = await updateFeedback(id, review);
-          return response;
+          return await updateFeedback(id, review);
         }
-        const response = await leaveFeedback({ id, review });
-        return response;
+        return await leaveFeedback({ id, review });
       }
   );
 
@@ -65,6 +63,7 @@ import { sessionModel } from "@/entities/session";
     },
     target: leaveReviewFx,
   });
+
 
 // show notification on success
   notification({

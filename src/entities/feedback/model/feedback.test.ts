@@ -29,7 +29,7 @@ test('feedback', async () => {
         ]
     })
 
-    await allSettled($$feedback.getReviews, {
+    await allSettled($$feedback.getReviewsFx, {
         scope,
         params: {
             userId:'userId',

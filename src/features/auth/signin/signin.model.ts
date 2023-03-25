@@ -4,7 +4,7 @@ import { createForm } from "effector-forms";
 import { loginWithEmailAndPassword } from "@/shared/api/User";
 import { signInRoutes } from "@/shared/routing";
 
-import {authSuccessed, getUserFx} from "@/entities/session/model";
+import {authSuccessed} from "@/entities/session/model";
 
 import { rules } from "../config";
 
@@ -25,8 +25,7 @@ export const loginForm = createForm({
 
 export const signInWithEmailAndPasswordFx = createEffect(
   async ({ email, password }: { email: string; password: string }) => {
-    const response = await loginWithEmailAndPassword(email, password);
-    return response;
+    return await loginWithEmailAndPassword(email, password);
   }
 );
 

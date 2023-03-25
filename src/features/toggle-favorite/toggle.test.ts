@@ -1,6 +1,6 @@
-import {test, expect, vitest, vi} from 'vitest'
+import {test, expect, vi} from 'vitest'
 import {allSettled, fork} from "effector";
-import {$testStore, createCartModel, testEvent} from "@/features/cart/toggle-favorite/model";
+import {createCartModel} from "@/features/toggle-favorite/toggle.model";
 import {Product} from "@/shared/api/Products";
 import { cartModel } from '@/entities/cart';
 import {CartItem} from "@/shared/api/User";

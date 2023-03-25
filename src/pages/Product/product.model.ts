@@ -8,8 +8,8 @@ import {createFeedbackModel} from "@/entities/feedback";
 import { createProductModel } from "@/entities/product";
 import { sessionModel } from "@/entities/session";
 
-import { createCartModel } from "@/features/cart/toggle-favorite";
 import { leaveReviewFx, $starRate, $textareaValue} from "@/features/feedback";
+import { createCartModel } from "@/features/toggle-favorite";
 
 
 const pageOpened = createEvent();

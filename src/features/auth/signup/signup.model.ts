@@ -1,9 +1,8 @@
-import { redirect } from "atomic-router";
 import { createEffect, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { createAccountWithEmail, saveUserToBD, User } from "@/shared/api/User";
-import { homeRoutes, signUpRoutes } from "@/shared/routing";
+import { signUpRoutes } from "@/shared/routing";
 
 import {authSuccessed, getUserFx} from "@/entities/session/model";
 
@@ -51,8 +50,7 @@ const signUpWithEmailAndPasswordFx = createEffect(
     name: string;
     surname: string;
   }) => {
-    const user = await createAccountWithEmail(email, password);
-    return user;
+    return await createAccountWithEmail(email, password);
   }
 );
 
