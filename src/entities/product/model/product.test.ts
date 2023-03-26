@@ -27,7 +27,7 @@ const product = [
 
 
 test('product test', async () => {
-    const list = createGoodsListModel({limit: 10, maxDefaultPrice: 10000, minDefaultPrice: 1})
+    const list = createGoodsListModel({limit: 10})
     const fn = vi.fn(() => ({goods: product}))
     const scope = fork({
         handlers: [
