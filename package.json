@@ -18,6 +18,7 @@
     "babel-jest": "^29.4.2",
     "core-js": "^3.27.2",
     "effector": "^22.5.0",
+    "effector-factorio": "^1.1.0",
     "effector-forms": "^0.0.24",
     "effector-react": "^22.4.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",

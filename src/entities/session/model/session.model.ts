@@ -20,9 +20,11 @@ export const $isAuthenticated = createStore(false);
 $isAuthenticated.reset(sessionReset);
 export const $sessionRole = createStore<'User' | 'Admin'>('User')
 export const getUserFx = createEffect(async ({ uid }: { uid: string }) => {
-  const user = await getUser(uid);
-  return user;
+  return  await getUser(uid);
 });
+export const removeProductFromLsFx = createEffect(() => {
+  localStorage.removeItem("products")
+})
 
 
 sample({

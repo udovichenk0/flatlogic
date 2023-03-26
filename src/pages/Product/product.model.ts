@@ -8,7 +8,7 @@ import {createFeedbackModel} from "@/entities/feedback";
 import { createProductModel } from "@/entities/product";
 import { sessionModel } from "@/entities/session";
 
-import { leaveReviewFx, $starRate, $textareaValue} from "@/features/feedback";
+import {feedbackFactory} from "@/features/feedback";
 import { createCartModel } from "@/features/toggle-favorite";
 
 
@@ -18,6 +18,8 @@ export const $$product = createProductModel();
 export const $$feedback = createFeedbackModel();
 export const $$modal = createModal({});
 export const $$featureCartModel = createCartModel();
+
+export const feedbackModel = feedbackFactory.createModel()
 
 
 // fetch product on opened/updated page
@@ -34,7 +36,7 @@ sample({
     productRoutes.route.opened,
     productRoutes.route.updated,
     sessionModel.$session,
-    leaveReviewFx.done,
+    feedbackModel.leaveReviewFx.done,
     pageOpened,
   ],
   source: combine(productRoutes.route.$params, sessionModel.$session),
@@ -58,8 +60,8 @@ sample({
   },
   target: spread({
     targets: {
-      rate: $starRate,
-      comment: $textareaValue
+      rate: feedbackModel.$starRate,
+      comment: feedbackModel.$textareaValue
     }
   }),
 });
@@ -73,7 +75,7 @@ sample({
 
 // close modal when leaveReviewFx success
 sample({
-  clock: leaveReviewFx.done,
+  clock: feedbackModel.leaveReviewFx.done,
   target: [$$modal.close],
 });
 

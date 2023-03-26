@@ -1,5 +1,5 @@
 import { Store } from "effector"
-import { useStore } from "effector-react"
+import {useUnit} from "effector-react"
 import { Fragment } from "react"
 
 import { Product } from "@/shared/api/Products"
@@ -8,7 +8,6 @@ import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
 import { cartModel } from "@/entities/cart"
 import { GoodCard } from "@/entities/product"
-
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
 import { Modal } from "./ui/modal/ui"
@@ -20,10 +19,12 @@ type GoodModel ={
 }
 
 export const GoodsList = ({goodsModel}:{goodsModel: GoodModel}) => {
-	const cart = useStore(cartModel.$cart)
-	const goods = useStore(goodsModel.$goods)
-	const isFetching = useStore(goodsModel.$isFetching)
-	const openedModal = useStore($openedModal)
+	const [cart,goods, isFetching, openedModal] = useUnit([
+		cartModel.$cart,
+		goodsModel.$goods,
+		goodsModel.$isFetching,
+		$openedModal
+	])
 	return (
 		<div>
 			<div className="grid grid-cols-[repeat(auto-fit,minmax(205px,max-content))] justify-center gap-10 mb-16">

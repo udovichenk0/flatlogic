@@ -11,7 +11,7 @@ import { FeedbackCard } from "@/entities/feedback"
 
 import { FeedbackForm } from "@/features/feedback"
 
-import {$$feedback, $$modal, $$product, $$featureCartModel} from "./product.model"
+import {$$feedback, $$modal, $$product, $$featureCartModel, feedbackModel} from "./product.model"
 
 const Product = () => {
 	const [product, rates, reviews, isFeedbackPending,cart] = useUnit([
@@ -50,7 +50,7 @@ const Product = () => {
 					<h2 className="text-[21px] font-bold text-base-dark">Reviews: {product?.reviews?.length}</h2>
 					<button onClick={() => $$modal.open()} className='text-bold text-sm text-brown'>+ Leave Feedback</button>
 					<Modal modal={$$modal}>
-						<FeedbackForm product={product}/>
+						<FeedbackForm model={feedbackModel} product={product}/>
 					</Modal>
 				</div>
 				<div className="mb-14 flex flex-col gap-8">

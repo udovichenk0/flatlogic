@@ -2792,6 +2792,11 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
+effector-factorio@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/effector-factorio/-/effector-factorio-1.1.0.tgz#af1cd4dee40182f45ae794e80973202aa543ec38"
+  integrity sha512-yTkxvYSGCdzpmYR6AR/0yQHN7PJ3TXKK/XYYdLvWslVEmaZEp8mhrvRalSX3tnycVsZpdgvr7VIM7yFWL2v9fQ==
+
 effector-forms@^0.0.24:
   version "0.0.24"
   resolved "https://registry.yarnpkg.com/effector-forms/-/effector-forms-0.0.24.tgz#2ff2ee251b4aa059baa9f6883866da0758a896bb"

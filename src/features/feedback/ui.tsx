@@ -1,18 +1,15 @@
+import {modelView} from "effector-factorio";
 import { useUnit } from "effector-react";
 
 import { CartItem } from "@/shared/api/User";
 import { BrownButton } from "@/shared/ui/Buttons/brown-button";
 import { Stars } from "@/shared/ui/Buttons/star";
 
-import { $starRate, $textareaValue, feedbackSubmitted, rateChanged, textareaChanged } from "./feedback.model";
-export const FeedbackForm = (
-	{
-		product,
-	}:
-		{
-			product:CartItem,
-		}) => {
-	const [userRate, userComment] = useUnit([$starRate, $textareaValue])
+import { feedbackFactory } from "@/features/feedback/feedback.model";
+
+export const FeedbackForm = modelView(feedbackFactory,({product}: {product:CartItem}) => {
+	const model = feedbackFactory.useModel()
+	const [userRate, userComment] = useUnit([model.$starRate, model.$textareaValue])
 	return (
 		<div>
 			<div className="flex gap-3 items-center border-b-2 pb-5 mb-5 border-[#d9d9d9]">
@@ -26,11 +23,11 @@ export const FeedbackForm = (
 			</div>
 			<div className="flex gap-2 items-center mb-5">
 				<h2 className="text-sm font-bold text-base-dark">Rate Product: </h2>
-				<Stars starRate={userRate} action={rateChanged}/>
+				<Stars starRate={userRate} action={model.rateChanged}/>
 			</div>
-			<textarea value={userComment} onChange={(e) => textareaChanged(e.currentTarget.value)} placeholder="Add your comment"
+			<textarea value={userComment} onChange={(e) => model.textareaChanged(e.currentTarget.value)} placeholder="Add your comment"
 			className="w-full border-2 border-[#ddd] p-4 h-[200px] outline-none mb-5" name="" id=""></textarea>
-			<BrownButton text={"LEAVE FEEDBACK"} action={() => feedbackSubmitted(product.id)}/>
+			<BrownButton text={"LEAVE FEEDBACK"} action={() => model.feedbackSubmitted(product.id)}/>
 		</div>
 	)
-}
+})

@@ -6,6 +6,8 @@ import { SignUpForm } from "@/features/auth/signup"
 
 import registerImg from '/register.png'
 
+import {createRegisterModel} from "@/pages/Auth/Signup/signup.model";
+
 const SignUp = () => {
 	return (
 		<div className='flex h-screen justify-between'>
@@ -15,7 +17,7 @@ const SignUp = () => {
 						Flatlogic<span className='text-brown'>.</span>
 					</Link>
 					<span className='font-bold text-lg mb-5'>Sign up</span>
-					<SignUpForm/>
+					<SignUpForm model={createRegisterModel}/>
 				</div>
 			</div>
 			<div className='flex-1 h-full object-cover'>

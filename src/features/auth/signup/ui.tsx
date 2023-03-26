@@ -1,14 +1,16 @@
 import { Link } from 'atomic-router-react'
+import {modelView} from "effector-factorio";
 import { useForm } from 'effector-forms'
 import { SyntheticEvent } from 'react'
 
 import { signInRoutes } from '@/shared/routing'
 import { AuthInput } from '@/shared/ui/inputs/auth-imput'
 
-import { registerForm } from "./signup.model"
+import { registerFactory } from "./signup.model"
 
-export const SignUpForm = () => {
-	const {fields, errorText,submit} = useForm(registerForm)
+export const SignUpForm = modelView(registerFactory,() => {
+	const model = registerFactory.useModel()
+	const {fields, errorText,submit} = useForm(model.registerForm)
 	
 	const onSubmit = (e:SyntheticEvent) => {
 		e.preventDefault()
@@ -69,4 +71,4 @@ export const SignUpForm = () => {
 			</form>
 		</div>
 	)
-}
+})
