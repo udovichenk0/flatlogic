@@ -1,7 +1,7 @@
 import {useUnit} from "effector-react"
 
 import { averageRate } from "@/shared/lib/average-rate"
-import { isItemInCart } from "@/shared/lib/isItemInCart"
+import { isItemInCart } from "@/shared/lib/is-item-in-cart"
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Stars } from "@/shared/ui/Buttons/star"
 import { Modal } from "@/shared/ui/modal"

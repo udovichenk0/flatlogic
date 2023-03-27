@@ -3,7 +3,7 @@ import {useUnit} from "effector-react"
 import { Fragment } from "react"
 
 import { Product } from "@/shared/api/Products"
-import { isItemInCart } from "@/shared/lib/isItemInCart"
+import { isItemInCart } from "@/shared/lib/is-item-in-cart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
 import { cartModel } from "@/entities/cart"
