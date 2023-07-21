@@ -1,4 +1,4 @@
-import { Feedback } from "@/shared/api/Products"
+import { Feedback } from "@/shared/api/feedback"
 import { Stars } from "@/shared/ui/Buttons/star"
 
 import UserImage from '/user.png'

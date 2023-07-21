@@ -1,9 +1,9 @@
 import {test, expect, vi} from 'vitest'
 import {allSettled, fork} from "effector";
 import {createCartModel} from "@/features/toggle-favorite/toggle.model";
-import {Product} from "@/shared/api/Products";
+import {Product} from "@/shared/api/products";
 import { cartModel } from '@/entities/cart';
-import {CartItem} from "@/shared/api/User";
+import {CartItem} from "@/shared/api/user";
 const cart = [
     {
         title: "Some flower",

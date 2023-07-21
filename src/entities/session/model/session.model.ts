@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 
-import { getUser, User } from "@/shared/api/User";
+import { getUser, User } from "@/shared/api/user";
 
 export const authFailed = createEvent();
 export const authSuccessed = createEvent()

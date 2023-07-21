@@ -1,4 +1,4 @@
-import { CartItem } from "@/shared/api/User";
+import { CartItem } from "@/shared/api/user";
 
 export const WishCard = ({product}:{product: CartItem}) => {
 	return (

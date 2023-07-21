@@ -1,4 +1,4 @@
-import { User } from "@/shared/api/User"
+import { User } from "@/shared/api/user"
 
 import { Logout } from "@/features/auth/logout"
 

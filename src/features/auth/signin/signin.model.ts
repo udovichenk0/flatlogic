@@ -2,7 +2,7 @@ import { createEffect, sample } from "effector";
 import {modelFactory} from "effector-factorio";
 import { createForm } from "effector-forms";
 
-import { loginWithEmailAndPassword } from "@/shared/api/User";
+import { loginWithEmailAndPassword } from "@/shared/api/user";
 import { signInRoutes } from "@/shared/routing";
 
 import { sessionModel } from "@/entities/session";

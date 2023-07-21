@@ -1,6 +1,7 @@
 import {createEffect, createEvent, createStore, sample} from "effector";
 
-import { getFeedbacks, Feedback } from "@/shared/api/Products";
+import { Feedback, getFeedbacks } from "@/shared/api/feedback";
+
 
 
 export const createFeedbackModel = () => {
@@ -9,7 +10,6 @@ export const createFeedbackModel = () => {
   const $isPending = createStore(false);
   const $rates = createStore<number[]>([]);
 
-  // get all reviews
   const getReviewsFx = createEffect(
     async ({ productId, userId }: { productId: string; userId: string }) => {
       return (await getFeedbacks(productId, userId)) as Feedback[];
@@ -29,14 +29,11 @@ export const createFeedbackModel = () => {
     target: $rates,
   });
 
-  //TODO Delete feedback
-  //fill the store
   sample({
     clock: getReviewsFx.doneData,
     target: $reviews,
   });
 
-  //toggle pending state
   sample({
     clock: getReviewsFx,
     fn: () => true,
@@ -47,6 +44,7 @@ export const createFeedbackModel = () => {
     fn: () => false,
     target: $isPending,
   });
+  
   return {
     $isPending,
     $rates,

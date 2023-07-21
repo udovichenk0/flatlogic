@@ -1,7 +1,7 @@
 import { redirect } from "atomic-router";
 import { createEffect, createEvent, sample } from "effector";
 
-import { logout } from "@/shared/api/User";
+import { logout } from "@/shared/api/user";
 import { homeRoutes } from "@/shared/routing";
 
 import { cartModel } from "@/entities/cart";

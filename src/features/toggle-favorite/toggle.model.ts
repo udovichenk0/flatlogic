@@ -6,20 +6,17 @@ import {
   sample,
 } from "effector";
 
-import { addToCart, CartItem, removeFromCart } from "@/shared/api/User";
+import { addToCart, CartItem, removeFromCart } from "@/shared/api/user";
 
 import { cartModel } from "@/entities/cart";
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
 
   export const createCartModel = () => {
-  const $isPending = createStore(true);
   const favoriteToggled = createEvent<CartItem>();
   const successAdded = createEvent();
   const successRemoved = createEvent();
 
-
-  // add/remove product to/from cart
   const toggleFavoriteFx = attach({
     source: cartModel.$cart,
     mapParams: ({ data, id }, cart) => ({
@@ -54,7 +51,6 @@ import { sessionModel } from "@/entities/session";
     effect: createEffect(
       async ({ cart, product }: { product: CartItem; cart: CartItem[] }) => {
         const isProductInCart = cart.find(({ id }) => id == product.id);
-        // if product in localstorage then remove from it, else add to
         if (isProductInCart) {
           const newCart = cart.filter(({ id }) => id != product.id);
           localStorage.setItem("products", JSON.stringify(newCart));
@@ -67,7 +63,6 @@ import { sessionModel } from "@/entities/session";
     ),
   });
 
-  // toggleFavorite on event triggered // when user is authenticated
   sample({
     clock: favoriteToggled,
     source: sessionModel.$session,
@@ -79,7 +74,6 @@ import { sessionModel } from "@/entities/session";
     target: toggleFavoriteFx,
   });
 
-  // toggle favorite in localStorage when user is not authorized
   sample({
     clock: favoriteToggled,
     source: sessionModel.$session,
@@ -88,11 +82,6 @@ import { sessionModel } from "@/entities/session";
     target: toggleCartFromLSFx,
   });
 
-
-  //TODO write logic, when user is anonymous // add to localStorage, then merge products from LS with bd
-
-  // update cart
-  //remove from the cart
   sample({
     clock: toggleFavoriteFx.doneData,
     source: cartModel.$cart,
@@ -100,7 +89,7 @@ import { sessionModel } from "@/entities/session";
     fn: (_, newCart) => newCart,
     target: [cartModel.$cart, successRemoved],
   });
-  // added to the cart
+
   sample({
     clock: toggleFavoriteFx.doneData,
     source: cartModel.$cart,
@@ -108,7 +97,7 @@ import { sessionModel } from "@/entities/session";
     fn: (_, newCart) => newCart,
     target: [cartModel.$cart, successAdded],
   });
-  // update cart from localStorage
+
   sample({
     clock: toggleCartFromLSFx.doneData,
     source: cartModel.$cart,
@@ -125,24 +114,22 @@ import { sessionModel } from "@/entities/session";
     target: [cartModel.$cart, successAdded],
   });
 
-  // show toasts when FX are done
   notification({
     clock: successAdded,
     type: "success",
     message: "product added to your cart",
   });
+
   notification({
     clock: successRemoved,
     type: "success",
     message: "product removed from your cart",
   });
-  //TODO show notification on failed try to add to the store
 
   return {
     toggleFavoriteFx,
     toggleCartFromLSFx,
     favoriteToggled,
-    $isPending,
   };
 };
 

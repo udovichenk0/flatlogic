@@ -5,13 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 // web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB7YLACybcXs1g1FzmcDMAIah9KDJYOl1A",
-  authDomain: "flatlogic-bb6a9.firebaseapp.com",
-  projectId: "flatlogic-bb6a9",
-  storageBucket: "flatlogic-bb6a9.appspot.com",
-  messagingSenderId: "867576179923",
-  appId: "1:867576179923:web:197689ba29a5030dd8f826",
-  databaseURL: "https://flatlogic-bb6a9.eur3.firebaseio.com",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  databaseURL: import.meta.env.VITE_DATABASE_ID,
 };
 
 // Initialize Firebase

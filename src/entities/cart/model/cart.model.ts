@@ -1,6 +1,6 @@
 import { createEvent, createStore } from "effector";
 
-import { CartItem } from "@/shared/api/User";
+import { CartItem } from "@/shared/api/user";
 
 export const cartReset = createEvent();
 

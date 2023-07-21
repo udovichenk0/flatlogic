@@ -6,7 +6,7 @@ import {
 } from "effector";
 import {spread} from "patronum";
 
-import { getProducts, getProduct, Product } from "@/shared/api/Products";
+import { getProducts, getProduct, Product } from "@/shared/api/products";
 //list of goods
 export const createGoodsListModel = ({limit}: {limit: number; }) => {
   const reset = createEvent();

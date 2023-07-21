@@ -7,12 +7,7 @@ import {
 } from "effector";
 import {modelFactory} from "effector-factorio";
 
-import {
-  Feedback,
-  getUsersFeedback,
-  leaveFeedback,
-  updateFeedback,
-} from "@/shared/api/Products";
+import { Feedback, getUsersFeedback, leaveFeedback, updateFeedback } from "@/shared/api/feedback";
 
 import { notification } from "@/entities/notification";
 import { sessionModel } from "@/entities/session";
@@ -45,7 +40,6 @@ import { sessionModel } from "@/entities/session";
       clock: textareaChanged,
       target: $textareaValue,
     });
-// leave a feedback about product
 
     sample({
       clock: feedbackSubmitted,

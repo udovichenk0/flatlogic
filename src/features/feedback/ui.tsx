@@ -1,7 +1,7 @@
 import {modelView} from "effector-factorio";
 import { useUnit } from "effector-react";
 
-import { CartItem } from "@/shared/api/User";
+import { CartItem } from "@/shared/api/user";
 import { BrownButton } from "@/shared/ui/Buttons/brown-button";
 import { Stars } from "@/shared/ui/Buttons/star";
 
