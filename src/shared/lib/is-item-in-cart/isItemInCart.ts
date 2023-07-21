@@ -1,5 +1,11 @@
-import { CartItem } from "@/shared/api/user";
-
-export function isItemInCart(cart: CartItem[], itemId: string) {
-  return !!cart.find(({ id }) => id == itemId);
+type CartProduct = {
+    description: string;
+    id: string;
+    price: number;
+    title: string;
+    type: string;
+    url: string;
+}
+export function isProductInCart(cart: CartProduct[], productId: string) {
+  return Boolean(cart.find(({ id }) => id == productId));
 }

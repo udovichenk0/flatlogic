@@ -2,10 +2,10 @@ import { createEffect, sample } from "effector";
 import {modelFactory} from "effector-factorio";
 import { createForm } from "effector-forms";
 
-import { loginWithEmailAndPassword } from "@/shared/api/user";
+import { loginWithEmailAndPassword } from "@/shared/api/session";
 import { signInRoutes } from "@/shared/routing";
 
-import { sessionModel } from "@/entities/session";
+import { authSuccessed, removeProductFromLsFx } from "@/entities/session";
 
 import { rules } from "../config";
 
@@ -36,7 +36,7 @@ export const loginFactory = modelFactory(() => {
 
   sample({
     clock: signInWithEmailAndPasswordFx.done,
-    target: [sessionModel.removeProductFromLsFx, sessionModel.authSuccessed]
+    target: [removeProductFromLsFx, authSuccessed]
   });
 
   sample({

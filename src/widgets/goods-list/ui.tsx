@@ -3,10 +3,10 @@ import {useUnit} from "effector-react"
 import { Fragment } from "react"
 
 import { Product } from "@/shared/api/products"
-import { isItemInCart } from "@/shared/lib/is-item-in-cart"
+import { isProductInCart } from "@/shared/lib/is-item-in-cart"
 import { SkeletonCards } from "@/shared/ui/Skeleton/card-skeleton"
 
-import { cartModel } from "@/entities/cart"
+import { $cart } from "@/entities/cart"
 import { GoodCard } from "@/entities/product"
 
 import { $openedModal, featureCartModel, modal, openModalById } from "./goods.model"
@@ -14,14 +14,14 @@ import { Modal } from "./ui/modal/ui"
 
 
 type GoodModel ={
-	$goods: Store<Product[]>,
+	$products: Store<Product[]>,
 	$isFetching: Store<boolean>,
 }
 
 export const GoodsList = ({goodsModel}:{goodsModel: GoodModel}) => {
 	const [cart,goods, isFetching, openedModal] = useUnit([
-		cartModel.$cart,
-		goodsModel.$goods,
+		$cart,
+		goodsModel.$products,
 		goodsModel.$isFetching,
 		$openedModal
 	])
@@ -35,13 +35,13 @@ export const GoodsList = ({goodsModel}:{goodsModel: GoodModel}) => {
 					return (
 						<Fragment key={id}>
 							<GoodCard price={price} title={title} type={type} url={url} id={id}
-							isAdded={isItemInCart(cart, id)}
+							isAdded={isProductInCart(cart, id)}
 							openModal={openModalById}
 							toggle={() => featureCartModel.favoriteToggled(product)}/>
 							{openedModal == id &&
 							<Modal modal={modal}
 							product={product}
-							isAdded={isItemInCart(cart, id)}
+							isAdded={isProductInCart(cart, id)}
 							toggle={() => featureCartModel.favoriteToggled(product)}/>}
 						</Fragment>
 					)

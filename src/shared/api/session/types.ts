@@ -1,18 +1,11 @@
-export type CartItem = {
-  description: string;
-  id: string;
-  price: number;
-  title: string;
-  type: string;
-  url: string;
-};
+import { CartProductDto } from "../cart/type";
 
-export type User = {
+export type UserDto = {
   avatar_url: string;
   billing_address: string;
   delivery_address: string;
   payment_method: string;
-  cart: CartItem[];
+  cart: CartProductDto[];
   email: string;
   name: string;
   surname: string;

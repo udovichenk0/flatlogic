@@ -1,6 +1,6 @@
 import {expect, test, vi} from "vitest";
 import {allSettled, fork} from "effector";
-import {sessionModel} from '@/entities/session'
+import {$session} from '@/entities/session'
 import {logoutFx, logoutTriggered} from "@/features/auth/logout/logout.model";
 
 const  User1 = {
@@ -28,7 +28,7 @@ test('logout', async () => {
     const fn = vi.fn()
     const scope = fork({
         values: [
-            [sessionModel.$session, User1]
+            [$session, User1]
         ],
         handlers: [
             [logoutFx, fn]
@@ -38,5 +38,5 @@ test('logout', async () => {
     await allSettled(logoutTriggered, {scope})
 
     expect(fn).toHaveBeenCalled()
-    expect(scope.getState(sessionModel.$session)).toStrictEqual({})
+    expect(scope.getState($session)).toStrictEqual({})
 })

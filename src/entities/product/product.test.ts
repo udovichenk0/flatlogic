@@ -1,6 +1,7 @@
 import {test, vi,expect} from 'vitest'
 import {createGoodsListModel} from "@/entities/product";
 import {allSettled, fork} from "effector";
+import { productsFx } from '@/shared/api/products';
 const product = [
     {
         title: "Some flower",
@@ -31,15 +32,15 @@ test('product test', async () => {
     const fn = vi.fn(() => ({goods: product}))
     const scope = fork({
         handlers: [
-            [list.getGoodsFx, fn]
+            [productsFx, fn]
         ],
         values: [
-            [list.$goods, []]
+            [list.$products, []]
         ]
     })
     const resetScope = fork({
         values: [
-            [list.$goods, product]
+            [list.$products, product]
         ]
     })
 
@@ -47,6 +48,6 @@ test('product test', async () => {
     await allSettled(list.reset, {scope: resetScope})
     expect(fn).toBeCalled()
     expect(fn).toHaveReturnedWith({goods: product})
-    expect(scope.getState(list.$goods)).toEqual(product)
-    expect(resetScope.getState(list.$goods)).toHaveLength(0)
+    expect(scope.getState(list.$products)).toEqual(product)
+    expect(resetScope.getState(list.$products)).toHaveLength(0)
 })

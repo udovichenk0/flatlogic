@@ -1,9 +1,8 @@
 import { useStore } from "effector-react"
 import { Fragment } from "react"
 
-import { WishCard } from "@/entities/cart"
-import { $cart } from "@/entities/cart/model"
-import { sessionModel } from "@/entities/session"
+import { WishCard, $cart } from "@/entities/cart"
+import { $session, getUserFx } from "@/entities/session"
 
 import { Block } from "./ui/block"
 import { Profile } from "./ui/profile"
@@ -11,8 +10,8 @@ import { CartItemSkeleton } from "./ui/skeleton"
 
 const Account = () => {
 	const cart = useStore($cart)
-	const session = useStore(sessionModel.$session)
-	const isPending = useStore(sessionModel.getUserFx.pending)
+	const session = useStore($session)
+	const isPending = useStore(getUserFx.pending)
 	const skeletonLength = new Array(6).fill(0)
 	return (
 		<div className="container">

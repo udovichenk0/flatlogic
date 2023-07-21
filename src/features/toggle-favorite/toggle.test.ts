@@ -2,8 +2,7 @@ import {test, expect, vi} from 'vitest'
 import {allSettled, fork} from "effector";
 import {createCartModel} from "@/features/toggle-favorite/toggle.model";
 import {Product} from "@/shared/api/products";
-import { cartModel } from '@/entities/cart';
-import {CartItem} from "@/shared/api/user";
+import { $cart, CartProduct } from '@/entities/cart';
 const cart = [
     {
         title: "Some flower",
@@ -64,7 +63,7 @@ const product2 = {
 test('should toggle favorite', async () => {
     const $$cartModel = createCartModel()
     const {favoriteToggled} = $$cartModel
-    const fn = vi.fn((_,{product,cart}:{product:CartItem, cart:CartItem[]}) => {
+    const fn = vi.fn((_,{product,cart}:{product:CartProduct, cart:CartProduct[]}) => {
         const isProductInCart = cart.find(({ id }) => id == product.id);
 
         if (isProductInCart) {
@@ -78,7 +77,7 @@ test('should toggle favorite', async () => {
             [$$cartModel.toggleCartFromLSFx, fn],
         ],
         values: [
-            [cartModel.$cart, cart]
+            [$cart, cart]
         ]
     })
     await allSettled(favoriteToggled, {
@@ -88,12 +87,12 @@ test('should toggle favorite', async () => {
 
     expect(fn).toBeCalled()
     expect(fn).toHaveBeenCalledOnce()
-    expect(scope.getState(cartModel.$cart)).toEqual([...cart,product])
+    expect(scope.getState($cart)).toEqual([...cart,product])
 
     await allSettled(favoriteToggled, {
         scope,
         params: product2
     })
 
-    expect(scope.getState(cartModel.$cart)).toEqual([product])
+    expect(scope.getState($cart)).toEqual([product])
 })

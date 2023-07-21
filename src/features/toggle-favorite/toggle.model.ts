@@ -6,19 +6,20 @@ import {
   sample,
 } from "effector";
 
-import { addToCart, CartItem, removeFromCart } from "@/shared/api/user";
 
-import { cartModel } from "@/entities/cart";
+import { addToCart, removeFromCart } from "@/shared/api/cart";
+
+import { $cart, CartProduct } from "@/entities/cart";
 import { notification } from "@/entities/notification";
-import { sessionModel } from "@/entities/session";
+import { $session } from "@/entities/session";
 
   export const createCartModel = () => {
-  const favoriteToggled = createEvent<CartItem>();
+  const favoriteToggled = createEvent<CartProduct>();
   const successAdded = createEvent();
   const successRemoved = createEvent();
 
   const toggleFavoriteFx = attach({
-    source: cartModel.$cart,
+    source: $cart,
     mapParams: ({ data, id }, cart) => ({
       product: data,
       userId: id,
@@ -30,8 +31,8 @@ import { sessionModel } from "@/entities/session";
         product,
         userId,
       }: {
-        cart: CartItem[];
-        product: CartItem;
+        cart: CartProduct[];
+        product: CartProduct;
         userId: string;
       }) => {
         const isProductInCart = cart.find(({ id }) => id == product.id);
@@ -43,13 +44,13 @@ import { sessionModel } from "@/entities/session";
     ),
   });
   const toggleCartFromLSFx = attach({
-    source: cartModel.$cart,
-    mapParams: (product:CartItem, cart:CartItem[]) => ({
+    source: $cart,
+    mapParams: (product:CartProduct, cart:CartProduct[]) => ({
       cart,
       product,
     }),
     effect: createEffect(
-      async ({ cart, product }: { product: CartItem; cart: CartItem[] }) => {
+      async ({ cart, product }: { product: CartProduct; cart: CartProduct[] }) => {
         const isProductInCart = cart.find(({ id }) => id == product.id);
         if (isProductInCart) {
           const newCart = cart.filter(({ id }) => id != product.id);
@@ -65,7 +66,7 @@ import { sessionModel } from "@/entities/session";
 
   sample({
     clock: favoriteToggled,
-    source: sessionModel.$session,
+    source: $session,
     filter: (session) => !!session.id,
     fn: (session, data) => ({
       id: session.id,
@@ -76,7 +77,7 @@ import { sessionModel } from "@/entities/session";
 
   sample({
     clock: favoriteToggled,
-    source: sessionModel.$session,
+    source: $session,
     filter: (session) => !session.id,
     fn: (_, product) => product,
     target: toggleCartFromLSFx,
@@ -84,34 +85,34 @@ import { sessionModel } from "@/entities/session";
 
   sample({
     clock: toggleFavoriteFx.doneData,
-    source: cartModel.$cart,
+    source: $cart,
     filter: (cart, newCart) => cart.length > newCart.length,
     fn: (_, newCart) => newCart,
-    target: [cartModel.$cart, successRemoved],
+    target: [$cart, successRemoved],
   });
 
   sample({
     clock: toggleFavoriteFx.doneData,
-    source: cartModel.$cart,
+    source: $cart,
     filter: (cart, newCart) => cart.length < newCart.length,
     fn: (_, newCart) => newCart,
-    target: [cartModel.$cart, successAdded],
+    target: [$cart, successAdded],
   });
 
   sample({
     clock: toggleCartFromLSFx.doneData,
-    source: cartModel.$cart,
+    source: $cart,
     filter: (cart, newCart) => cart.length > newCart.length,
     fn: (_, newCart) => newCart,
-    target: [cartModel.$cart, successRemoved],
+    target: [$cart, successRemoved],
   });
 
   sample({
     clock: toggleCartFromLSFx.doneData,
-    source: cartModel.$cart,
+    source: $cart,
     filter: (cart, newCart) => cart.length < newCart.length,
     fn: (_, newCart) => newCart,
-    target: [cartModel.$cart, successAdded],
+    target: [$cart, successAdded],
   });
 
   notification({

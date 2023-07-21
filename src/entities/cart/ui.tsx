@@ -1,6 +1,6 @@
-import { CartItem } from "@/shared/api/user";
+import { CartProduct } from "./type"
 
-export const WishCard = ({product}:{product: CartItem}) => {
+export const WishCard = ({product}:{product: CartProduct}) => {
 	return (
 		<div className='grid grid-cols-[1fr,165px,100px] items-center'>
 			<div className="flex items-center gap-5">

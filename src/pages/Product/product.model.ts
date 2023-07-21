@@ -1,16 +1,16 @@
-import { combine, createEvent, sample } from "effector";
-import {spread} from "patronum";
+import { createEvent, sample } from "effector";
+import { spread } from "patronum";
 
+import { changeFeedbackFx, getReviewsFx, leaveFeedbackFx } from "@/shared/api/feedback";
 import { createModal } from "@/shared/lib/modal";
 import { productRoutes } from "@/shared/routing";
 
-import {createFeedbackModel} from "@/entities/feedback";
+import { createFeedbackModel } from "@/entities/feedback";
 import { createProductModel } from "@/entities/product";
-import { sessionModel } from "@/entities/session";
+import { $session, User } from "@/entities/session";
 
-import {feedbackFactory} from "@/features/feedback";
+import { feedbackFactory } from "@/features/feedback";
 import { createCartModel } from "@/features/toggle-favorite";
-
 
 const pageOpened = createEvent();
 
@@ -21,36 +21,31 @@ export const $$featureCartModel = createCartModel();
 
 export const feedbackModel = feedbackFactory.createModel()
 
-
-// fetch product on opened/updated page
 sample({
   clock: [productRoutes.route.opened, productRoutes.route.updated, pageOpened],
   source: productRoutes.route.$params,
   fn: (id: any) => id,
-  target: $$product.getProductFx,
+  target: $$product.getProductTriggered,
 });
-
-// fetch reviews on opened/updated page and when we leave new feedback(to update view)
 sample({
   clock: [
     productRoutes.route.opened,
     productRoutes.route.updated,
-    sessionModel.$session,
-    feedbackModel.leaveReviewFx.done,
+    $session,
+    leaveFeedbackFx.done,
+    changeFeedbackFx,
     pageOpened,
   ],
-  source: combine(productRoutes.route.$params, sessionModel.$session),
-  fn: ([params, session]: any) => ({
+  source: {params: productRoutes.route.$params, session: $session},
+  fn: ({ params, session }: {params: any, session: User}) => ({
     productId: params.id,
     userId: session.id,
   }),
   target: $$feedback.getReviewsTriggered,
 });
-
-// after we get feedbacks we need to take that one user left, then restore $starRate, $textareaValue with values from that feedback
 sample({
-  clock: $$feedback.getReviewsFx.doneData,
-  source: sessionModel.$session,
+  clock: getReviewsFx.doneData,
+  source: $session,
   fn: (user, data) => {
     const usersFeedback = data.find(({ userId }) => userId == user.id);
     return {
@@ -65,17 +60,13 @@ sample({
     }
   }),
 });
-
-//on close events
-// reset store on closed page
 sample({
   clock: productRoutes.route.closed,
-  target: $$product.reset,
+  target: [$$product.reset, $$feedback.reset],
 });
 
-// close modal when leaveReviewFx success
 sample({
-  clock: feedbackModel.leaveReviewFx.done,
+  clock: [leaveFeedbackFx.done, changeFeedbackFx.done],
   target: [$$modal.close],
 });
 

@@ -1,11 +1,11 @@
 import { redirect } from "atomic-router";
 import { createEffect, createEvent, sample } from "effector";
 
-import { logout } from "@/shared/api/user";
+import { logout } from "@/shared/api/session";
 import { homeRoutes } from "@/shared/routing";
 
-import { cartModel } from "@/entities/cart";
-import { sessionModel } from "@/entities/session";
+import { cartReset } from "@/entities/cart";
+import { sessionReset } from "@/entities/session";
 
 export const logoutTriggered = createEvent();
 
@@ -25,5 +25,5 @@ redirect({
 
 sample({
   clock: logoutFx.done,
-  target: [sessionModel.sessionReset, cartModel.cartReset],
+  target: [sessionReset, cartReset],
 });

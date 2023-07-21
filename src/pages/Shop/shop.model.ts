@@ -1,9 +1,11 @@
 import {createEvent, sample} from "effector";
 
+import { productsFx } from "@/shared/api/products";
 import { shopRoutes } from "@/shared/routing";
 
 import { createFilterModel } from "@/entities/filter";
-import { createGoodsListModel } from "@/entities/product/model";
+import { createGoodsListModel } from "@/entities/product";
+
 const pageOpened = createEvent();
 
 //factory
@@ -16,18 +18,18 @@ sample({
   source: filterModel.$filters,
   fn: ([byPriceRange]) => {
     return {
-      byPriceRange,
+      filterByPriceRange: byPriceRange,
     }
   },
-  target: $$goodsList.getGoodsFx
+  target: productsFx
 })
 
 
 //fetch goods when page is opened and there is empty store with goods
 sample({
   clock: [shopRoutes.route.opened, pageOpened],
-  source: $$goodsList.$goods,
-  filter: (goods) => !goods.length,
+  source: $$goodsList.$products,
+  filter: (products) => !products.length,
   target: $$goodsList.getGoods,
 });
 

@@ -2,8 +2,9 @@ import { Store, Event } from "effector"
 import {useStore} from "effector-react";
 import { useEffect, useRef } from "react";
 
-import { CartItem } from "@/shared/api/user";
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button";
+
+import { CartProduct } from "@/entities/cart";
 
 type Modal = {
 	$isOpened: Store<boolean>,
@@ -13,7 +14,7 @@ type Modal = {
 }
 
 
-export const Modal = ({modal, product, toggle, isAdded}:{modal:Modal, product:CartItem, toggle: () => void, isAdded: boolean}) => {
+export const Modal = ({modal, product, toggle, isAdded}:{modal:Modal, product: CartProduct, toggle: () => void, isAdded: boolean}) => {
 	const isOpened = useStore(modal.$isOpened)
 
 	const overlayRef = useRef<HTMLInputElement>(null)

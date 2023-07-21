@@ -12,9 +12,9 @@ const pageOpened = createEvent();
 //when page is opened fetch data
 sample({
   clock: [homeRoutes.route.opened, pageOpened],
-  source: $$goodsList.$goods,
-  filter: (goods) => {
-    return !goods.length;
+  source: $$goodsList.$products,
+  filter: (products) => {
+    return !products.length;
   },
   target: $$goodsList.getGoods,
 });

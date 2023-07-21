@@ -1,9 +1,10 @@
-import { User } from "@/shared/api/user"
 
 import { Logout } from "@/features/auth/logout"
 
 // eslint-disable-next-line import/no-internal-modules
 import userImage from '/user.png'
+
+import { User } from "@/entities/session"
 
 export const Profile = ({session}:{session: User}) => {
 	return (

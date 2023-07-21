@@ -1,14 +1,15 @@
 import { createEvent, createStore } from "effector";
 
-import { CartItem } from "@/shared/api/user";
+import { CartProduct } from "./type";
+
 
 export const cartReset = createEvent();
 
-export const $cart = createStore<CartItem[]>([]);
+export const $cart = createStore<CartProduct[]>([]);
 
 $cart.reset(cartReset);
 
-export function mergeArrayOfObjects(array: CartItem[], newArray: CartItem[]) {
+export function mergeArrayOfObjects(array: CartProduct[], newArray: CartProduct[]) {
   const ids = new Set(array.map((cart) => cart.id));
 
   return [...array, ...newArray.filter(({ id }) => !ids.has(id))];

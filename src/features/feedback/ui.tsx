@@ -1,13 +1,14 @@
 import {modelView} from "effector-factorio";
 import { useUnit } from "effector-react";
 
-import { CartItem } from "@/shared/api/user";
 import { BrownButton } from "@/shared/ui/Buttons/brown-button";
 import { Stars } from "@/shared/ui/Buttons/star";
 
+import { CartProduct } from "@/entities/cart";
+
 import { feedbackFactory } from "@/features/feedback/feedback.model";
 
-export const FeedbackForm = modelView(feedbackFactory,({product}: {product:CartItem}) => {
+export const FeedbackForm = modelView(feedbackFactory,({product, isCommented}: {product:CartProduct, isCommented: boolean}) => {
 	const model = feedbackFactory.useModel()
 	const [userRate, userComment] = useUnit([model.$starRate, model.$textareaValue])
 	return (
@@ -27,7 +28,7 @@ export const FeedbackForm = modelView(feedbackFactory,({product}: {product:CartI
 			</div>
 			<textarea value={userComment} onChange={(e) => model.textareaChanged(e.currentTarget.value)} placeholder="Add your comment"
 			className="w-full border-2 border-[#ddd] p-4 h-[200px] outline-none mb-5" name="" id=""></textarea>
-			<BrownButton text={"LEAVE FEEDBACK"} action={() => model.feedbackSubmitted(product.id)}/>
+			<BrownButton text={"LEAVE FEEDBACK"} action={() => model.feedbackSubmitted({id: product.id, isCommented })}/>
 		</div>
 	)
 })

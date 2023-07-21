@@ -1,6 +1,8 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 
-import { getUser, User } from "@/shared/api/user";
+import { getUser } from "@/shared/api/session";
+
+import { User } from "./type";
 
 export const authFailed = createEvent();
 export const authSuccessed = createEvent()
@@ -13,7 +15,7 @@ sample({
 
 export const sessionReset = createEvent();
 
-export const $session = createStore({} as User);
+export const $session = createStore<User>({} as User);
 $session.reset(sessionReset);
 
 export const $isAuthenticated = createStore(false);

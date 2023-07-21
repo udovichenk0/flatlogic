@@ -1,29 +1,29 @@
 import { createEffect, sample } from "effector";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { cartModel } from "@/entities/cart";
-import { sessionModel } from "@/entities/session";
+import { $cart, mergeArrayOfObjects } from "@/entities/cart";
+import { authFailed, authSuccessed, getUserFx } from "@/entities/session";
 
 const auth = getAuth();
 export const onAuthStateChangedFx = createEffect(async () => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      sessionModel.getUserFx({ uid: user.uid });
+      getUserFx({ uid: user.uid });
       sample({
-        clock: sessionModel.getUserFx.doneData,
-        source: cartModel.$cart,
+        clock: getUserFx.doneData,
+        source: $cart,
         fn: (cartFromLs, user) => {
-          return cartModel.mergeArrayOfObjects(user.cart, cartFromLs);
+          return mergeArrayOfObjects(user.cart, cartFromLs);
         },
-        target: [cartModel.$cart, sessionModel.authSuccessed],
+        target: [$cart, authSuccessed],
       });
     } else {
       sample({
-        clock: sessionModel.authFailed,
+        clock: authFailed,
         fn: () => JSON.parse(localStorage.getItem("products") || "[]"),
-        target: cartModel.$cart,
+        target: $cart,
       });
-      sessionModel.authFailed();
+      authFailed();
     }
   });
 });

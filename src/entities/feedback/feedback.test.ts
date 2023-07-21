@@ -1,6 +1,7 @@
 import {expect, test, vi} from "vitest";
 import {allSettled, fork} from "effector";
 import {createFeedbackModel} from "@/entities/feedback";
+import { getReviewsFx } from "@/shared/api/feedback";
 
 const reviews = [
     {
@@ -25,11 +26,11 @@ test('feedback', async () => {
             [$$feedback.$reviews, []],
         ],
         handlers: [
-            [$$feedback.getReviewsFx, fn]
+            [getReviewsFx, fn]
         ]
     })
 
-    await allSettled($$feedback.getReviewsFx, {
+    await allSettled(getReviewsFx, {
         scope,
         params: {
             userId:'userId',

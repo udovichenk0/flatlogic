@@ -2,10 +2,10 @@ import { createEffect, sample } from "effector";
 import {modelFactory} from "effector-factorio";
 import { createForm } from "effector-forms";
 
-import { createAccountWithEmail, saveUserToBD, User } from "@/shared/api/user";
+import { createAccountWithEmail, saveUserToBD, } from "@/shared/api/session";
 import { signUpRoutes } from "@/shared/routing";
 
-import { sessionModel } from "@/entities/session";
+import { User, authSuccessed, getUserFx, removeProductFromLsFx } from "@/entities/session";
 
 import { rules } from "../config";
 
@@ -58,7 +58,6 @@ export const registerFactory = modelFactory(() => {
     await saveUserToBD(data);
   });
 
-
   sample({
     clock: registerForm.formValidated,
     fn: ({ email, password, name, surname }) => ({
@@ -90,12 +89,12 @@ export const registerFactory = modelFactory(() => {
   sample({
     clock: signUpWithEmailAndPasswordFx.doneData,
     fn: (response) => ({ uid: response.uid }),
-    target: sessionModel.getUserFx,
+    target: getUserFx,
   });
 
   sample({
     clock: signUpWithEmailAndPasswordFx.done,
-    target: [sessionModel.removeProductFromLsFx, sessionModel.authSuccessed],
+    target: [removeProductFromLsFx, authSuccessed],
   });
 
   sample({

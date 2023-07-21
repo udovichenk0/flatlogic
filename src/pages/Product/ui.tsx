@@ -1,26 +1,36 @@
 import {useUnit} from "effector-react"
 
 import { averageRate } from "@/shared/lib/average-rate"
-import { isItemInCart } from "@/shared/lib/is-item-in-cart"
+import { isFeedbackAlreadyCommented } from "@/shared/lib/is-commented"
+import { isProductInCart } from "@/shared/lib/is-item-in-cart"
 import { BrownAnimatedButton } from "@/shared/ui/Buttons/brown-animated-button"
 import { Stars } from "@/shared/ui/Buttons/star"
 import { Modal } from "@/shared/ui/modal"
 
-import { cartModel } from "@/entities/cart"
+import { $cart } from "@/entities/cart"
 import { FeedbackCard } from "@/entities/feedback"
+import { $session } from "@/entities/session"
 
 import { FeedbackForm } from "@/features/feedback"
 
 import {$$feedback, $$modal, $$product, $$featureCartModel, feedbackModel} from "./product.model"
 
 const Product = () => {
-	const [product, rates, reviews, isFeedbackPending,cart] = useUnit([
+	const [
+		product, 
+		rates, 
+		feedbacks, 
+		isFeedbackPending,cart,
+		session
+	] = useUnit([
 		$$product.$product,
 		$$feedback.$rates,
 		$$feedback.$reviews,
 		$$feedback.$isPending,
-		cartModel.$cart,
+		$cart,
+		$session
 	])
+	const isCommented = isFeedbackAlreadyCommented({feedbacks, userId: session.id})
 	return (
 		<div>
 			<div className="container">
@@ -42,7 +52,7 @@ const Product = () => {
 							</div>
 						</div>
 						<div className="flex gap-2 items">
-							<BrownAnimatedButton text={isItemInCart(cart, product.id)? 'REMOVE FROM CART' : 'ADD TO CART'} animation="hover" onClick={() => $$featureCartModel.favoriteToggled(product)}/>
+							<BrownAnimatedButton text={isProductInCart(cart, product.id)? 'REMOVE FROM CART' : 'ADD TO CART'} animation="hover" onClick={() => $$featureCartModel.favoriteToggled(product)}/>
 						</div>
 					</div>
 				</div>
@@ -50,11 +60,11 @@ const Product = () => {
 					<h2 className="text-[21px] font-bold text-base-dark">Reviews: {product?.reviews?.length}</h2>
 					<button onClick={() => $$modal.open()} className='text-bold text-sm text-brown'>+ Leave Feedback</button>
 					<Modal modal={$$modal}>
-						<FeedbackForm model={feedbackModel} product={product}/>
+						<FeedbackForm model={feedbackModel} isCommented={isCommented} product={product}/>
 					</Modal>
 				</div>
 				<div className="mb-14 flex flex-col gap-8">
-					{!isFeedbackPending || reviews.length !=0 ? reviews.map((feedback, id) => {
+					{!isFeedbackPending || feedbacks.length !=0 ? feedbacks.map((feedback, id) => {
 						return (
 							<div key={id}>
 								<FeedbackCard feedback={feedback}/>
